@@ -1,0 +1,31 @@
+#pg-container {
+    grid-template-areas: "header header header"
+    "aside-left main aside-right";
+    gap: 1rem;
+}
+
+header {
+    grid-area: header;
+    border-color: red;
+}
+
+main {
+    grid-area: main;
+    border-color: yellow;
+}
+
+aside.left {
+    grid-area: aside-left;
+    border-color: green;
+    height: 100vh;
+    overflow-y: auto;
+    top: 0.5rem;
+}
+
+aside.right {
+    grid-area: aside-right;
+    border-color: blue;
+    height: 100vh;
+    overflow-y: auto;
+    top: 0.5rem;
+}

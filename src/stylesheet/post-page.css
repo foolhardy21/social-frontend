@@ -1,0 +1,38 @@
+
+
+main {
+    width: 1fr;
+}
+
+aside.left {
+    width: 20rem;
+    height: 70vh;
+    overflow-y: auto;
+}
+
+aside.right {
+    width: 20rem;
+    height: 70vh;
+    overflow-y: auto;
+}
+
+.grid-feed {
+    grid-template-columns: repeat(1, 1fr);
+    grid-auto-rows: max-content;
+    gap: 1rem;
+}
+
+.card-post {
+    height: max-content;
+}
+
+textarea {
+    width: 100%;
+    height: 8rem;
+}
+
+#aside-item:hover {
+    cursor: pointer;
+    background: var(--clr-off-primary);
+    font-weight: 600;
+}
