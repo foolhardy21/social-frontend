@@ -1,10 +1,11 @@
 import { PostCard, ReplyCard, CommentCard } from './'
+import { Main } from '../Reusable'
 
 const MainPostFeed = () => {
 
     return (
 
-        <main class="grid grid-feed mg-btm-s pd-left-xxlg pd-right-xxlg">
+        <Main>
 
             <PostCard />
 
@@ -12,7 +13,7 @@ const MainPostFeed = () => {
 
             <CommentCard />
 
-        </main>
+        </Main>
     )
 }
 

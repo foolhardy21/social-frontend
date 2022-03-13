@@ -1,57 +1,58 @@
 import { profM, profS } from "../../data/profileImg.data"
+import { Button, Card, Icon, Image, Text } from '../Reusable'
 
 const PostCard = () => {
 
     return (
-        <article class="card-post card-shadow-xs flx flx-column pd-xs">
+        <Card classes="flx flx-column pd-xs">
 
-            <div class="flx flx-maj-stretch flx-min-center mg-btm-s">
+            <div className="flx flx-maj-stretch flx-min-center mg-btm-s">
 
-                <div class="flx flx-min-center">
+                <div className="flx flx-min-center">
 
-                    <img srcSet={`${profM} 100w,
-${profS} 60w`} alt='dp' sizes="(max-width: 768px) 60px, 100px"
-                        class="brd-full b-solid b-off-primary img-fit-cover" />
+                    <Image srcSet={`${profM} 100w,
+${profS} 60w`} alt='profile picture' sizes="(max-width: 768px) 60px, 100px"
+                        classes="brd-full b-solid b-off-primary" />
 
-                    <div class="flx flx-column">
+                    <div className="flx flx-column">
 
-                        <p class="txt-md txt-primary txt-cap mg-left-xs">vinay kumar</p>
+                        <Text classes="txt-md txt-primary txt-cap mg-left-xs">vinay kumar</Text>
 
-                        <p class="txt-md txt-off-primary mg-left-xs">@vinay.foolhardy</p>
+                        <Text classes="txt-md txt-off-primary mg-left-xs">@vinay.foolhardy</Text>
 
                     </div>
 
                 </div>
 
-                <span class="material-icons icon-primary">
-                    bookmark
-                </span>
+                <Icon classes="icon-primary">
+                    bookmark_outlined
+                </Icon>
 
             </div>
 
-            <p class="pd-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium officiis
+            <Text classes="pd-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium officiis
                 asperiores magnam voluptates fugiat iure at, ratione, esse laboriosam dolores alias explicabo! Nam
                 cumque tempore possimus dicta autem delectus rem nemo, aperiam id modi omnis eveniet laborum enim
                 aspernatur unde repellendus distinctio eum aliquid voluptatibus. Voluptatum maxime neque quam quaerat?
-            </p>
+            </Text>
 
-            <p class="txt-off-primary txt-md txt-cap mg-top-xs mg-left-xs">11:45pm 12 Dec 2020</p>
+            <Text classes="txt-off-primary txt-md txt-cap mg-top-xs mg-left-xs">11:45pm 12 Dec 2020</Text>
 
-            <div class="flx flx-maj-end mg-top-xs mg-right-xs">
+            <div className="flx flx-maj-end mg-top-xs mg-right-xs">
 
-                <div class="flx">
+                <div className="flx">
 
-                    <p class="txt-md txt-primary mg-right-xs">12</p>
+                    <Text classes="txt-md txt-primary mg-right-xs">12</Text>
 
-                    <button class="btn-txt txt-md txt-lcase">
+                    <Button classes="btn-txt txt-md txt-lcase">
                         like
-                    </button>
+                    </Button>
 
                 </div>
 
             </div>
 
-        </article>
+        </Card>
     )
 }
 

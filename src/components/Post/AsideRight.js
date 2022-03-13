@@ -1,61 +1,74 @@
 import { profXS } from "../../data/profileImg.data"
+import { Aside, Text } from "../Reusable"
 
 const AsideRight = () => {
 
     return (
-        <aside class="right pos-sticky">
-            <p class="txt-md txt-primary txt-cap mg-btm-s">followers</p>
+        <Aside classes="right mg-right-s pos-sticky">
 
-            <ul class="mg-left-s mg-btm-s">
-                <li id="aside-item" class="flx flx-min-center mg-btm-xs">
-                    <img src={profXS} alt='dp' class="brd-full mg-right-xs" />
-                    <p class="txt-md txt-primary">binay</p>
+            <Text classes="txt-md txt-primary txt-cap mg-btm-s">followers</Text>
+
+            <ul className="mg-left-s mg-btm-s">
+
+                <li id="aside-item" className="flx flx-min-center mg-btm-xs">
+                    <img src={profXS} alt='dp' className="brd-full mg-right-xs" />
+                    <Text classes="txt-md txt-primary">binay</Text>
                 </li>
-                <li id="aside-item" class="flx flx-min-center mg-btm-xs">
-                    <img src={profXS} alt='dp' class="brd-full mg-right-xs" />
-                    <p class="txt-md txt-primary">binay</p>
+
+                <li id="aside-item" className="flx flx-min-center mg-btm-xs">
+                    <img src={profXS} alt='dp' className="brd-full mg-right-xs" />
+                    <Text classes="txt-md txt-primary">binay</Text>
                 </li>
-                <li id="aside-item" class="flx flx-min-center mg-btm-xs">
-                    <img src={profXS} alt='dp' class="brd-full mg-right-xs" />
-                    <p class="txt-md txt-primary">binay</p>
+
+                <li id="aside-item" className="flx flx-min-center mg-btm-xs">
+                    <img src={profXS} alt='dp' className="brd-full mg-right-xs" />
+                    <Text classes="txt-md txt-primary">binay</Text>
                 </li>
-                <li id="aside-item" class="flx flx-min-center mg-btm-xs">
-                    <img src={profXS} alt='dp' class="brd-full mg-right-xs" />
-                    <p class="txt-md txt-primary">binay</p>
+
+                <li id="aside-item" className="flx flx-min-center mg-btm-xs">
+                    <img src={profXS} alt='dp' className="brd-full mg-right-xs" />
+                    <Text classes="txt-md txt-primary">binay</Text>
                 </li>
             </ul>
 
-            <p class="txt-md txt-primary txt-cap">following</p>
+            <Text classes="txt-md txt-primary txt-cap">following</Text>
 
-            <ul class="mg-left-s mg-btm-s">
-                <li id="aside-item" class="flx flx-min-center pd-xs">
-                    <img src={profXS} alt='dp' class="brd-full mg-right-xs" />
-                    <p class="txt-md txt-primary">binay</p>
+            <ul className="mg-left-s mg-btm-s">
+
+                <li id="aside-item" className="flx flx-min-center pd-xs">
+                    <img src={profXS} alt='dp' className="brd-full mg-right-xs" />
+                    <Text classes="txt-md txt-primary">binay</Text>
                 </li>
-                <li id="aside-item" class="flx flx-min-center pd-xs">
-                    <img src={profXS} alt='dp' class="brd-full mg-right-xs" />
-                    <p class="txt-md txt-primary">binay</p>
+
+                <li id="aside-item" className="flx flx-min-center pd-xs">
+                    <img src={profXS} alt='dp' className="brd-full mg-right-xs" />
+                    <Text classes="txt-md txt-primary">binay</Text>
                 </li>
-                <li id="aside-item" class="flx flx-min-center pd-xs">
-                    <img src={profXS} alt='dp' class="brd-full mg-right-xs" />
-                    <p class="txt-md txt-primary">binay</p>
+
+                <li id="aside-item" className="flx flx-min-center pd-xs">
+                    <img src={profXS} alt='dp' className="brd-full mg-right-xs" />
+                    <Text classes="txt-md txt-primary">binay</Text>
                 </li>
-                <li id="aside-item" class="flx flx-min-center pd-xs">
-                    <img src={profXS} alt='dp' class="brd-full mg-right-xs" />
-                    <p class="txt-md txt-primary">binay</p>
+
+                <li id="aside-item" className="flx flx-min-center pd-xs">
+                    <img src={profXS} alt='dp' className="brd-full mg-right-xs" />
+                    <Text classes="txt-md txt-primary">binay</Text>
                 </li>
-                <li id="aside-item" class="flx flx-min-center pd-xs">
-                    <img src={profXS} alt='dp' class="brd-full mg-right-xs" />
-                    <p class="txt-md txt-primary">binay</p>
+
+                <li id="aside-item" className="flx flx-min-center pd-xs">
+                    <img src={profXS} alt='dp' className="brd-full mg-right-xs" />
+                    <Text classes="txt-md txt-primary">binay</Text>
                 </li>
-                <li id="aside-item" class="flx flx-min-center pd-xs">
-                    <img src={profXS} alt='dp' class="brd-full mg-right-xs" />
-                    <p class="txt-md txt-primary">binay</p>
+
+                <li id="aside-item" className="flx flx-min-center pd-xs">
+                    <img src={profXS} alt='dp' className="brd-full mg-right-xs" />
+                    <Text classes="txt-md txt-primary">binay</Text>
                 </li>
 
             </ul>
 
-        </aside>
+        </Aside>
+
     )
 }
 

@@ -1,44 +1,53 @@
 import { profXS } from '../../data/profileImg.data'
+import { Aside, Text } from '../Reusable'
 
 const AsideLeft = () => {
 
     return (
+        <Aside classes="left mg-left-s pos-sticky">
 
-        <aside class="left pos-sticky">
-            <p class="txt-md txt-primary txt-cap mg-left-s mg-btm-s">bookmarks</p>
+            <Text classes="txt-md txt-primary txt-cap mg-btm-s">bookmarks</Text>
 
-            <ul class="mg-left-md mg-btm-s">
+            <ul className="mg-left-md mg-btm-s">
+
                 <li id="aside-item" class="flx flx-min-center pd-xs">
-                    <img src={profXS} alt='dp' class="brd-full mg-right-xs" />
-                    <p class="txt-md txt-primary">Lorem ipsum dolor.....</p>
+                    <img src={profXS} alt='dp' className="brd-full mg-right-xs" />
+                    <Text classes="txt-md txt-primary">Lorem ipsum dolor.....</Text>
                 </li>
+
                 <li id="aside-item" class="flx flx-min-center pd-xs">
-                    <img src={profXS} alt='dp' class="brd-full mg-right-xs" />
-                    <p class="txt-md txt-primary">Lorem ipsum dolor.....</p>
+                    <img src={profXS} alt='dp' className="brd-full mg-right-xs" />
+                    <Text classes="txt-md txt-primary">Lorem ipsum dolor.....</Text>
                 </li>
+
                 <li id="aside-item" class="flx flx-min-center pd-xs">
-                    <img src={profXS} alt='dp' class="brd-full mg-right-xs" />
-                    <p class="txt-md txt-primary">Lorem ipsum dolor.....</p>
+                    <img src={profXS} alt='dp' className="brd-full mg-right-xs" />
+                    <Text classes="txt-md txt-primary">Lorem ipsum dolor.....</Text>
                 </li>
+
                 <li id="aside-item" class="flx flx-min-center pd-xs">
-                    <img src={profXS} alt='dp' class="brd-full mg-right-xs" />
-                    <p class="txt-md txt-primary">Lorem ipsum dolor.....</p>
+                    <img src={profXS} alt='dp' className="brd-full mg-right-xs" />
+                    <Text classes="txt-md txt-primary">Lorem ipsum dolor.....</Text>
                 </li>
+
             </ul>
 
-            <p class="txt-md txt-primary txt-cap mg-left-s mg-btm-s">drafts</p>
+            <Text classes="txt-md txt-primary txt-cap mg-btm-s">drafts</Text>
 
-            <ul class="mg-left-md mg-btm-s">
-                <li id="aside-item" class="flx flx-min-center pd-xs">
+            <ul className="mg-left-md mg-btm-s">
+
+                <li id="aside-item" className="flx flx-min-center pd-xs">
                     <img src={profXS} alt='dp' class="brd-full mg-right-xs" />
-                    <p class="txt-md txt-primary">Lorem ipsum dolor.....</p>
+                    <Text classes="txt-md txt-primary">Lorem ipsum dolor.....</Text>
                 </li>
-                <li id="aside-item" class="flx flx-min-center pd-xs">
+
+                <li id="aside-item" className="flx flx-min-center pd-xs">
                     <img src={profXS} alt='dp' class="brd-full mg-right-xs" />
-                    <p class="txt-md txt-primary">Lorem ipsum dolor.....</p>
+                    <Text classes="txt-md txt-primary">Lorem ipsum dolor.....</Text>
                 </li>
             </ul>
-        </aside>
+        </Aside>
+
     )
 }
 

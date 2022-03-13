@@ -1,29 +1,32 @@
+import { Button, Header, Icon, NavBar, Text } from '../Reusable'
+
 const PostHeader = () => {
 
     return (
-        <header class="b-solid flx flx-maj-even flx-min-center pd-top-md pd-btm-md">
+        <Header>
 
-            <p class="txt-lg txt-ucase txt-primary">sneakerhood</p>
+            <Text classes="txt-lg txt-ucase txt-primary">sneakerhood</Text>
 
-            <nav class="flx flx-center">
+            <NavBar>
 
-                <button class="btn-txt txt-primary txt-md txt-lcase mg-right-s">
+                <Button classes="btn-txt txt-primary txt-md txt-lcase mg-right-s">
                     profile
-                </button>
+                </Button>
 
-                <button class="btn-txt txt-primary txt-md txt-lcase mg-right-s">
+                <Button classes="btn-txt txt-primary txt-md txt-lcase mg-right-s">
                     feed
-                </button>
+                </Button>
 
-                <button class="btn-txt txt-primary bg-primary txt-md pd-xs txt-lcase">logout</button>
+                <Button classes="btn-txt txt-primary bg-primary txt-md pd-xs txt-lcase">logout</Button>
 
-            </nav>
+            </NavBar>
 
-            <span class="material-icons icon-primary">
+            <Icon classes="icon-primary">
                 bedtime
-            </span>
+            </Icon>
 
-        </header>
+        </Header>
+
     )
 }
 
