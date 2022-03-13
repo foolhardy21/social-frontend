@@ -22,8 +22,8 @@ aside.right {
     gap: 1rem;
 }
 
-.card-post {
-    height: max-content;
+.card-dim {
+    width: 100%;
 }
 
 textarea {
