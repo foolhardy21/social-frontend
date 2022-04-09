@@ -1,0 +1,1 @@
+export const isFormEmpty = formObj => Object.values(formObj).some(val => val === '')
