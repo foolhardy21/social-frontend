@@ -18,6 +18,11 @@ const SignupForm = () => {
     const { signUpUser } = useAuth()
     const { username, password, firstName, lastName, alert: { message, type }, passwordInputType } = signupState
 
+    const showAlert = (message, type) => {
+        signupDispatch({ type: 'UPDATE_ALERT', payload: { message, type } })
+        setTimeout(() => signupDispatch({ type: 'UPDATE_ALERT', payload: { message: '', type: '' } }), 1500)
+    }
+
     const togglePasswordInputType = () => {
         signupDispatch({ type: 'TOGGLE_PASSWORD_TYPE' })
     }
@@ -42,13 +47,13 @@ const SignupForm = () => {
         e.preventDefault()
 
         if (isFormEmpty({ username, password, firstName, lastName })) {
-            signupDispatch({ type: 'UPDATE_ALERT', payload: { message: 'form is empty', type: 'error' } })
+            showAlert('form is empty', 'error')
         } else {
             const response = await signUpUser(username, password, firstName, lastName)
             if (response.status === 201) {
-                signupDispatch({ type: 'UPDATE_ALERT', payload: { message: 'signed up', type: 'success' } })
-            } else if (response.status === 422 || response.status === 500) {
-                signupDispatch({ type: 'UPDATE_ALERT', payload: { message: 'user already exists', type: 'error' } })
+                showAlert('signed up', 'success')
+            } else if (response.status === 422) {
+                showAlert('user already exists', 'error')
             }
         }
     }

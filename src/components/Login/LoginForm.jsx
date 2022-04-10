@@ -16,6 +16,11 @@ const LoginForm = () => {
     const { logInUser } = useAuth()
     const { username, password, alert: { message, type }, passwordInputType } = loginState
 
+    const showAlert = (message, type) => {
+        loginDispatch({ type: 'UPDATE_ALERT', payload: { message, type } })
+        setTimeout(() => loginDispatch({ type: 'UPDATE_ALERT', payload: { message: '', type: '' } }), 1500)
+    }
+
     const togglePasswordInputType = () => {
         loginDispatch({ type: 'TOGGLE_PASSWORD_TYPE' })
     }
@@ -32,13 +37,15 @@ const LoginForm = () => {
         e.preventDefault()
 
         if (isFormEmpty({ username, password })) {
-            loginDispatch({ type: 'UPDATE_ALERT', payload: { message: 'form is empty', type: 'error' } })
+            showAlert('form is empty', 'error')
         } else {
             const response = await logInUser(username, password)
             if (response.status === 200) {
-                loginDispatch({ type: 'UPDATE_ALERT', payload: { message: 'logged in', type: 'success' } })
+                showAlert('logged in', 'success')
             } else if (response.status === 404) {
-                loginDispatch({ type: 'UPDATE_ALERT', payload: { message: 'user not found', type: 'error' } })
+                showAlert('user not found', 'error')
+            } else if (response.status === 401) {
+                showAlert('wrong password', 'error')
             }
         }
     }
