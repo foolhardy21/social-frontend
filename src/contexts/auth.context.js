@@ -17,10 +17,25 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    const signUpUser = async (username, password, firstName, lastName) => {
+        try {
+            const response = await axios.post('/api/auth/signup', {
+                username,
+                password,
+                firstName,
+                lastName
+            })
+            return response
+        } catch (e) {
+            return e.response
+        }
+    }
+
     return (
         <AuthContext.Provider
             value={{
-                logInUser
+                logInUser,
+                signUpUser
             }}
         >
             {children}
