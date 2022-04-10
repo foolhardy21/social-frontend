@@ -1,0 +1,8 @@
+.btnSignup {
+  border-style: none;
+}
+
+.btnSignup:hover {
+  cursor: pointer;
+  background: var(--clr-primary);
+}
