@@ -1,9 +1,10 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import axios from 'axios'
 
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
+    const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
 
     const logInUser = async (username, password) => {
         try {
@@ -34,8 +35,10 @@ export const AuthProvider = ({ children }) => {
     return (
         <AuthContext.Provider
             value={{
+                isUserLoggedIn,
+                setIsUserLoggedIn,
                 logInUser,
-                signUpUser
+                signUpUser,
             }}
         >
             {children}
