@@ -1,15 +1,21 @@
-import { useState, useEffect } from 'react'
-import { NavBar } from '../components/Reusable'
+import { useEffect } from 'react'
+import ClipLoader from 'react-spinners/ClipLoader'
+import { NavBar, PostsHOC } from '../components/Reusable'
+import { usePosts } from '../contexts'
+import { ExplorePost } from '../components/Explore'
 import styles from '../components/Explore/explore.module.css'
-import axios from 'axios'
+
+const ExplorePosts = PostsHOC(ExplorePost)
 
 const Explore = () => {
-    const [posts, setPosts] = useState()
+    const { postsState: { loading }, getPosts, postsDispatch } = usePosts()
 
     useEffect(() => {
         (async () => {
-            const response = await axios.get('/api/posts')
-            setPosts(response.data.posts)
+            const response = await getPosts()
+            if (response.status === 200) {
+                postsDispatch({ type: 'INIT_POSTS', payload: response.data.posts })
+            }
         })()
     }, [])
 
@@ -23,15 +29,16 @@ const Explore = () => {
 
             <div className={`${styles.feedDiv} flx flx-column pd-md`}>
                 {
-                    posts?.map(post => <article key={post._id} className={`${styles.postDiv} pd-s`}>
-                        <p className='txt-secondary txt-md mg-btm-xs'>{post.username}</p>
-                        <p className='txt-secondary card-txtw-md'>{post.content}</p>
-                    </article>)
+                    loading
+                        ? <div className='flx flx-center mg-top-xlg'>
+                            <ClipLoader size={50} color='#ffffff' />
+                        </div>
+                        : <ExplorePosts />
                 }
             </div>
 
-            <div className={`${styles.extraDiv}`}>
-                {/* third div empty probably for searchbar and trending */}
+            <div className={styles.extraDiv}>
+                {/* third div empty for now. for searchbar and trending */}
             </div>
 
         </div>
