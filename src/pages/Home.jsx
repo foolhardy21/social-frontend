@@ -1,5 +1,5 @@
-import logo from '../assets/sneakerhood-logos_white.png'
-import { HomeMain } from '../components/Home'
+import logo from 'assets/sneakerhood-logos_white.png'
+import { HomeMain } from 'components/Home'
 
 const Home = () => {
 

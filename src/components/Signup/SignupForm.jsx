@@ -1,7 +1,7 @@
 import { useReducer } from "react"
-import { useAuth } from "../../contexts/auth.context"
-import { signupReducer } from "../../reducers"
-import { isFormEmpty } from "../../utils"
+import { useAuth } from "contexts/auth.context"
+import { signupReducer } from "reducers"
+import { isFormEmpty } from "utils"
 
 const SignupForm = () => {
     const [signupState, signupDispatch] = useReducer(signupReducer, {
