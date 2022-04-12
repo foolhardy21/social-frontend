@@ -1,8 +1,8 @@
-import { usePosts } from '../../contexts'
+import { usePosts } from 'contexts'
 
 const PostsHOC = PostComponent => {
 
-    const PostsSection = () => {
+    const Posts = () => {
         const { postsState: { posts } } = usePosts()
 
         return (
@@ -14,7 +14,7 @@ const PostsHOC = PostComponent => {
         )
     }
 
-    return PostsSection
+    return Posts
 }
 
 export default PostsHOC

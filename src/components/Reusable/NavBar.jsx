@@ -1,5 +1,5 @@
 import { useLocation, Link } from "react-router-dom"
-import { useAuth } from "../../contexts"
+import { useAuth } from "contexts"
 import styles from './reusable.module.css'
 
 const NavBar = () => {

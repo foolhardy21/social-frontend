@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { AuthProvider, PostsProvider } from "./contexts";
+import { AuthProvider, PostsProvider } from "contexts";
 import { makeServer } from "./server";
 
 // Call make Server

@@ -1,4 +1,4 @@
-import { getDate, getTime } from '../../utils'
+import { getDate, getTime } from 'utils'
 import styles from './explore.module.css'
 
 const ExplorePost = ({ post: { username, content, likes: { likeCount }, createdAt } }) => {

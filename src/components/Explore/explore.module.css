@@ -1,14 +1,3 @@
-.exploreGrid {
-  display: grid;
-  grid-template-columns: 25vw 1fr 28vw;
-  grid-template-areas: "nav feed extra";
-}
-
-.navDiv {
-  grid-area: nav;
-  height: 100vh;
-}
-
 .feedDiv {
   grid-area: feed;
   overflow-y: auto;
@@ -20,22 +9,4 @@
   border-bottom: solid thin var(--clr-off-primary);
   letter-spacing: 1px;
   line-height: 20px;
-}
-
-.extraDiv {
-  grid-area: extra;
-  height: 100vh;
-}
-
-@media only screen and (max-width: 1280px) {
-}
-
-@media only screen and (max-width: 1024px) {
-  .exploreGrid {
-    grid-template-columns: 20vw 1fr;
-    grid-template-areas: "nav feed";
-  }
-}
-
-@media only screen and (max-width: 768px) {
 }

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useReducer } from "react";
-import { postsReducer } from "../reducers";
+import { postsReducer } from "reducers";
 
 const PostsContext = createContext({})
 
