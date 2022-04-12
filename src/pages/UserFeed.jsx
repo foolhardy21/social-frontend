@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import ClipLoader from 'react-spinners/ClipLoader'
+import { useEffect } from 'react'
 import { ExplorePost } from 'components/Explore'
 import { FeedPageHOC, PostsHOC } from "components/Reusable"
 import { useAuth, usePosts } from 'contexts'
@@ -9,7 +8,6 @@ import axios from 'axios'
 const HomePosts = PostsHOC(ExplorePost)
 
 const UserFeedSection = () => {
-
     const { postsDispatch } = usePosts()
     const { getUserToken } = useAuth()
 
@@ -37,8 +35,6 @@ const UserFeedSection = () => {
             postsDispatch({ type: 'GET_USER_FEED', payload: mohitfollowing })
         })()
     }, [])
-
-    // 
 
     return (
         <div className={`${styles.feedDiv} flx flx-column pd-md`}>
