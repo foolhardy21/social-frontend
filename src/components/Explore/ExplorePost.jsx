@@ -24,7 +24,8 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, cre
         if (isUserLoggedIn) {
             const response = await likePost(_id)
             if (response.status === 201) {
-                postsDispatch({ type: 'INIT_POSTS', payload: response.data.posts })
+                const likedPost = response.data.posts.find(post => post._id === _id)
+                postsDispatch({ type: 'LIKE_POST', payload: likedPost })
             } else if (response.status === 404) {
                 // not logged in
             } else if (response.status === 400) {
@@ -37,7 +38,8 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, cre
         if (isUserLoggedIn) {
             const response = await dislikePost(_id)
             if (response.status === 201) {
-                postsDispatch({ type: 'INIT_POSTS', payload: response.data.posts })
+                const dislikedPost = response.data.posts.find(post => post._id === _id)
+                postsDispatch({ type: 'LIKE_POST', payload: dislikedPost })
             } else if (response.status === 404) {
                 // not logged in
             } else if (response.status === 400) {
