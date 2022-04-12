@@ -37,6 +37,19 @@ export const PostsProvider = ({ children }) => {
         }
     }
 
+    const dislikePost = async postId => {
+        try {
+            const response = await axios.post(`/api/posts/dislike/${postId}`, {}, {
+                headers: {
+                    authorization: getUserToken()
+                }
+            })
+            return response
+        } catch (e) {
+            return e.response
+        }
+    }
+
     const bookmarkPost = async postId => {
         try {
             const response = await axios.post(`/api/users/bookmark/${postId}`, {}, {
@@ -58,6 +71,7 @@ export const PostsProvider = ({ children }) => {
                 getPosts,
                 likePost,
                 bookmarkPost,
+                dislikePost,
             }}
         >
             {children}

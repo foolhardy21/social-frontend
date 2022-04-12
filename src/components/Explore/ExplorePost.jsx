@@ -4,7 +4,7 @@ import styles from './explore.module.css'
 
 const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, createdAt } }) => {
     const { isUserLoggedIn } = useAuth()
-    const { likePost, bookmarkPost, postsDispatch } = usePosts()
+    const { likePost, dislikePost, bookmarkPost, postsDispatch } = usePosts()
 
     const handlePostBookmark = async () => {
         if (isUserLoggedIn) {
@@ -23,6 +23,19 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, cre
     const handlePostLike = async () => {
         if (isUserLoggedIn) {
             const response = await likePost(_id)
+            if (response.status === 201) {
+                postsDispatch({ type: 'INIT_POSTS', payload: response.data.posts })
+            } else if (response.status === 404) {
+                // not logged in
+            } else if (response.status === 400) {
+                // already liked
+            }
+        }
+    }
+
+    const handlePostDislike = async () => {
+        if (isUserLoggedIn) {
+            const response = await dislikePost(_id)
             if (response.status === 201) {
                 postsDispatch({ type: 'INIT_POSTS', payload: response.data.posts })
             } else if (response.status === 404) {
@@ -56,9 +69,13 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, cre
                         bookmark
                     </button>
 
-                    <button onClick={handlePostLike} className='btn-txt txt-md txt-secondary txt-300'>
-                        {/* {isPostLiked ? 'liked' : 'like'} */}
+                    {/* {isPostLiked ? 'liked' : 'like'} */}
+                    <button onClick={handlePostLike} className='btn-txt txt-md txt-secondary txt-300 mg-right-xs'>
                         like
+                    </button>
+
+                    <button onClick={handlePostDislike} className='btn-txt txt-md txt-secondary txt-300'>
+                        dislike
                     </button>
 
                 </div>
