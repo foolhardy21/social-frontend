@@ -1,5 +1,5 @@
-import { createContext, useContext, useState } from "react";
 import axios from 'axios'
+import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext()
 
@@ -34,6 +34,11 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    const logoutUser = () => {
+        window.localStorage.removeItem('userToken')
+        setIsUserLoggedIn(false)
+    }
+
     const getUserToken = () => window.localStorage.getItem('userToken')
 
     return (
@@ -44,6 +49,7 @@ export const AuthProvider = ({ children }) => {
                 logInUser,
                 signUpUser,
                 getUserToken,
+                logoutUser,
             }}
         >
             {children}

@@ -1,10 +1,16 @@
-import { useLocation, Link } from "react-router-dom"
+import { useLocation, Link, useNavigate } from "react-router-dom"
 import { useAuth } from "contexts"
 import styles from './reusable.module.css'
 
 const NavBar = () => {
-    const { isUserLoggedIn } = useAuth()
+    const { isUserLoggedIn, logoutUser } = useAuth()
     const { pathname } = useLocation()
+    const navigate = useNavigate()
+
+    const handleLogoutUser = () => {
+        logoutUser()
+        navigate('/')
+    }
 
     return (
         <ul className='pd-top-md pd-right-s'>
@@ -60,18 +66,27 @@ const NavBar = () => {
             {/* add conditional icon for logout and login */}
 
             <li>
-                <Link to={`${isUserLoggedIn ? '/explore' : '/login'}`} className={`flx flx-min-center ${styles.navBarItem} pd-s`}>
-                    <span className='material-icons icon-secondary mg-right-xs'>
-                        {
-                            isUserLoggedIn ? 'logout' : 'login'
-                        }
-                    </span>
-                    <p className={`txt-secondary txt-lg ${styles.navBarItemText}`}>
-                        {
-                            isUserLoggedIn ? 'logout' : 'login'
-                        }
-                    </p>
-                </Link>
+                {
+                    isUserLoggedIn
+                        ?
+                        <button onClick={handleLogoutUser} className={`btn-txt flx flx-min-center ${styles.navBarItem} pd-s`}>
+                            <span className='material-icons icon-secondary mg-right-xs'>
+                                logout
+                            </span>
+                            <p className={`txt-secondary txt-lg ${styles.navBarItemText}`}>
+                                logout
+                            </p>
+                        </button>
+                        :
+                        <Link to='/login' className={`flx flx-min-center ${styles.navBarItem} pd-s`}>
+                            <span className='material-icons icon-secondary mg-right-xs'>
+                                login
+                            </span>
+                            <p className={`txt-secondary txt-lg ${styles.navBarItemText}`}>
+                                login
+                            </p>
+                        </Link>
+                }
             </li>
 
         </ul>
