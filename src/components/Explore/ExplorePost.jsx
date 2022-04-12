@@ -1,7 +1,37 @@
+import { useAuth, usePosts } from 'contexts'
 import { getDate, getTime } from 'utils'
 import styles from './explore.module.css'
 
-const ExplorePost = ({ post: { username, content, likes: { likeCount }, createdAt } }) => {
+const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, createdAt } }) => {
+    const { isUserLoggedIn } = useAuth()
+    const { likePost, bookmarkPost, postsDispatch } = usePosts()
+
+    const handlePostBookmark = async () => {
+        if (isUserLoggedIn) {
+            const response = await bookmarkPost(_id)
+            console.log(response)
+            if (response.status === 200) {
+                // bookmarked
+            } else if (response.status === 404) {
+                // not logged in
+            } else if (response.status === 400) {
+                // already bookmarked
+            }
+        }
+    }
+
+    const handlePostLike = async () => {
+        if (isUserLoggedIn) {
+            const response = await likePost(_id)
+            if (response.status === 201) {
+                postsDispatch({ type: 'INIT_POSTS', payload: response.data.posts })
+            } else if (response.status === 404) {
+                // not logged in
+            } else if (response.status === 400) {
+                // already liked
+            }
+        }
+    }
 
     return (
 
@@ -21,9 +51,15 @@ const ExplorePost = ({ post: { username, content, likes: { likeCount }, createdA
 
                 <div className='flx'>
 
-                    <button className='btn-txt txt-md txt-secondary txt-300 mg-right-xs'>bookmark</button>
+                    <button onClick={handlePostBookmark} className='btn-txt txt-md txt-secondary txt-300 mg-right-xs'>
+                        {/* {isPostBookmarked ? 'bookmarked' : 'bookmark'} */}
+                        bookmark
+                    </button>
 
-                    <button className='btn-txt txt-md txt-secondary txt-300'>like</button>
+                    <button onClick={handlePostLike} className='btn-txt txt-md txt-secondary txt-300'>
+                        {/* {isPostLiked ? 'liked' : 'like'} */}
+                        like
+                    </button>
 
                 </div>
 

@@ -1,4 +1,5 @@
 import { useReducer } from "react"
+import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../contexts"
 import { loginReducer } from "../../reducers"
 import { isFormEmpty } from "../../utils"
@@ -14,6 +15,7 @@ const LoginForm = () => {
         passwordInputType: 'password'
     })
     const { logInUser } = useAuth()
+    const navigate = useNavigate()
     const { username, password, alert: { message, type }, passwordInputType } = loginState
 
     const showAlert = (message, type) => {
@@ -42,6 +44,7 @@ const LoginForm = () => {
             const response = await logInUser(username, password)
             if (response.status === 200) {
                 showAlert('logged in', 'success')
+                setTimeout(() => navigate('/explore'), 1600)
             } else if (response.status === 404) {
                 showAlert('user not found', 'error')
             } else if (response.status === 401) {

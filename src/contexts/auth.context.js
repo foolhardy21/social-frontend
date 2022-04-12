@@ -12,6 +12,8 @@ export const AuthProvider = ({ children }) => {
                 username,
                 password,
             })
+            window.localStorage.setItem('userToken', response.data.encodedToken)
+            setIsUserLoggedIn(true)
             return response
         } catch (e) {
             return e.response
@@ -32,6 +34,8 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    const getUserToken = () => window.localStorage.getItem('userToken')
+
     return (
         <AuthContext.Provider
             value={{
@@ -39,6 +43,7 @@ export const AuthProvider = ({ children }) => {
                 setIsUserLoggedIn,
                 logInUser,
                 signUpUser,
+                getUserToken,
             }}
         >
             {children}
