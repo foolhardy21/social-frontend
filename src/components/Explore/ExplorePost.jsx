@@ -1,10 +1,11 @@
-import { useAuth, usePosts } from 'contexts'
+import { useAuth, useBookmarks, usePosts } from 'contexts'
 import { getDate, getTime } from 'utils'
 import styles from './explore.module.css'
 
 const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, createdAt } }) => {
     const { isUserLoggedIn } = useAuth()
     const { likePost, dislikePost, bookmarkPost, postsDispatch, removeBookmarkFromPost } = usePosts()
+    const { bookmarksDispatch } = useBookmarks()
 
     const handlePostBookmark = async () => {
         if (isUserLoggedIn) {
@@ -24,7 +25,7 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, cre
         if (isUserLoggedIn) {
             const response = await removeBookmarkFromPost(_id)
             if (response.status === 200) {
-
+                bookmarksDispatch({ type: 'REMOVE_BOOKMARK', payload: _id })
             } else if (response.status === 404) {
                 // not logged in
             } else if (response.status === 400) {
@@ -80,17 +81,13 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, cre
                 <div className='flx'>
 
                     <button onClick={handlePostBookmark} className='btn-txt txt-md txt-secondary txt-300 mg-right-xs'>
-                        {/* {isPostBookmarked ? 'bookmarked' : 'bookmark'} */}
                         bookmark
                     </button>
 
                     <button onClick={handleRemoveBookmark} className='btn-txt txt-md txt-secondary txt-300 mg-right-xs'>
-                        {/* {isPostBookmarked ? 'bookmarked' : 'bookmark'} */}
                         remove bookmark
                     </button>
 
-
-                    {/* {isPostLiked ? 'liked' : 'like'} */}
                     <button onClick={handlePostLike} className='btn-txt txt-md txt-secondary txt-300 mg-right-xs'>
                         like
                     </button>
