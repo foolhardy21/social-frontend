@@ -18,6 +18,7 @@ const PostInputCard = () => {
         } else if (response.status === 404) {
             // not logged in
         }
+        setPostValue('')
     }
 
     return (
