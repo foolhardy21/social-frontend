@@ -4,7 +4,7 @@ import styles from './explore.module.css'
 
 const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, createdAt } }) => {
     const { isUserLoggedIn } = useAuth()
-    const { likePost, dislikePost, bookmarkPost, postsDispatch } = usePosts()
+    const { likePost, dislikePost, bookmarkPost, postsDispatch, removeBookmarkFromPost } = usePosts()
 
     const handlePostBookmark = async () => {
         if (isUserLoggedIn) {
@@ -16,6 +16,19 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, cre
                 // not logged in
             } else if (response.status === 400) {
                 // already bookmarked
+            }
+        }
+    }
+
+    const handleRemoveBookmark = async () => {
+        if (isUserLoggedIn) {
+            const response = await removeBookmarkFromPost(_id)
+            if (response.status === 200) {
+
+            } else if (response.status === 404) {
+                // not logged in
+            } else if (response.status === 400) {
+                // already removed from bookmarks
             }
         }
     }
@@ -70,6 +83,12 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, cre
                         {/* {isPostBookmarked ? 'bookmarked' : 'bookmark'} */}
                         bookmark
                     </button>
+
+                    <button onClick={handleRemoveBookmark} className='btn-txt txt-md txt-secondary txt-300 mg-right-xs'>
+                        {/* {isPostBookmarked ? 'bookmarked' : 'bookmark'} */}
+                        remove bookmark
+                    </button>
+
 
                     {/* {isPostLiked ? 'liked' : 'like'} */}
                     <button onClick={handlePostLike} className='btn-txt txt-md txt-secondary txt-300 mg-right-xs'>

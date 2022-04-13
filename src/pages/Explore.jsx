@@ -1,14 +1,15 @@
 import { useEffect } from 'react'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { FeedPageHOC, PostsHOC } from 'components/Reusable'
-import { usePosts } from 'contexts'
+import { useAuth, usePosts } from 'contexts'
 import { ExplorePost } from 'components/Explore'
 import styles from 'components/Explore/explore.module.css'
 
-const ExplorePosts = PostsHOC(ExplorePost)
-
 const ExplorePostsSection = () => {
-    const { postsState: { loading }, getPosts, postsDispatch } = usePosts()
+    const { postsState: { loading, posts }, getPosts, postsDispatch } = usePosts()
+    const { getUserToken, setIsUserLoggedIn } = useAuth()
+
+    const ExplorePosts = PostsHOC(ExplorePost, posts)
 
     useEffect(() => {
         (async () => {
@@ -17,6 +18,9 @@ const ExplorePostsSection = () => {
                 postsDispatch({ type: 'INIT_POSTS', payload: response.data.posts })
             }
         })()
+        if (getUserToken()) {
+            setIsUserLoggedIn(true)
+        }
     }, [])
 
     return (

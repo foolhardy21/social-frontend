@@ -5,11 +5,12 @@ import { useAuth, usePosts } from 'contexts'
 import styles from 'components/Explore/explore.module.css'
 import axios from 'axios'
 
-const HomePosts = PostsHOC(ExplorePost)
 
 const UserFeedSection = () => {
-    const { postsDispatch } = usePosts()
+    const { postsDispatch, postsState: { posts } } = usePosts()
     const { getUserToken } = useAuth()
+
+    const HomePosts = PostsHOC(ExplorePost, posts)
 
     useEffect(() => {
         (async () => {
