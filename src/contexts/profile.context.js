@@ -31,11 +31,14 @@ export const ProfileProvider = ({ children }) => {
     }
 
     const getProfilePosts = async (username) => {
+        profileDispatch({ type: 'SET_PROFILE_POSTS_LOADING' })
         try {
             const response = await axios.get(`/api/posts/user/${username}`)
             return response
         } catch (e) {
             return e.response
+        } finally {
+            profileDispatch({ type: 'REMOVE_PROFILE_POSTS_LOADING' })
         }
     }
 
