@@ -1,4 +1,5 @@
 import { useAuth, useBookmarks, usePosts } from 'contexts'
+import { Link } from 'react-router-dom'
 import { getDate, getTime } from 'utils'
 import styles from './explore.module.css'
 
@@ -66,7 +67,7 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, cre
 
         <article className={`${styles.postDiv} pd-s`}>
 
-            <p className='txt-secondary txt-md txt-500'>{'@ '}{username}</p>
+            <Link to={`/${username}`} className='btn-txt txt-secondary txt-md txt-500'>{'@ '}{username}</Link>
 
             <p className='txt-secondary txt-md txt-300 mg-left-xs mg-top-s mg-btm-s'>{content}</p>
 
