@@ -1,14 +1,15 @@
 import { useEffect } from 'react'
 import { useParams } from "react-router-dom"
 import ClipLoader from 'react-spinners/ClipLoader'
-import { FeedPageHOC, PostsHOC } from "components/Reusable"
-import { useProfile } from "contexts"
+import { FeedPageHOC, PostsHOC, Modal } from "components/Reusable"
+import { useModal, useProfile } from "contexts"
 import { ProfileBio } from 'components/Profile'
 import { ExplorePost } from 'components/Explore'
 
 const ProfileSection = () => {
     const params = useParams()
     const { profileState: { bio, posts }, getProfileBio, getProfilePosts, profileDispatch } = useProfile()
+    const { modal } = useModal()
 
     const ProfilePosts = PostsHOC(ExplorePost, posts.value)
 
@@ -43,6 +44,9 @@ const ProfileSection = () => {
                 posts.loading
                     ? <div className='flx flx-center mg-top-xlg'><ClipLoader size={50} color='#ffffff' /></div>
                     : <ProfilePosts />
+            }
+            {
+                modal.type.length > 0 && <Modal />
             }
         </div>
     )
