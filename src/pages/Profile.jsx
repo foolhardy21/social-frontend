@@ -1,11 +1,13 @@
 import { useEffect } from 'react'
 import { useParams } from "react-router-dom"
+import ClipLoader from 'react-spinners/ClipLoader'
 import { FeedPageHOC } from "components/Reusable"
 import { useProfile } from "contexts"
+import { ProfileBio } from 'components/Profile'
 
 const ProfileSection = () => {
     const params = useParams()
-    const { profileState: { bio: { value, loading } }, getProfileBio, profileDispatch } = useProfile()
+    const { profileState: { bio: { loading } }, getProfileBio, profileDispatch } = useProfile()
 
     useEffect(() => {
         (async () => {
@@ -20,12 +22,8 @@ const ProfileSection = () => {
         <div className='flx flx-column'>
             {
                 loading
-                    ? <p>LOADING</p>
-                    : <>
-                        <p>{value.firstName}</p>
-                        <p>{value.lastName}</p>
-                        <p>{value.username}</p>
-                    </>
+                    ? <div className='flx flx-center mg-top-xlg'><ClipLoader size={50} color='#ffffff' /></div>
+                    : <ProfileBio />
             }
         </div>
     )
