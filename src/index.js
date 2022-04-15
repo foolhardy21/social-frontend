@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { AuthProvider, PostsProvider, ProfileProvider } from "contexts";
+import { AuthProvider, ModalProvider, PostsProvider, ProfileProvider } from "contexts";
 import { makeServer } from "./server";
 import { BookmarksProvider } from "contexts";
 
@@ -13,7 +13,9 @@ ReactDOM.render(
     <PostsProvider>
       <BookmarksProvider>
         <ProfileProvider>
-          <App />
+          <ModalProvider>
+            <App />
+          </ModalProvider>
         </ProfileProvider>
       </BookmarksProvider>
     </PostsProvider>

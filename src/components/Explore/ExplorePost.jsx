@@ -1,5 +1,5 @@
-import { useAuth, useBookmarks, usePosts } from 'contexts'
 import { Link } from 'react-router-dom'
+import { useAuth, useBookmarks, useModal, usePosts, useProfile } from 'contexts'
 import { getDate, getTime } from 'utils'
 import styles from './explore.module.css'
 
@@ -7,11 +7,30 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, cre
     const { isUserLoggedIn } = useAuth()
     const { likePost, dislikePost, bookmarkPost, postsDispatch, removeBookmarkFromPost } = usePosts()
     const { bookmarksDispatch } = useBookmarks()
+    const { deletePost, profileDispatch } = useProfile()
+    const { setModal } = useModal()
+
+
+    const handlePostEdit = async () => {
+        // show the modal, pass the type and post id to it.
+        // based on the type it will show the edit post modal or edit profile modal
+        setModal(m => ({ ...m, type: 'POST', id: _id }))
+    }
+
+    const handlePostDelete = async () => {
+        const response = await deletePost(_id)
+        if (response.status === 201) {
+            profileDispatch({ type: 'REMOVE_FROM_PROFILE_POSTS', payload: _id })
+        } else if (response.status === 404) {
+            //    not logged in
+        } else if (response.status === 400) {
+            //    not your post
+        }
+    }
 
     const handlePostBookmark = async () => {
         if (isUserLoggedIn) {
             const response = await bookmarkPost(_id)
-            console.log(response)
             if (response.status === 200) {
                 // bookmarked
             } else if (response.status === 404) {
@@ -67,7 +86,27 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, cre
 
         <article className={`${styles.postDiv} pd-s`}>
 
-            <Link to={`/${username}`} className='btn-txt txt-secondary txt-md txt-500'>{'@ '}{username}</Link>
+            <div className='flx flx-maj-stretch'>
+
+                <Link to={`/${username}`} className='btn-txt txt-secondary txt-md txt-500'>{'@ '}{username}</Link>
+
+                <div className='flx'>
+
+                    <button onClick={handlePostEdit} className='btn-txt mg-right-xs'>
+                        <span className='material-icons icon-secondary'>
+                            edit
+                        </span>
+                    </button>
+
+                    <button onClick={handlePostDelete} className='btn-txt'>
+                        <span className='material-icons txt-err'>
+                            delete
+                        </span>
+                    </button>
+
+                </div>
+
+            </div>
 
             <p className='txt-secondary txt-md txt-300 mg-left-xs mg-top-s mg-btm-s'>{content}</p>
 

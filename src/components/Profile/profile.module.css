@@ -3,3 +3,10 @@
   border-right: solid thin var(--clr-primary); */
   border-bottom: solid thin var(--clr-primary);
 }
+
+.postModalTextArea {
+  width: 70%;
+  height: 10rem;
+  resize: none;
+  outline: none;
+}

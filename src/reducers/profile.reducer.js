@@ -13,5 +13,9 @@ export const profileReducer = (state, { type, payload }) => {
 
         case 'SET_PROFILE_POSTS': return { ...state, posts: { ...state.posts, value: payload } }
 
+        case 'REMOVE_FROM_PROFILE_POSTS': return { ...state, posts: { ...state.posts, value: state.posts.value.filter(post => post._id !== payload) } }
+
+        case 'EDIT_PROFILE_POST': return { ...state, posts: { ...state.posts, value: state.posts.value.map(post => post._id === payload.id ? payload.post : post) } }
+
     }
 }
