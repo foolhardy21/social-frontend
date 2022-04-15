@@ -1,47 +1,49 @@
 import { useEffect } from 'react'
 import { useParams } from "react-router-dom"
 import ClipLoader from 'react-spinners/ClipLoader'
-import { FeedPageHOC, PostsHOC, Modal } from "components/Reusable"
-import { useModal, useProfile } from "contexts"
+import { Modal, PostsWrapper, Post, FeedPageWrapper } from "components/Reusable"
+import { useModal, usePosts, useProfile } from "contexts"
 import { ProfileBio } from 'components/Profile'
-import { ExplorePost } from 'components/Explore'
+import { ACTION_INIT_PROFILE_POSTS, ACTION_SET_BIO } from 'utils'
+import styles from 'components/Reusable/feedpage.module.css'
 
 const ProfileSection = () => {
     const params = useParams()
-    const { profileState: { bio, posts }, getProfileBio, getProfilePosts, profileDispatch } = useProfile()
+    const { postsState, getUserPosts, postsDispatch } = usePosts()
+    const { profileState, getProfileBio, profileDispatch } = useProfile()
     const { modal } = useModal()
 
-    const ProfilePosts = PostsHOC(ExplorePost, posts.value)
+    const ProfilePosts = PostsWrapper(Post, postsState.posts)
 
     useEffect(() => {
         (async () => {
             const { status, data: { user } } = await getProfileBio(params.username)
             if (status === 200) {
-                profileDispatch({ type: 'SET_PROFILE_BIO', payload: user })
+                profileDispatch({ type: ACTION_SET_BIO, payload: user })
             }
         })()
     }, [])
 
     useEffect(() => {
-        if (Object.keys(bio.value).length > 0) {
+        if (Object.keys(profileState.bio).length > 0) {
             (async () => {
-                const { status, data: { posts } } = await getProfilePosts(params.username)
+                const { status, data: { posts } } = await getUserPosts(params.username)
                 if (status === 200) {
-                    profileDispatch({ type: 'SET_PROFILE_POSTS', payload: posts })
+                    postsDispatch({ type: ACTION_INIT_PROFILE_POSTS, payload: posts })
                 }
             })()
         }
-    }, [bio.value])
+    }, [profileState.bio])
 
     return (
-        <div className='flx flx-column'>
+        <div className={`${styles.feedDiv} flx flx-column`}>
             {
-                bio.loading
+                profileState.loading
                     ? <div className='flx flx-center mg-top-xlg'><ClipLoader size={50} color='#ffffff' /></div>
                     : <ProfileBio />
             }
             {
-                posts.loading
+                postsState.loading
                     ? <div className='flx flx-center mg-top-xlg'><ClipLoader size={50} color='#ffffff' /></div>
                     : <ProfilePosts />
             }
@@ -52,6 +54,6 @@ const ProfileSection = () => {
     )
 }
 
-const Profile = FeedPageHOC(ProfileSection)
+const Profile = FeedPageWrapper(ProfileSection)
 
 export default Profile

@@ -1,25 +1,20 @@
 import axios from 'axios'
 import { createContext, useContext, useReducer } from 'react'
 import { profileReducer } from 'reducers'
+import { ACTION_REMOVE_LOADING, ACTION_SET_LOADING } from 'utils'
 import { useAuth } from './auth.context'
 
 const ProfileContext = createContext()
 
 export const ProfileProvider = ({ children }) => {
     const [profileState, profileDispatch] = useReducer(profileReducer, {
-        bio: {
-            loading: false,
-            value: {}
-        },
-        posts: {
-            loading: false,
-            value: []
-        }
+        bio: {},
+        loading: false,
     })
     const { getUserToken } = useAuth()
 
     const getProfileBio = async (username) => {
-        profileDispatch({ type: 'SET_PROFILE_BIO_LOADING' })
+        profileDispatch({ type: ACTION_SET_LOADING })
         try {
             const { data: { users } } = await axios.get('/api/users')
             const loggedInUser = users.find(user => user.username === username)
@@ -28,39 +23,14 @@ export const ProfileProvider = ({ children }) => {
         } catch (e) {
             return e.response
         } finally {
-            profileDispatch({ type: 'REMOVE_PROFILE_BIO_LOADING' })
+            profileDispatch({ type: ACTION_REMOVE_LOADING })
         }
     }
 
-    const getProfilePosts = async (username) => {
-        profileDispatch({ type: 'SET_PROFILE_POSTS_LOADING' })
+    const editBio = async (user) => {
         try {
-            const response = await axios.get(`/api/posts/user/${username}`)
-            return response
-        } catch (e) {
-            return e.response
-        } finally {
-            profileDispatch({ type: 'REMOVE_PROFILE_POSTS_LOADING' })
-        }
-    }
-
-    const deletePost = async postId => {
-        try {
-            const response = await axios.delete(`/api/posts/${postId}`, {
-                headers: {
-                    authorization: getUserToken()
-                }
-            })
-            return response
-        } catch (e) {
-            return e.response
-        }
-    }
-
-    const editPost = async (postId, post) => {
-        try {
-            const response = await axios.post(`/api/posts/edit/${postId}`, {
-                postData: post
+            const response = await axios.post('/api/users/edit', {
+                userData: user
             }, {
                 headers: {
                     authorization: getUserToken()
@@ -78,9 +48,7 @@ export const ProfileProvider = ({ children }) => {
                 profileState,
                 profileDispatch,
                 getProfileBio,
-                getProfilePosts,
-                deletePost,
-                editPost,
+                editBio,
             }}
         >
             {children}

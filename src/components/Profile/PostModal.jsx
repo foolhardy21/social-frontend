@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useModal, useProfile } from "contexts"
 import { useEffect, useState } from "react"
+import { ACTION_EDIT_POST } from "utils"
 import styles from './profile.module.css'
 
 const PostModal = () => {
@@ -11,7 +12,7 @@ const PostModal = () => {
     const handlePostEdit = async () => {
         const response = await editPost(id, post)
         if (response.status === 201) {
-            profileDispatch({ type: 'EDIT_PROFILE_POST', payload: { id, post } })
+            profileDispatch({ type: ACTION_EDIT_POST, payload: { id, post } })
         }
         setModal(m => ({ ...m, type: '', id: '' }))
         setPost({})

@@ -16,5 +16,7 @@ export const signupReducer = (state, { type, payload }) => {
 
         case ACTION_UPDATE_ALERT: return { ...state, alert: { type: payload.type, message: payload.message } }
 
+        default: return state
+
     }
 }
