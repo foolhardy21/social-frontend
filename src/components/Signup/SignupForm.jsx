@@ -2,7 +2,7 @@ import { useReducer } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../contexts/auth.context"
 import { signupReducer } from "../../reducers"
-import { ACTION_TOGGLE_PASSWORD_TYPE, ACTION_UPDATE_FIRST_NAME, ACTION_UPDATE_LAST_NAME, ACTION_UPDATE_PASSWORD, ACTION_UPDATE_USERNAME, ALERT_TYPE_ERROR, ALERT_TYPE_SUCCESS, isFormEmpty, showAlert } from "../../utils"
+import { ACTION_TOGGLE_PASSWORD_TYPE, ACTION_UPDATE_FIRST_NAME, ACTION_UPDATE_LAST_NAME, ACTION_UPDATE_PASSWORD, ACTION_UPDATE_USERNAME, ALERT_DISPLAY_TIME, ALERT_TYPE_ERROR, ALERT_TYPE_SUCCESS, isFormEmpty, showAlert } from "../../utils"
 
 const SignupForm = () => {
     const [signupState, signupDispatch] = useReducer(signupReducer, {
@@ -49,7 +49,7 @@ const SignupForm = () => {
             const response = await signUpUser(username, password, firstName, lastName)
             if (response.status === 201) {
                 showAlert(signupDispatch, 'signed up', ALERT_TYPE_SUCCESS)
-                navigate('/login')
+                setTimeout(() => navigate('/login'), ALERT_DISPLAY_TIME + 100)
             } else if (response.status === 422) {
                 showAlert(signupDispatch, 'user already exists', ALERT_TYPE_ERROR)
             }
