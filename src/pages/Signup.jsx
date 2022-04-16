@@ -7,7 +7,7 @@ const Signup = () => {
             style={{
                 minHeight: '100vh'
             }}
-            className='bg-off-secondary flx flx-center'
+            className='flx flx-center bg-off-secondary'
         >
 
             <SignupCard />
