@@ -1,11 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Login, Signup } from './pages';
+import { Home, Login, Signup } from './pages';
 
 const App = () => {
 
   return (
     <BrowserRouter>
       <Routes>
+
+        <Route path='/' element={<Home />} />
 
         <Route path='/login' element={<Login />} />
 

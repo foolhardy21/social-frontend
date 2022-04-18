@@ -1,0 +1,13 @@
+.heroImg {
+  width: 50vw;
+  max-height: 100%;
+}
+
+.btnSignup {
+  border-style: none;
+}
+
+.btnSignup:hover {
+  cursor: pointer;
+  background: var(--clr-primary);
+}
