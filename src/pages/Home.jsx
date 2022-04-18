@@ -7,7 +7,7 @@ const Home = () => {
     return (
         <div
             style={{
-                minHeight: '100vh',
+                height: '100vh',
             }}
             className='flx flx-center bg-off-secondary'
         >

@@ -1,5 +1,6 @@
 .heroImg {
   width: 50vw;
+  max-height: 100%;
 }
 
 .btnSignup {
