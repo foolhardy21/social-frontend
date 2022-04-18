@@ -20,7 +20,6 @@
 @media only screen and (max-width: 1024px) {
   .feedPageGrid {
     grid-template-columns: 20vw 1fr;
-    grid-template-areas: "nav feed";
   }
 }
 
