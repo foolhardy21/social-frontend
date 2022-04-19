@@ -2,8 +2,7 @@ import { useReducer, useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "contexts"
 import { loginReducer } from "reducers"
-import { isFormEmpty } from "utils"
-import { ACTION_TOGGLE_PASSWORD_TYPE, ACTION_UPDATE_PASSWORD, ACTION_UPDATE_USERNAME, ALERT_TYPE_ERROR, ALERT_TYPE_SUCCESS, isFormEmpty, showAlert } from "../../utils"
+import { isFormEmpty, ACTION_TOGGLE_PASSWORD_TYPE, ACTION_UPDATE_PASSWORD, ACTION_UPDATE_USERNAME, ALERT_TYPE_ERROR, ALERT_TYPE_SUCCESS, ALERT_DISPLAY_TIME, showAlert } from "utils"
 
 const LoginForm = () => {
     const navigate = useNavigate()

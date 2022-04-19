@@ -1,7 +1,7 @@
-import { NavBar } from './'
+import { NavBar } from '.'
 import styles from './reusable.module.css'
 
-const FeedPageHOC = PostsSection => {
+const FeedPageWrapper = PostsSection => {
 
     const FeedPage = () => {
 
@@ -25,4 +25,4 @@ const FeedPageHOC = PostsSection => {
     return FeedPage
 }
 
-export default FeedPageHOC 
+export default FeedPageWrapper 

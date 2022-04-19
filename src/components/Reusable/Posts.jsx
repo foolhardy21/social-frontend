@@ -1,6 +1,6 @@
 import { usePosts } from 'contexts'
 
-const PostsHOC = PostComponent => {
+const PostsWrapper = PostComponent => {
 
     const Posts = () => {
         const { postsState: { posts } } = usePosts()
@@ -17,4 +17,4 @@ const PostsHOC = PostComponent => {
     return Posts
 }
 
-export default PostsHOC
+export default PostsWrapper

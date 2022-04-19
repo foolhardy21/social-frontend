@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 import ClipLoader from 'react-spinners/ClipLoader'
-import { FeedPageHOC, PostsHOC } from 'components/Reusable'
-import { usePosts } from 'contexts'
+import { FeedPageWrapper, PostsWrapper } from 'components/Reusable'
 import { ExplorePost } from 'components/Explore'
-import styles from 'components/Explore/explore.module.css'
+import { usePosts } from 'contexts'
 import { ACTION_INIT_POSTS } from 'utils'
+import styles from 'components/Explore/explore.module.css'
 
-const ExplorePosts = PostsHOC(ExplorePost)
+const ExplorePosts = PostsWrapper(ExplorePost)
 
 const ExplorePostsSection = () => {
     const { postsState: { loading }, getPosts, postsDispatch } = usePosts()
@@ -33,6 +33,6 @@ const ExplorePostsSection = () => {
     )
 }
 
-const Explore = FeedPageHOC(ExplorePostsSection)
+const Explore = FeedPageWrapper(ExplorePostsSection)
 
 export default Explore

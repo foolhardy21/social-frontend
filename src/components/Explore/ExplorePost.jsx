@@ -1,10 +1,21 @@
+import { useState, useEffect } from 'react'
 import { useAuth, usePosts } from 'contexts'
-import { getDate, getTime } from 'utils'
+import { ACTION_INIT_POSTS, getDate, getTime } from 'utils'
 import styles from './explore.module.css'
 
-const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, createdAt } }) => {
-    const { isUserLoggedIn } = useAuth()
-    const { likePost, dislikePost, bookmarkPost, postsDispatch } = usePosts()
+const ExplorePost = ({ post: { _id, username, content, likes: { likeCount, likedBy }, createdAt } }) => {
+    const [isPostLiked, setIsPostLiked] = useState(false)
+    const { isUserLoggedIn, getUsername } = useAuth()
+    const { postsState: { posts }, likePost, dislikePost, bookmarkPost, postsDispatch } = usePosts()
+
+    useEffect(() => {
+        const loggedInUsername = getUsername()
+        if (likedBy.some(user => user.username === loggedInUsername)) {
+            setIsPostLiked(true)
+        } else {
+            setIsPostLiked(false)
+        }
+    }, [posts])
 
     const handlePostBookmark = async () => {
         if (isUserLoggedIn) {
@@ -23,7 +34,7 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, cre
         if (isUserLoggedIn) {
             const response = await likePost(_id)
             if (response.status === 201) {
-                postsDispatch({ type: 'INIT_POSTS', payload: response.data.posts })
+                postsDispatch({ type: ACTION_INIT_POSTS, payload: response.data.posts })
             } else if (response.status === 404) {
                 // not logged in
             } else if (response.status === 400) {
@@ -36,11 +47,11 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, cre
         if (isUserLoggedIn) {
             const response = await dislikePost(_id)
             if (response.status === 201) {
-                postsDispatch({ type: 'INIT_POSTS', payload: response.data.posts })
+                postsDispatch({ type: ACTION_INIT_POSTS, payload: response.data.posts })
             } else if (response.status === 404) {
                 // not logged in
             } else if (response.status === 400) {
-                // already liked
+                // already disliked
             }
         }
     }
@@ -64,18 +75,17 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, cre
                 <div className='flx'>
 
                     <button onClick={handlePostBookmark} className='btn-txt txt-md txt-secondary txt-300 mg-right-xs'>
-                        {/* {isPostBookmarked ? 'bookmarked' : 'bookmark'} */}
                         bookmark
                     </button>
 
-                    {/* {isPostLiked ? 'liked' : 'like'} */}
-                    <button onClick={handlePostLike} className='btn-txt txt-md txt-secondary txt-300 mg-right-xs'>
-                        like
-                    </button>
+                    {
+                        isPostLiked ? <button onClick={handlePostDislike} className='btn-txt txt-md txt-secondary txt-300'>
+                            dislike
+                        </button> : <button onClick={handlePostLike} className='btn-txt txt-md txt-secondary txt-300 mg-right-xs'>
+                            like
+                        </button>
 
-                    <button onClick={handlePostDislike} className='btn-txt txt-md txt-secondary txt-300'>
-                        dislike
-                    </button>
+                    }
 
                 </div>
 

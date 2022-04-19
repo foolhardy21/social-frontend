@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
                 password,
             })
             window.localStorage.setItem('userToken', response.data.encodedToken)
+            window.localStorage.setItem('username', response.data.foundUser.username)
             setIsUserLoggedIn(true)
             return response
         } catch (e) {
@@ -37,10 +38,13 @@ export const AuthProvider = ({ children }) => {
 
     const logoutUser = () => {
         window.localStorage.removeItem('userToken')
+        window.localStorage.removeItem('username')
         setIsUserLoggedIn(false)
     }
 
     const getUserToken = () => window.localStorage.getItem('userToken')
+
+    const getUsername = () => window.localStorage.getItem('username')
 
     return (
         <AuthContext.Provider
@@ -49,8 +53,9 @@ export const AuthProvider = ({ children }) => {
                 setIsUserLoggedIn,
                 logInUser,
                 signUpUser,
-                getUserToken,
                 logoutUser,
+                getUserToken,
+                getUsername,
             }}
         >
             {children}
