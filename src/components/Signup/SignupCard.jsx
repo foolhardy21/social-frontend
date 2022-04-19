@@ -10,7 +10,7 @@ const SignupCard = () => {
 
             <SignupForm />
 
-            <p className='txt-md txt-primary'>already have an account? <Link to='/login' className='txt-cap txt-primary txt-500'>log in</Link></p>
+            <p className="txt-md txt-primary txt-cap">already have an account? <Link to='/login' className="txt-md txt-primary txt-600">log in</Link></p>
 
         </section>
     )

@@ -1,17 +1,20 @@
 import axios from 'axios'
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import { API_LOGIN, API_SIGNUP } from '../utils'
 
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
+    const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
 
     const logInUser = async (username, password) => {
         try {
-            const response = await axios.post(API_LOGIN, {
+            const response = await axios.post('/api/auth/login', {
                 username,
                 password,
             })
+            window.localStorage.setItem('userToken', response.data.encodedToken)
+            setIsUserLoggedIn(true)
             return response
         } catch (e) {
             return e.response
@@ -20,7 +23,7 @@ export const AuthProvider = ({ children }) => {
 
     const signUpUser = async (username, password, firstName, lastName) => {
         try {
-            const response = await axios.post(API_SIGNUP, {
+            const response = await axios.post('/api/auth/signup', {
                 username,
                 password,
                 firstName,
@@ -32,11 +35,22 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    const logoutUser = () => {
+        window.localStorage.removeItem('userToken')
+        setIsUserLoggedIn(false)
+    }
+
+    const getUserToken = () => window.localStorage.getItem('userToken')
+
     return (
         <AuthContext.Provider
             value={{
+                isUserLoggedIn,
+                setIsUserLoggedIn,
                 logInUser,
-                signUpUser
+                signUpUser,
+                getUserToken,
+                logoutUser,
             }}
         >
             {children}

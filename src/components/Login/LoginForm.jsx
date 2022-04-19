@@ -1,9 +1,12 @@
-import { useReducer } from "react"
-import { useAuth } from "../../contexts"
-import { loginReducer } from "../../reducers"
+import { useReducer, useRef, useEffect  } from "react"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "contexts"
+import { loginReducer } from "reducers"
+import { isFormEmpty } from "utils"
 import { ACTION_TOGGLE_PASSWORD_TYPE, ACTION_UPDATE_PASSWORD, ACTION_UPDATE_USERNAME, ALERT_TYPE_ERROR, ALERT_TYPE_SUCCESS, isFormEmpty, showAlert } from "../../utils"
 
 const LoginForm = () => {
+    const submitBtnRef = useRef(null)
     const [loginState, loginDispatch] = useReducer(loginReducer, {
         username: '',
         password: '',
@@ -14,6 +17,7 @@ const LoginForm = () => {
         passwordInputType: 'password'
     })
     const { logInUser } = useAuth()
+    const navigate = useNavigate()
     const { username, password, alert: { message, type }, passwordInputType } = loginState
 
     const togglePasswordInputType = () => {
@@ -45,6 +49,17 @@ const LoginForm = () => {
         }
     }
 
+    const handleGuestLogin = () => {
+        loginDispatch({ type: 'UPDATE_USERNAME', payload: 'coolmohit' })
+        loginDispatch({ type: 'UPDATE_PASSWORD', payload: 'a1!' })
+    }
+
+    useEffect(() => {
+        if (username === 'coolmohit' && password === 'a1!') {
+            submitBtnRef.current.click()
+        }
+    }, [username, password])
+
     return (
         <form onSubmit={handleLoginSubmit} className='flx flx-column mg-top-md mg-btm-md'>
 
@@ -67,7 +82,11 @@ const LoginForm = () => {
             </div>
 
             <div className='flx flx-maj-end'>
-                <button type="submit" className='btn-solid bg-secondary txt-secondary txt-md txt-ucase pd-left-s pd-right-s pd-top-xs pd-btm-xs brd-s'>login</button>
+                <button ref={submitBtnRef} type="submit" className='btn-solid bg-secondary txt-secondary txt-md txt-ucase pd-left-s pd-right-s pd-top-xs pd-btm-xs brd-s'>login</button>
+            </div>
+
+            <div className='flx flx-maj-end mg-top-xs'>
+                <button onClick={handleGuestLogin} type="button" className='btn-outlined b-solid b-primary bg-primary txt-primary txt-md txt-cap pd-left-s pd-right-s pd-top-xs pd-btm-xs brd-s'>guest login</button>
             </div>
 
         </form>
