@@ -1,11 +1,6 @@
 import axios from 'axios'
-<<<<<<< HEAD
 import { createContext, useContext, useState } from "react";
 import { API_LOGIN, API_SIGNUP } from 'utils'
-||||||| parent of b8112bc (feat - explore page added)
-=======
-import { createContext, useContext, useState } from "react";
->>>>>>> b8112bc (feat - explore page added)
 
 const AuthContext = createContext()
 
@@ -18,15 +13,9 @@ export const AuthProvider = ({ children }) => {
                 username,
                 password,
             })
-<<<<<<< HEAD
             window.localStorage.setItem('userToken', response.data.encodedToken)
             window.localStorage.setItem('username', response.data.foundUser.username)
             setIsUserLoggedIn(true)
-||||||| parent of b8112bc (feat - explore page added)
-=======
-            window.localStorage.setItem('userToken', response.data.encodedToken)
-            setIsUserLoggedIn(true)
->>>>>>> b8112bc (feat - explore page added)
             return response
         } catch (e) {
             return e.response
@@ -47,7 +36,6 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-<<<<<<< HEAD
     const logoutUser = () => {
         window.localStorage.removeItem('userToken')
         window.localStorage.removeItem('username')
@@ -58,34 +46,16 @@ export const AuthProvider = ({ children }) => {
 
     const getUsername = () => window.localStorage.getItem('username')
 
-||||||| parent of b8112bc (feat - explore page added)
-=======
-    const logoutUser = () => {
-        window.localStorage.removeItem('userToken')
-        setIsUserLoggedIn(false)
-    }
-
-    const getUserToken = () => window.localStorage.getItem('userToken')
-
->>>>>>> b8112bc (feat - explore page added)
     return (
         <AuthContext.Provider
             value={{
                 isUserLoggedIn,
                 setIsUserLoggedIn,
                 logInUser,
-<<<<<<< HEAD
                 signUpUser,
                 logoutUser,
                 getUserToken,
                 getUsername,
-||||||| parent of b8112bc (feat - explore page added)
-                signUpUser
-=======
-                signUpUser,
-                getUserToken,
-                logoutUser,
->>>>>>> b8112bc (feat - explore page added)
             }}
         >
             {children}
