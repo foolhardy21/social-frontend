@@ -25,7 +25,7 @@ const NavBar = () => {
                         home
                     </span>
                     <p className={`txt-secondary txt-lg ${styles.navBarItemText} ${pathname === '/home' && 'txt-600'}`}>
-                        home
+                        my feed
                     </p>
                 </Link>
             </li>

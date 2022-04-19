@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useAuth, usePosts } from 'contexts'
-import { ACTION_INIT_POSTS, getDate, getTime } from 'utils'
-import styles from './explore.module.css'
+import { ACTION_LIKE_POST, getDate, getTime } from 'utils'
+import styles from './reusable.module.css'
 
-const ExplorePost = ({ post: { _id, username, content, likes: { likeCount, likedBy }, createdAt } }) => {
+const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, createdAt } }) => {
     const [isPostLiked, setIsPostLiked] = useState(false)
     const { isUserLoggedIn, getUsername } = useAuth()
     const { postsState: { posts }, likePost, dislikePost, bookmarkPost, postsDispatch } = usePosts()
@@ -34,7 +34,8 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount, liked
         if (isUserLoggedIn) {
             const response = await likePost(_id)
             if (response.status === 201) {
-                postsDispatch({ type: ACTION_INIT_POSTS, payload: response.data.posts })
+                const likedPost = response.data.posts.find(post => post._id === _id)
+                postsDispatch({ type: ACTION_LIKE_POST, payload: likedPost })
             } else if (response.status === 404) {
                 // not logged in
             } else if (response.status === 400) {
@@ -47,7 +48,8 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount, liked
         if (isUserLoggedIn) {
             const response = await dislikePost(_id)
             if (response.status === 201) {
-                postsDispatch({ type: ACTION_INIT_POSTS, payload: response.data.posts })
+                const dislikedPost = response.data.posts.find(post => post._id === _id)
+                postsDispatch({ type: ACTION_LIKE_POST, payload: dislikedPost })
             } else if (response.status === 404) {
                 // not logged in
             } else if (response.status === 400) {
@@ -96,4 +98,4 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount, liked
 
 }
 
-export default ExplorePost
+export default Post

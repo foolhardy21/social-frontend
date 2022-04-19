@@ -1,12 +1,11 @@
 import axios from 'axios'
 import { useEffect } from 'react'
-import { ExplorePost } from 'components/Explore'
-import { FeedPageWrapper, PostsWrapper } from "components/Reusable"
+import { FeedPageWrapper, Post, PostsWrapper } from "components/Reusable"
 import { useAuth, usePosts } from 'contexts'
-import styles from 'components/Explore/explore.module.css'
+import styles from 'components/Reusable/reusable.module.css'
 import { ACTION_INIT_USER_FEED } from 'utils'
 
-const HomePosts = PostsWrapper(ExplorePost)
+const FeedPosts = PostsWrapper(Post)
 
 const UserFeedSection = () => {
     const { postsDispatch } = usePosts()
@@ -40,7 +39,7 @@ const UserFeedSection = () => {
 
     return (
         <div className={`${styles.feedDiv} flx flx-column pd-md`}>
-            <HomePosts />
+            <FeedPosts />
         </div>
     )
 }

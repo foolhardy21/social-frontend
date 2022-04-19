@@ -1,12 +1,11 @@
 import { useEffect } from 'react'
 import ClipLoader from 'react-spinners/ClipLoader'
-import { FeedPageWrapper, PostsWrapper } from 'components/Reusable'
-import { ExplorePost } from 'components/Explore'
+import { FeedPageWrapper, Post, PostsWrapper } from 'components/Reusable'
 import { usePosts } from 'contexts'
 import { ACTION_INIT_POSTS } from 'utils'
-import styles from 'components/Explore/explore.module.css'
+import styles from 'components/Reusable/reusable.module.css'
 
-const ExplorePosts = PostsWrapper(ExplorePost)
+const ExplorePosts = PostsWrapper(Post)
 
 const ExplorePostsSection = () => {
     const { postsState: { loading }, getPosts, postsDispatch } = usePosts()
