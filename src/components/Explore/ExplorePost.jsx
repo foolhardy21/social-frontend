@@ -9,7 +9,6 @@ const ExplorePost = ({ post: { _id, username, content, likes: { likeCount }, cre
     const handlePostBookmark = async () => {
         if (isUserLoggedIn) {
             const response = await bookmarkPost(_id)
-            console.log(response)
             if (response.status === 200) {
                 // bookmarked
             } else if (response.status === 404) {
