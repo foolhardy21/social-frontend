@@ -4,6 +4,7 @@ import { FeedPageHOC, PostsHOC } from 'components/Reusable'
 import { usePosts } from 'contexts'
 import { ExplorePost } from 'components/Explore'
 import styles from 'components/Explore/explore.module.css'
+import { ACTION_INIT_POSTS } from 'utils'
 
 const ExplorePosts = PostsHOC(ExplorePost)
 
@@ -14,7 +15,7 @@ const ExplorePostsSection = () => {
         (async () => {
             const response = await getPosts()
             if (response.status === 200) {
-                postsDispatch({ type: 'INIT_POSTS', payload: response.data.posts })
+                postsDispatch({ type: ACTION_INIT_POSTS, payload: response.data.posts })
             }
         })()
     }, [])

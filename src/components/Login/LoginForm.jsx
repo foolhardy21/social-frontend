@@ -1,4 +1,4 @@
-import { useReducer, useRef, useEffect  } from "react"
+import { useReducer, useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "contexts"
 import { loginReducer } from "reducers"
@@ -6,6 +6,7 @@ import { isFormEmpty } from "utils"
 import { ACTION_TOGGLE_PASSWORD_TYPE, ACTION_UPDATE_PASSWORD, ACTION_UPDATE_USERNAME, ALERT_TYPE_ERROR, ALERT_TYPE_SUCCESS, isFormEmpty, showAlert } from "../../utils"
 
 const LoginForm = () => {
+    const navigate = useNavigate()
     const submitBtnRef = useRef(null)
     const [loginState, loginDispatch] = useReducer(loginReducer, {
         username: '',
@@ -17,7 +18,7 @@ const LoginForm = () => {
         passwordInputType: 'password'
     })
     const { logInUser } = useAuth()
-    const navigate = useNavigate()
+
     const { username, password, alert: { message, type }, passwordInputType } = loginState
 
     const togglePasswordInputType = () => {
@@ -41,6 +42,7 @@ const LoginForm = () => {
             const response = await logInUser(username, password)
             if (response.status === 200) {
                 showAlert(loginDispatch, 'logged in', ALERT_TYPE_SUCCESS)
+                setTimeout(() => navigate('/explore'), ALERT_DISPLAY_TIME + 100)
             } else if (response.status === 404) {
                 showAlert(loginDispatch, 'user not found', ALERT_TYPE_ERROR)
             } else if (response.status === 401) {

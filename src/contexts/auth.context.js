@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { createContext, useContext, useState } from "react";
-import { API_LOGIN, API_SIGNUP } from '../utils'
+import { API_LOGIN, API_SIGNUP } from 'utils'
 
 const AuthContext = createContext()
 
@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 
     const logInUser = async (username, password) => {
         try {
-            const response = await axios.post('/api/auth/login', {
+            const response = await axios.post(API_LOGIN, {
                 username,
                 password,
             })
@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
 
     const signUpUser = async (username, password, firstName, lastName) => {
         try {
-            const response = await axios.post('/api/auth/signup', {
+            const response = await axios.post(API_SIGNUP, {
                 username,
                 password,
                 firstName,

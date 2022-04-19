@@ -1,11 +1,11 @@
 import { useReducer } from "react"
-import { isFormEmpty } from "utils"
 import { useNavigate } from "react-router-dom"
-import { useAuth } from "../../contexts/auth.context"
-import { signupReducer } from "../../reducers"
-import { ACTION_TOGGLE_PASSWORD_TYPE, ACTION_UPDATE_FIRST_NAME, ACTION_UPDATE_LAST_NAME, ACTION_UPDATE_PASSWORD, ACTION_UPDATE_USERNAME, ALERT_DISPLAY_TIME, ALERT_TYPE_ERROR, ALERT_TYPE_SUCCESS, isFormEmpty, showAlert } from "../../utils"
+import { useAuth } from "contexts"
+import { signupReducer } from "reducers"
+import { isFormEmpty, ACTION_TOGGLE_PASSWORD_TYPE, ACTION_UPDATE_FIRST_NAME, ACTION_UPDATE_LAST_NAME, ACTION_UPDATE_PASSWORD, ACTION_UPDATE_USERNAME, ALERT_DISPLAY_TIME, ALERT_TYPE_ERROR, ALERT_TYPE_SUCCESS, isFormEmpty, showAlert } from "utils"
 
 const SignupForm = () => {
+    const navigate = useNavigate()
     const [signupState, signupDispatch] = useReducer(signupReducer, {
         username: '',
         password: '',
@@ -18,7 +18,7 @@ const SignupForm = () => {
         passwordInputType: 'password'
     })
     const { signUpUser } = useAuth()
-    const navigate = useNavigate()
+
     const { username, password, firstName, lastName, alert: { message, type }, passwordInputType } = signupState
 
     const togglePasswordInputType = () => {
