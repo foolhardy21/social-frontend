@@ -1,7 +1,9 @@
 import { useReducer } from "react"
-import { useAuth } from "contexts/auth.context"
-import { signupReducer } from "reducers"
 import { isFormEmpty } from "utils"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../contexts/auth.context"
+import { signupReducer } from "../../reducers"
+import { ACTION_TOGGLE_PASSWORD_TYPE, ACTION_UPDATE_FIRST_NAME, ACTION_UPDATE_LAST_NAME, ACTION_UPDATE_PASSWORD, ACTION_UPDATE_USERNAME, ALERT_DISPLAY_TIME, ALERT_TYPE_ERROR, ALERT_TYPE_SUCCESS, isFormEmpty, showAlert } from "../../utils"
 
 const SignupForm = () => {
     const [signupState, signupDispatch] = useReducer(signupReducer, {
@@ -16,44 +18,41 @@ const SignupForm = () => {
         passwordInputType: 'password'
     })
     const { signUpUser } = useAuth()
+    const navigate = useNavigate()
     const { username, password, firstName, lastName, alert: { message, type }, passwordInputType } = signupState
 
-    const showAlert = (message, type) => {
-        signupDispatch({ type: 'UPDATE_ALERT', payload: { message, type } })
-        setTimeout(() => signupDispatch({ type: 'UPDATE_ALERT', payload: { message: '', type: '' } }), 1500)
-    }
-
     const togglePasswordInputType = () => {
-        signupDispatch({ type: 'TOGGLE_PASSWORD_TYPE' })
+        signupDispatch({ type: ACTION_TOGGLE_PASSWORD_TYPE })
     }
 
     const updateUsername = e => {
-        signupDispatch({ type: 'UPDATE_USERNAME', payload: e.target.value })
+        signupDispatch({ type: ACTION_UPDATE_USERNAME, payload: e.target.value })
     }
 
     const updatePassword = e => {
-        signupDispatch({ type: 'UPDATE_PASSWORD', payload: e.target.value })
+        signupDispatch({ type: ACTION_UPDATE_PASSWORD, payload: e.target.value })
     }
 
     const updateFirstName = e => {
-        signupDispatch({ type: 'UPDATE_FIRSTNAME', payload: e.target.value })
+        signupDispatch({ type: ACTION_UPDATE_FIRST_NAME, payload: e.target.value })
     }
 
     const updateLastName = e => {
-        signupDispatch({ type: 'UPDATE_LASTNAME', payload: e.target.value })
+        signupDispatch({ type: ACTION_UPDATE_LAST_NAME, payload: e.target.value })
     }
 
     const handleSignupSubmit = async e => {
         e.preventDefault()
 
         if (isFormEmpty({ username, password, firstName, lastName })) {
-            showAlert('form is empty', 'error')
+            showAlert(signupDispatch, 'form is empty', ALERT_TYPE_ERROR)
         } else {
             const response = await signUpUser(username, password, firstName, lastName)
             if (response.status === 201) {
-                showAlert('signed up', 'success')
+                showAlert(signupDispatch, 'signed up', ALERT_TYPE_SUCCESS)
+                setTimeout(() => navigate('/login'), ALERT_DISPLAY_TIME + 100)
             } else if (response.status === 422) {
-                showAlert('user already exists', 'error')
+                showAlert(signupDispatch, 'user already exists', ALERT_TYPE_ERROR)
             }
         }
     }
@@ -62,8 +61,8 @@ const SignupForm = () => {
         <form onSubmit={handleSignupSubmit} className='flx flx-column mg-top-md mg-btm-md'>
 
             {
-                message.length > 0 && <div className={` ${type === 'error' ? 'bg-err' : 'bg-success'} flx flx-min-center flx-maj-start pd-xs brd-s mg-btm-xs`}>
-                    <span className='material-icons icon-secondary  mg-right-xs'>{type === 'error' ? 'error' : 'check_circle'}</span>
+                message.length > 0 && <div className={` ${type === ALERT_TYPE_ERROR ? 'bg-err' : 'bg-success'} flx flx-min-center flx-maj-start pd-xs brd-s mg-btm-xs`}>
+                    <span className='material-icons icon-secondary  mg-right-xs'>{type === ALERT_TYPE_ERROR ? 'error' : 'check_circle'}</span>
                     <p className='txt-md txt-secondary txt-cap txt-500'>{message}</p>
                 </div>
             }
