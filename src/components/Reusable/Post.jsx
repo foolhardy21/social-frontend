@@ -27,8 +27,6 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
         }
     }, [bookmarks])
 
-    console.log(bookmarks)
-
     const handleRemoveBookmark = async () => {
         const response = await removeBookmarkFromPost(_id)
         if (response.status === 200) {

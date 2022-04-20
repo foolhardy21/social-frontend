@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createContext, useReducer, useContext } from "react";
 import { bookmarksReducer } from 'reducers'
-import { ACTION_REMOVE_LOADING, ACTION_SET_LOADING, API_POST_BOOKMARK } from "utils";
+import { ACTION_REMOVE_LOADING, ACTION_SET_LOADING, API_POST_BOOKMARK, API_REMOVE_BOOKMARK } from "utils";
 import { useAuth } from "./";
 
 const BookmarkContext = createContext()
@@ -44,7 +44,7 @@ export const BookmarksProvider = ({ children }) => {
 
     const removeBookmarkFromPost = async postId => {
         try {
-            const response = await axios.post(`/api/users/remove-bookmark/${postId}`, {}, {
+            const response = await axios.post(`${API_REMOVE_BOOKMARK}/${postId}`, {}, {
                 headers: {
                     authorization: getUserToken()
                 }
