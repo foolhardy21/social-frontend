@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import ClipLoader from 'react-spinners/ClipLoader'
 import { FeedPageWrapper, Post, PostsWrapper } from "components/Reusable"
 import { useBookmarks } from "contexts"
+import { ACTION_INIT_BOOKMARKS } from "utils"
 import styles from 'components/Explore/explore.module.css'
 
 const BookmarksSection = () => {
@@ -13,7 +14,7 @@ const BookmarksSection = () => {
         (async () => {
             const response = await getBookmarks()
             if (response.status === 200) {
-                bookmarksDispatch({ type: 'INIT_BOOKMARKS', payload: response.data.bookmarks })
+                bookmarksDispatch({ type: ACTION_INIT_BOOKMARKS, payload: response.data.bookmarks })
             } else if (response.status === 404) {
                 // not logged in
             }
