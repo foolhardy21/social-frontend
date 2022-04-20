@@ -1,14 +1,13 @@
 import { useEffect } from "react"
 import ClipLoader from 'react-spinners/ClipLoader'
-import { ExplorePost } from "components/Explore"
-import { FeedPageHOC, PostsHOC } from "components/Reusable"
+import { FeedPageWrapper, Post, PostsWrapper } from "components/Reusable"
 import { useBookmarks } from "contexts"
 import styles from 'components/Explore/explore.module.css'
 
 const BookmarksSection = () => {
     const { getBookmarks, bookmarksDispatch, bookmarksState: { bookmarks, loading } } = useBookmarks()
 
-    const BookmarkPosts = PostsHOC(ExplorePost, bookmarks)
+    const BookmarkPosts = PostsWrapper(Post, bookmarks)
 
     useEffect(() => {
         (async () => {
@@ -35,6 +34,6 @@ const BookmarksSection = () => {
 
 }
 
-const Bookmarks = FeedPageHOC(BookmarksSection)
+const Bookmarks = FeedPageWrapper(BookmarksSection)
 
 export default Bookmarks

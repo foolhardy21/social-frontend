@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { FeedPageWrapper, Post, PostsWrapper } from 'components/Reusable'
-import { usePosts } from 'contexts'
+import { usePosts, useAuth } from 'contexts'
 import { ACTION_INIT_POSTS } from 'utils'
 import styles from 'components/Reusable/reusable.module.css'
 
@@ -9,7 +9,7 @@ const ExplorePostsSection = () => {
     const { postsState: { loading, posts }, getPosts, postsDispatch } = usePosts()
     const { getUserToken, setIsUserLoggedIn } = useAuth()
 
-    const ExplorePosts = PostsHOC(ExplorePost, posts)
+    const ExplorePosts = PostsWrapper(Post, posts)
 
     useEffect(() => {
         (async () => {
