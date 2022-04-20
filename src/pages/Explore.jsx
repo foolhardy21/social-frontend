@@ -5,10 +5,11 @@ import { usePosts } from 'contexts'
 import { ACTION_INIT_POSTS } from 'utils'
 import styles from 'components/Reusable/reusable.module.css'
 
-const ExplorePosts = PostsWrapper(Post)
-
 const ExplorePostsSection = () => {
-    const { postsState: { loading }, getPosts, postsDispatch } = usePosts()
+    const { postsState: { loading, posts }, getPosts, postsDispatch } = usePosts()
+    const { getUserToken, setIsUserLoggedIn } = useAuth()
+
+    const ExplorePosts = PostsHOC(ExplorePost, posts)
 
     useEffect(() => {
         (async () => {
@@ -17,6 +18,9 @@ const ExplorePostsSection = () => {
                 postsDispatch({ type: ACTION_INIT_POSTS, payload: response.data.posts })
             }
         })()
+        if (getUserToken()) {
+            setIsUserLoggedIn(true)
+        }
     }, [])
 
     return (

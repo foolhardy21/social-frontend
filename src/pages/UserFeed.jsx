@@ -8,7 +8,7 @@ import { ACTION_INIT_USER_FEED } from 'utils'
 const FeedPosts = PostsWrapper(Post)
 
 const UserFeedSection = () => {
-    const { postsDispatch } = usePosts()
+    const { postsDispatch, postsState: { posts } } = usePosts()
     const { getUserToken } = useAuth()
 
     // you may ignore this for now, this is a setup for the user feed
