@@ -46,7 +46,7 @@ const NavBar = () => {
                     <span className='material-icons icon-secondary mg-right-xs'>
                         bookmark
                     </span>
-                    <p className={`txt-secondary txt-lg ${styles.navBarItemText} ${pathname === '/bookmark' && 'txt-600'}`}>
+                    <p className={`txt-secondary txt-lg ${styles.navBarItemText} ${pathname === '/bookmarks' && 'txt-600'}`}>
                         bookmarks
                     </p>
                 </Link>
