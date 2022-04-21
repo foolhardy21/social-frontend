@@ -3,7 +3,7 @@ import ClipLoader from 'react-spinners/ClipLoader'
 import { FeedPageWrapper, Post, PostsWrapper } from "components/Reusable"
 import { useBookmarks } from "contexts"
 import { ACTION_INIT_BOOKMARKS } from "utils"
-import styles from 'components/Explore/explore.module.css'
+import styles from 'components/Reusable/reusable.module.css'
 
 const BookmarksSection = () => {
     const { getBookmarks, bookmarksDispatch, bookmarksState: { bookmarks, loading } } = useBookmarks()
