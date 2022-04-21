@@ -16,5 +16,11 @@ export const postsReducer = (state, { type, payload }) => {
 
         case ACTION_INIT_USER_FEED: return { ...state, posts: state.posts.filter(post => payload.some(username => username === post.username)) }
 
+        case ACTION_LIKE_POST: return {
+            ...state, posts: state.posts.map(post => post._id === payload._id ? ({ ...payload }) : post)
+        }
+
+        case ACTION_INIT_USER_FEED: return { ...state, posts: state.posts.filter(post => payload.some(username => username === post.username)) }
+
     }
 }

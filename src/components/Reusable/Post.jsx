@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react'
-import { useAuth, usePosts } from 'contexts'
-import { ACTION_LIKE_POST, getDate, getTime } from 'utils'
+import { useAuth, useBookmarks, usePosts } from 'contexts'
+import { ACTION_INIT_BOOKMARKS, ACTION_LIKE_POST, getDate, getTime } from 'utils'
 import styles from './reusable.module.css'
 
 const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, createdAt } }) => {
     const [isPostLiked, setIsPostLiked] = useState(false)
+    const [isPostBookmarked, setIsPostBookmarked] = useState(false)
     const { isUserLoggedIn, getUsername } = useAuth()
-    const { postsState: { posts }, likePost, dislikePost, bookmarkPost, postsDispatch } = usePosts()
+    const { postsState: { posts }, likePost, dislikePost, postsDispatch } = usePosts()
+    const { bookmarksState: { bookmarks }, bookmarkPost, removeBookmarkFromPost, bookmarksDispatch } = useBookmarks()
 
     useEffect(() => {
         const loggedInUsername = getUsername()
@@ -17,11 +19,30 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
         }
     }, [posts])
 
+    useEffect(() => {
+        if (bookmarks.some(bookmark => bookmark._id === _id)) {
+            setIsPostBookmarked(true)
+        } else {
+            setIsPostBookmarked(false)
+        }
+    }, [bookmarks])
+
+    const handleRemoveBookmark = async () => {
+        const response = await removeBookmarkFromPost(_id)
+        if (response.status === 200) {
+            bookmarksDispatch({ type: ACTION_INIT_BOOKMARKS, payload: response.data.bookmarks })
+        } else if (response.status === 400) {
+            // already removed from bookmarks
+        } else if (response.status === 404) {
+            // not logged in
+        }
+    }
+
     const handlePostBookmark = async () => {
         if (isUserLoggedIn) {
             const response = await bookmarkPost(_id)
             if (response.status === 200) {
-                // bookmarked
+                bookmarksDispatch({ type: ACTION_INIT_BOOKMARKS, payload: response.data.bookmarks })
             } else if (response.status === 404) {
                 // not logged in
             } else if (response.status === 400) {
@@ -76,18 +97,13 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
 
                 <div className='flx'>
 
-                    <button onClick={handlePostBookmark} className='btn-txt txt-md txt-secondary txt-300 mg-right-xs'>
-                        bookmark
+                    <button onClick={isPostBookmarked ? handleRemoveBookmark : handlePostBookmark} className='btn-txt txt-md txt-secondary txt-300 mg-right-xs'>
+                        <span className='material-icons icon-secondary'>{isPostBookmarked ? 'bookmark' : 'bookmark_border'}</span>
                     </button>
 
-                    {
-                        isPostLiked ? <button onClick={handlePostDislike} className='btn-txt txt-md txt-secondary txt-300'>
-                            dislike
-                        </button> : <button onClick={handlePostLike} className='btn-txt txt-md txt-secondary txt-300 mg-right-xs'>
-                            like
-                        </button>
-
-                    }
+                    <button onClick={isPostLiked ? handlePostDislike : handlePostLike} className='btn-txt txt-md txt-secondary txt-300'>
+                        <span className='material-icons icon-secondary'>{isPostLiked ? 'favorite' : 'favorite_border'}</span>
+                    </button>
 
                 </div>
 

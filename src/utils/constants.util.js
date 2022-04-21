@@ -7,6 +7,8 @@ export const ACTION_UPDATE_LAST_NAME = 'UPDATE_LASTNAME'
 export const ACTION_INIT_POSTS = 'INIT_POSTS'
 export const ACTION_LIKE_POST = 'LIKE_POST'
 export const ACTION_INIT_USER_FEED = 'INIT_USER_FEED'
+export const ACTION_INIT_BOOKMARKS = 'INIT_BOOKMARKS'
+export const ACTION_REMOVE_BOOKMARK = 'REMOVE_BOOKMARK'
 export const ACTION_SET_LOADING = 'SET_LOADING'
 export const ACTION_REMOVE_LOADING = 'REMOVE_LOADING'
 
@@ -16,6 +18,7 @@ export const API_POSTS = '/api/posts'
 export const API_POST_LIKE = '/api/posts/like'
 export const API_POST_DISLIKE = '/api/posts/dislike'
 export const API_POST_BOOKMARK = '/api/users/bookmark'
+export const API_REMOVE_BOOKMARK = '/api/users/remove-bookmark'
 
 export const ALERT_DISPLAY_TIME = 1500
 

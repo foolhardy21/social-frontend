@@ -51,19 +51,6 @@ export const PostsProvider = ({ children }) => {
         }
     }
 
-    const bookmarkPost = async postId => {
-        try {
-            const response = await axios.post(`${API_POST_BOOKMARK}/${postId}`, {}, {
-                headers: {
-                    authorization: getUserToken()
-                }
-            })
-            return response
-        } catch (e) {
-            return e.response
-        }
-    }
-
     return (
         <PostsContext.Provider
             value={{
@@ -71,7 +58,6 @@ export const PostsProvider = ({ children }) => {
                 postsDispatch,
                 getPosts,
                 likePost,
-                bookmarkPost,
                 dislikePost,
             }}
         >

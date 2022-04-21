@@ -1,9 +1,6 @@
-import { usePosts } from 'contexts'
-
-const PostsWrapper = PostComponent => {
+const PostsWrapper = (PostComponent, posts) => {
 
     const Posts = () => {
-        const { postsState: { posts } } = usePosts()
 
         return (
             <>

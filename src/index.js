@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { AuthProvider, PostsProvider } from "contexts";
 import { makeServer } from "./server";
+import { BookmarksProvider } from "contexts";
 
 // Call make Server
 makeServer();
@@ -10,7 +11,9 @@ makeServer();
 ReactDOM.render(
   <AuthProvider>
     <PostsProvider>
-      <App />
+      <BookmarksProvider>
+        <App />
+      </BookmarksProvider>
     </PostsProvider>
   </AuthProvider>,
   document.getElementById("root")

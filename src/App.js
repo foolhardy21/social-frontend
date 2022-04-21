@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Explore, Home, Login, Signup, UserFeed } from 'pages';
+import Bookmarks from 'pages/Bookmarks';
 
 const App = () => {
 
@@ -16,6 +17,8 @@ const App = () => {
         <Route path='/explore' element={<Explore />} />
 
         <Route path='/home' element={<UserFeed />} />
+
+        <Route path='/bookmarks' element={<Bookmarks />} />
 
       </Routes>
     </BrowserRouter>
