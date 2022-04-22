@@ -1,6 +1,6 @@
 import { useLocation, Link, useNavigate } from "react-router-dom"
 import { useAuth } from "contexts"
-import styles from './reusable.module.css'
+import styles from './navbar.module.css'
 
 const NavBar = () => {
     const { isUserLoggedIn, logoutUser } = useAuth()
@@ -20,7 +20,7 @@ const NavBar = () => {
             </li>
 
             <li>
-                <Link to='/home' className={`flx flx-min-center ${styles.navBarItem} pd-s`}>
+                <Link to='/myfeed' className={`flx flx-min-center ${styles.navBarItem} pd-s`}>
                     <span className='material-icons icon-secondary mg-right-xs'>
                         home
                     </span>
@@ -65,11 +65,12 @@ const NavBar = () => {
 
             {/* add conditional icon for logout and login */}
 
-            <li>
-                {
-                    isUserLoggedIn
-                        ?
-                        <button onClick={handleLogoutUser} className={`btn-txt flx flx-min-center ${styles.navBarItem} pd-s`}>
+            {
+                isUserLoggedIn
+                    ?
+                    <li className={`flx flx-min-center ${styles.navBarItem}`}>
+
+                        <button onClick={handleLogoutUser} className={`btn-txt flx  flx-min-center pd-s`}>
                             <span className='material-icons icon-secondary mg-right-xs'>
                                 logout
                             </span>
@@ -77,7 +78,10 @@ const NavBar = () => {
                                 logout
                             </p>
                         </button>
-                        :
+
+                    </li>
+                    :
+                    <li>
                         <Link to='/login' className={`flx flx-min-center ${styles.navBarItem} pd-s`}>
                             <span className='material-icons icon-secondary mg-right-xs'>
                                 login
@@ -86,8 +90,8 @@ const NavBar = () => {
                                 login
                             </p>
                         </Link>
-                }
-            </li>
+                    </li>
+            }
 
         </ul>
 

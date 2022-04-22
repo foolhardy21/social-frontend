@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Explore, Home, Login, Signup, UserFeed } from 'pages';
-import Bookmarks from 'pages/Bookmarks';
+import { ExploreFeedPage, Home, Login, Signup, UserFeedPage, BookmarksFeedPage } from 'pages';
 
 const App = () => {
 
@@ -14,11 +13,11 @@ const App = () => {
 
         <Route path='/signup' element={<Signup />} />
 
-        <Route path='/explore' element={<Explore />} />
+        <Route path='/explore' element={<ExploreFeedPage />} />
 
-        <Route path='/home' element={<UserFeed />} />
+        <Route path='/myfeed' element={<UserFeedPage />} />
 
-        <Route path='/bookmarks' element={<Bookmarks />} />
+        <Route path='/bookmarks' element={<BookmarksFeedPage />} />
 
       </Routes>
     </BrowserRouter>

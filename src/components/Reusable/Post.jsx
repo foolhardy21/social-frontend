@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth, useBookmarks, usePosts } from 'contexts'
 import { ACTION_INIT_BOOKMARKS, ACTION_LIKE_POST, getDate, getTime } from 'utils'
-import styles from './reusable.module.css'
+import styles from './post.module.css'
 
 const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, createdAt } }) => {
     const [isPostLiked, setIsPostLiked] = useState(false)

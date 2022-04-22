@@ -1,5 +1,5 @@
 import { NavBar } from '.'
-import styles from './reusable.module.css'
+import styles from './feedpage.module.css'
 
 const FeedPageWrapper = PostsSection => {
 

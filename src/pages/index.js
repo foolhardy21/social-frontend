@@ -1,5 +1,6 @@
 export { default as Login } from './Login'
 export { default as Signup } from './Signup'
 export { default as Home } from './Home'
-export { default as Explore } from './Explore'
-export { default as UserFeed } from './UserFeed'
+export { default as ExploreFeedPage } from './Explore'
+export { default as UserFeedPage } from './UserFeed'
+export { default as BookmarksFeedPage } from './Bookmarks'

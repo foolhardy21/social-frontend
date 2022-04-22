@@ -1,0 +1,5 @@
+.postDiv {
+  border-bottom: solid thin var(--clr-off-primary);
+  letter-spacing: 1px;
+  line-height: 20px;
+}

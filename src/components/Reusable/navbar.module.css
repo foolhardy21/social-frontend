@@ -1,0 +1,8 @@
+@media only screen and (max-width: 768px) {
+  .navBarItem {
+    justify-content: flex-end;
+  }
+  .navBarItemText {
+    display: none;
+  }
+}

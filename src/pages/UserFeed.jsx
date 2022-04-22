@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import { FeedPageWrapper, Post, PostsWrapper } from "components/Reusable"
 import { useAuth, usePosts } from 'contexts'
-import styles from 'components/Reusable/reusable.module.css'
+import styles from 'components/Reusable/feedpage.module.css'
 import { ACTION_INIT_USER_FEED } from 'utils'
 
 const UserFeedSection = () => {
@@ -44,6 +44,6 @@ const UserFeedSection = () => {
     )
 }
 
-const UserFeed = FeedPageWrapper(UserFeedSection)
+const UserFeedPage = FeedPageWrapper(UserFeedSection)
 
-export default UserFeed
+export default UserFeedPage

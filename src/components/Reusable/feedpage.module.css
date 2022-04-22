@@ -21,26 +21,8 @@
   height: 100vh;
 }
 
-.postDiv {
-  border-bottom: solid thin var(--clr-off-primary);
-  letter-spacing: 1px;
-  line-height: 20px;
-}
-
-@media only screen and (max-width: 1280px) {
-}
-
 @media only screen and (max-width: 1024px) {
   .feedPageGrid {
     grid-template-columns: 20vw 1fr;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .navBarItem {
-    justify-content: flex-end;
-  }
-  .navBarItemText {
-    display: none;
   }
 }
