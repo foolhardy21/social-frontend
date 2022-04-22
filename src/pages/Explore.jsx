@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import ClipLoader from 'react-spinners/ClipLoader'
-import { FeedPageWrapper, PageHeading, Post, PostsWrapper } from 'components/Reusable'
+import { CreatePost, FeedPageWrapper, PageHeading, Post, PostsWrapper } from 'components/Reusable'
 import { usePosts, useAuth } from 'contexts'
 import { ACTION_INIT_POSTS } from 'utils'
 import styles from 'components/Reusable/feedpage.module.css'
@@ -32,6 +32,7 @@ const ExplorePostsSection = () => {
                     </div>
                     : <>
                         <PageHeading heading='explore' />
+                        <CreatePost />
                         <ExplorePosts />
                     </>
             }

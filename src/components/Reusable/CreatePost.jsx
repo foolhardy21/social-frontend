@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { usePosts } from 'contexts'
 import postStyles from './post.module.css'
 import styles from './createpost.module.css'
+import { ACTION_ADD_POST } from 'utils'
 
 const CreatePost = () => {
     const [postValue, setPostValue] = useState('')
@@ -13,7 +14,7 @@ const CreatePost = () => {
         const response = await createPost(postValue)
         if (response.status === 201) {
             const createdPost = response.data.posts[response.data.posts.length - 1]
-            postsDispatch({ type: 'ADD_POST', payload: createdPost })
+            postsDispatch({ type: ACTION_ADD_POST, payload: createdPost })
         } else if (response.status === 404) {
             // not logged in
         }
