@@ -9,7 +9,7 @@ const ExplorePostsSection = () => {
     const { postsState: { loading, posts }, getPosts, postsDispatch } = usePosts()
     const { getUserToken, setIsUserLoggedIn } = useAuth()
 
-    const ExplorePosts = PostsWrapper(Post, posts)
+    const ExplorePosts = PostsWrapper(Post, posts, 'explore')
 
     useEffect(() => {
         (async () => {

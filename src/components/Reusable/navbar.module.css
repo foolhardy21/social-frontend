@@ -1,3 +1,7 @@
+.linkLogout:hover {
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 768px) {
   .navBarItem {
     justify-content: flex-end;

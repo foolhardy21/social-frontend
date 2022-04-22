@@ -8,7 +8,7 @@ import styles from 'components/Reusable/feedpage.module.css'
 const BookmarksSection = () => {
     const { getBookmarks, bookmarksDispatch, bookmarksState: { bookmarks, loading } } = useBookmarks()
 
-    const BookmarkPosts = PostsWrapper(Post, bookmarks)
+    const BookmarkPosts = PostsWrapper(Post, bookmarks, 'bookmarks')
 
     useEffect(() => {
         (async () => {
@@ -29,6 +29,7 @@ const BookmarksSection = () => {
                         <ClipLoader size={50} color='#ffffff' />
                     </div>
                     : <BookmarkPosts />
+
             }
         </div>
     )

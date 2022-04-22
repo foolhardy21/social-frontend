@@ -68,16 +68,16 @@ const NavBar = () => {
             {
                 isUserLoggedIn
                     ?
-                    <li className={`flx flx-min-center ${styles.navBarItem}`}>
+                    <li className={`flx flx-min-center ${styles.linkLogout} ${styles.navBarItem}`}>
 
-                        <button onClick={handleLogoutUser} className={`btn-txt flx  flx-min-center pd-s`}>
+                        <a onClick={handleLogoutUser} className={`flx  flx-min-center pd-s`}>
                             <span className='material-icons icon-secondary mg-right-xs'>
                                 logout
                             </span>
                             <p className={`txt-secondary txt-lg ${styles.navBarItemText}`}>
                                 logout
                             </p>
-                        </button>
+                        </a>
 
                     </li>
                     :

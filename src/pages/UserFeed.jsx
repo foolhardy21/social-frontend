@@ -9,7 +9,7 @@ const UserFeedSection = () => {
     const { postsDispatch, postsState: { posts } } = usePosts()
     const { getUserToken } = useAuth()
 
-    const FeedPosts = PostsWrapper(Post, posts)
+    const FeedPosts = PostsWrapper(Post, posts, 'my feed')
 
     // you may ignore this for now, this is a setup for the user feed
     useEffect(() => {
