@@ -1,12 +1,30 @@
+<<<<<<< HEAD
 import { useReducer, useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "contexts"
 import { loginReducer } from "reducers"
 import { isFormEmpty, ACTION_TOGGLE_PASSWORD_TYPE, ACTION_UPDATE_PASSWORD, ACTION_UPDATE_USERNAME, ALERT_TYPE_ERROR, ALERT_TYPE_SUCCESS, ALERT_DISPLAY_TIME, showAlert } from "utils"
+||||||| parent of 7870956 (feat - explore page added)
+import { useReducer } from "react"
+import { useAuth } from "../../contexts"
+import { loginReducer } from "../../reducers"
+import { isFormEmpty } from "../../utils"
+=======
+import { useReducer, useRef, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "contexts"
+import { loginReducer } from "reducers"
+import { isFormEmpty } from "utils"
+>>>>>>> 7870956 (feat - explore page added)
 
 const LoginForm = () => {
+<<<<<<< HEAD
     const navigate = useNavigate()
     const submitBtnRef = useRef(null)
+||||||| parent of 7870956 (feat - explore page added)
+=======
+    const submitBtnRef = useRef(null)
+>>>>>>> 7870956 (feat - explore page added)
     const [loginState, loginDispatch] = useReducer(loginReducer, {
         username: '',
         password: '',
@@ -17,6 +35,13 @@ const LoginForm = () => {
         passwordInputType: 'password'
     })
     const { logInUser } = useAuth()
+<<<<<<< HEAD
+||||||| parent of 7870956 (feat - explore page added)
+    const { username, password, alert: { message, type }, passwordInputType } = loginState
+=======
+    const navigate = useNavigate()
+    const { username, password, alert: { message, type }, passwordInputType } = loginState
+>>>>>>> 7870956 (feat - explore page added)
 
     const { username, password, alert: { message, type }, passwordInputType } = loginState
 
@@ -40,8 +65,15 @@ const LoginForm = () => {
         } else {
             const response = await logInUser(username, password)
             if (response.status === 200) {
+<<<<<<< HEAD
                 showAlert(loginDispatch, 'logged in', ALERT_TYPE_SUCCESS)
                 setTimeout(() => navigate('/explore'), ALERT_DISPLAY_TIME + 100)
+||||||| parent of 7870956 (feat - explore page added)
+                showAlert('logged in', 'success')
+=======
+                showAlert('logged in', 'success')
+                setTimeout(() => navigate('/explore'), 1600)
+>>>>>>> 7870956 (feat - explore page added)
             } else if (response.status === 404) {
                 showAlert(loginDispatch, 'user not found', ALERT_TYPE_ERROR)
             } else if (response.status === 401) {
