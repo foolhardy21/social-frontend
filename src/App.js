@@ -19,6 +19,10 @@ const App = () => {
 
         <Route path='/bookmarks' element={<BookmarksFeedPage />} />
 
+        <Route path='/home' element={<UserFeed />} />
+
+        <Route path='/bookmarks' element={<Bookmarks />} />
+
       </Routes>
     </BrowserRouter>
   );
