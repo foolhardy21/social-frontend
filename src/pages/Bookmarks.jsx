@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import ClipLoader from 'react-spinners/ClipLoader'
-import { FeedPageWrapper, Post, PostsWrapper } from "components/Reusable"
+import { FeedPageWrapper, PageHeading, Post, PostsWrapper } from "components/Reusable"
 import { useBookmarks } from "contexts"
 import { ACTION_INIT_BOOKMARKS } from "utils"
 import styles from 'components/Reusable/feedpage.module.css'
@@ -8,7 +8,7 @@ import styles from 'components/Reusable/feedpage.module.css'
 const BookmarksSection = () => {
     const { getBookmarks, bookmarksDispatch, bookmarksState: { bookmarks, loading } } = useBookmarks()
 
-    const BookmarkPosts = PostsWrapper(Post, bookmarks, 'bookmarks')
+    const BookmarkPosts = PostsWrapper(Post, bookmarks)
 
     useEffect(() => {
         (async () => {
@@ -28,8 +28,10 @@ const BookmarksSection = () => {
                     ? <div className='flx flx-center mg-top-xlg'>
                         <ClipLoader size={50} color='#ffffff' />
                     </div>
-                    : <BookmarkPosts />
-
+                    : <>
+                        <PageHeading heading='bookmarks' />
+                        <BookmarkPosts />
+                    </>
             }
         </div>
     )

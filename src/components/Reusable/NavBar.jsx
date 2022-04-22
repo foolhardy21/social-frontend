@@ -14,11 +14,9 @@ const NavBar = () => {
 
     return (
         <ul className='pd-top-md pd-right-s'>
-
             <li className='flx pd-s'>
                 <p className='txt-secondary txt-lg'>sneakerhood</p>
             </li>
-
             <li>
                 <Link to='/myfeed' className={`flx flx-min-center ${styles.navBarItem} pd-s`}>
                     <span className='material-icons icon-secondary mg-right-xs'>
@@ -29,7 +27,6 @@ const NavBar = () => {
                     </p>
                 </Link>
             </li>
-
             <li>
                 <Link to='/explore' className={`flx flx-min-center ${styles.navBarItem} pd-s`}>
                     <span className='material-icons icon-secondary mg-right-xs'>
@@ -40,7 +37,6 @@ const NavBar = () => {
                     </p>
                 </Link>
             </li>
-
             <li>
                 <Link to='/bookmarks' className={`flx flx-min-center ${styles.navBarItem} pd-s`}>
                     <span className='material-icons icon-secondary mg-right-xs'>
@@ -51,7 +47,6 @@ const NavBar = () => {
                     </p>
                 </Link>
             </li>
-
             <li>
                 <Link to='/profile' className={`flx flx-min-center ${styles.navBarItem} pd-s`}>
                     <span className='material-icons icon-secondary mg-right-xs'>
@@ -62,14 +57,10 @@ const NavBar = () => {
                     </p>
                 </Link>
             </li>
-
-            {/* add conditional icon for logout and login */}
-
             {
                 isUserLoggedIn
                     ?
                     <li className={`flx flx-min-center ${styles.linkLogout} ${styles.navBarItem}`}>
-
                         <a onClick={handleLogoutUser} className={`flx  flx-min-center pd-s`}>
                             <span className='material-icons icon-secondary mg-right-xs'>
                                 logout
@@ -78,7 +69,6 @@ const NavBar = () => {
                                 logout
                             </p>
                         </a>
-
                     </li>
                     :
                     <li>
@@ -92,7 +82,6 @@ const NavBar = () => {
                         </Link>
                     </li>
             }
-
         </ul>
 
     )

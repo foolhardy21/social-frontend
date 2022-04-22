@@ -1,0 +1,8 @@
+.textArea {
+  resize: none;
+}
+
+.btnPost:hover {
+  background-color: var(--clr-primary);
+  color: var(--clr-secondary);
+}

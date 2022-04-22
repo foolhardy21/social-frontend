@@ -82,33 +82,21 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
     return (
 
         <article className={`${styles.postDiv} pd-s`}>
-
             <p className='txt-secondary txt-md txt-500'>{'@ '}{username}</p>
-
             <p className='txt-secondary txt-md txt-300 mg-left-xs mg-top-s mg-btm-s'>{content}</p>
-
             <p className='txt-off-secondary txt-md txt-300'>{getDate(createdAt)}</p>
-
             <p className='txt-off-secondary txt-md txt-300'>{getTime(createdAt)}</p>
-
             <div className='flx flx-maj-stretch mg-top-s'>
-
                 <p className='txt-secondary txt-md txt-300'>{`likes ${likeCount}`}</p>
-
                 <div className='flx'>
-
                     <button onClick={isPostBookmarked ? handleRemoveBookmark : handlePostBookmark} className='btn-txt txt-md txt-secondary txt-300 mg-right-xs'>
                         <span className='material-icons icon-secondary'>{isPostBookmarked ? 'bookmark' : 'bookmark_border'}</span>
                     </button>
-
                     <button onClick={isPostLiked ? handlePostDislike : handlePostLike} className='btn-txt txt-md txt-secondary txt-300'>
                         <span className='material-icons icon-secondary'>{isPostLiked ? 'favorite' : 'favorite_border'}</span>
                     </button>
-
                 </div>
-
             </div>
-
         </article>
     )
 

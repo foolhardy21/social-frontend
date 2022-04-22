@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { useEffect } from 'react'
-import { FeedPageWrapper, Post, PostsWrapper } from "components/Reusable"
+import { FeedPageWrapper, Post, CreatePost, PostsWrapper, PageHeading } from "components/Reusable"
 import { useAuth, usePosts } from 'contexts'
-import styles from 'components/Reusable/feedpage.module.css'
 import { ACTION_INIT_USER_FEED } from 'utils'
+import styles from 'components/Reusable/feedpage.module.css'
 
 const UserFeedSection = () => {
     const { postsDispatch, postsState: { posts } } = usePosts()
@@ -39,6 +39,8 @@ const UserFeedSection = () => {
 
     return (
         <div className={`${styles.feedDiv} flx flx-column pd-md`}>
+            <PageHeading heading='my feed' />
+            <CreatePost />
             <FeedPosts />
         </div>
     )

@@ -1,10 +1,9 @@
 import { useState } from 'react'
-import styles from 'components/Explore/explore.module.css'
-import styles2 from './reusable.module.css'
-import styles3 from 'components/Home/home.module.css'
 import { usePosts } from 'contexts'
+import postStyles from './post.module.css'
+import styles from './createpost.module.css'
 
-const PostInputCard = () => {
+const CreatePost = () => {
     const [postValue, setPostValue] = useState('')
     const { createPost, postsDispatch } = usePosts()
 
@@ -22,16 +21,13 @@ const PostInputCard = () => {
     }
 
     return (
-        <article className={`${styles.postDiv} flx flx-column pd-s`}>
-
-            <textarea placeholder="what's happening?" value={postValue} onChange={(e) => setPostValue(e.target.value)} className={`${styles2.textArea} bg-off-secondary txt-secondary pd-xs txt-md`} />
-
+        <article className={`${postStyles.postDiv} flx flx-column pd-s`}>
+            <textarea rows='5' placeholder="what's happening?" value={postValue} onChange={(e) => setPostValue(e.target.value)} className={`${styles.textArea} bg-off-secondary txt-secondary pd-xs txt-md`} />
             <div className="flx flx-maj-end mg-top-xs">
-                <button type='button' disabled={isButtonDisabled()} onClick={handlePostSubmit} className={`btn-solid ${styles3.btnSignup} bg-primary txt-primary txt-md txt-lcase pd-xs brd-s`}>post</button>
+                <button type='button' disabled={isButtonDisabled()} onClick={handlePostSubmit} className={`btn-solid ${styles.btnPost} bg-primary txt-primary txt-md txt-lcase pd-xs brd-s`}>post</button>
             </div>
-
         </article>
     )
 }
 
-export default PostInputCard
+export default CreatePost

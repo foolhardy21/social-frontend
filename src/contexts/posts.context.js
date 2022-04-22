@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createContext, useContext, useReducer } from "react";
 import { postsReducer } from "reducers";
-import { ACTION_REMOVE_LOADING, ACTION_SET_LOADING, API_POSTS, API_POST_BOOKMARK, API_POST_DISLIKE, API_POST_LIKE } from "utils";
+import { ACTION_REMOVE_LOADING, ACTION_SET_LOADING, API_POSTS, API_POST_DISLIKE, API_POST_LIKE } from "utils";
 import { useAuth } from "./";
 
 const PostsContext = createContext({})
