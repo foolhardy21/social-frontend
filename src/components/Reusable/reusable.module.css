@@ -1,0 +1,34 @@
+.feedPageGrid {
+  display: grid;
+  grid-template-columns: 25vw 1fr 28vw;
+  grid-template-areas: "nav feed extra";
+}
+
+.navDiv {
+  grid-area: nav;
+  height: 100vh;
+}
+
+.extraDiv {
+  grid-area: extra;
+  height: 100vh;
+}
+
+@media only screen and (max-width: 1280px) {
+}
+
+@media only screen and (max-width: 1024px) {
+  .feedPageGrid {
+    grid-template-columns: 20vw 1fr;
+    grid-template-areas: "nav feed";
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .navBarItem {
+    justify-content: flex-end;
+  }
+  .navBarItemText {
+    display: none;
+  }
+}
