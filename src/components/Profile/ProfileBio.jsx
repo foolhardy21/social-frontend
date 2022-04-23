@@ -1,11 +1,12 @@
 import axios from "axios"
-import { useModal, useProfile } from "contexts"
+import { useAuth, useModal, useProfile } from "contexts"
 import { getDate } from 'utils'
 import styles from './profile.module.css'
 
 const ProfileBio = () => {
     const { profileState: { bio } } = useProfile()
     const { setModal } = useModal()
+    const { getUsername } = useAuth()
 
     const handleProfileEdit = async () => {
         setModal(m => ({ ...m, type: 'BIO', id: bio.username }))
@@ -35,8 +36,13 @@ const ProfileBio = () => {
                     <p className='txt-md txt-secondary txt-cap'>{`following ${bio?.following?.length}`}</p>
 
                 </div>
+                {/* show edit only on logged in user bio */}
 
-                <button onClick={handleProfileEdit} className={`btn-outlined b-solid b-secondary txt-secondary txt-md txt-300 brd-md pd-xs`}>edit profile</button>
+                {/* show follow unfollow on user other than logged in */}
+                {
+                    getUsername() === bio?.username &&
+                    <button onClick={handleProfileEdit} className={`btn-outlined b-solid b-secondary txt-secondary txt-md txt-300 brd-md pd-xs`}>edit profile</button>
+                }
 
             </div>
         </article>

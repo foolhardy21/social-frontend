@@ -22,7 +22,7 @@ export const postsReducer = (state, { type, payload }) => {
 
         case ACTION_REMOVE_POST: return { ...state, posts: state.posts.filter(post => post._id !== payload) }
 
-        case ACTION_EDIT_POST: return { ...state, posts: state.posts.value.map(post => post._id === payload.id ? payload.post : post) }
+        case ACTION_EDIT_POST: return { ...state, posts: state.posts.map(post => post._id === payload._id ? payload : post) }
 
         default: return state
 

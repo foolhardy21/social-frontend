@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useModal, useProfile } from "contexts"
+import { useModal, usePosts } from "contexts"
 import { useEffect, useState } from "react"
 import { ACTION_EDIT_POST } from "utils"
 import styles from './profile.module.css'
@@ -7,15 +7,17 @@ import styles from './profile.module.css'
 const PostModal = () => {
     const [post, setPost] = useState({})
     const { modal: { id }, setModal } = useModal()
-    const { editPost, profileDispatch } = useProfile()
+    // const { , profileDispatch } = useProfile()
+    const { editPost, postsDispatch } = usePosts()
 
     const handlePostEdit = async () => {
         const response = await editPost(id, post)
         if (response.status === 201) {
-            profileDispatch({ type: ACTION_EDIT_POST, payload: { id, post } })
+            const editedPost = response.data.posts.find(newpost => newpost._id === post._id)
+            postsDispatch({ type: ACTION_EDIT_POST, payload: editedPost })
         }
-        setModal(m => ({ ...m, type: '', id: '' }))
         setPost({})
+        setModal(m => ({ ...m, type: '', id: '' }))
     }
 
     useEffect(() => {
