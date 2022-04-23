@@ -13,9 +13,7 @@ const Home = () => {
         >
             <img srcSet={logo} className={styles.heroImg}
             />
-
             <HomeMain />
-
         </div>
     )
 }

@@ -9,9 +9,7 @@ const Signup = () => {
             }}
             className='flx flx-center bg-off-secondary'
         >
-
             <SignupCard />
-
         </div>
     )
 }

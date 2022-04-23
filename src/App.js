@@ -6,19 +6,12 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-
         <Route path='/' element={<Home />} />
-
         <Route path='/login' element={<Login />} />
-
         <Route path='/signup' element={<Signup />} />
-
         <Route path='/explore' element={<ExploreFeedPage />} />
-
         <Route path='/myfeed' element={<UserFeedPage />} />
-
         <Route path='/bookmarks' element={<BookmarksFeedPage />} />
-
       </Routes>
     </BrowserRouter>
   );

@@ -63,16 +63,13 @@ const LoginForm = () => {
 
     return (
         <form onSubmit={handleLoginSubmit} className='flx flx-column mg-top-md mg-btm-md'>
-
             {
                 message.length > 0 && <div className={` ${type === ALERT_TYPE_ERROR ? 'bg-err' : 'bg-success'} flx flx-min-center flx-maj-start pd-xs brd-s mg-btm-xs`}>
                     <span className='material-icons icon-secondary  mg-right-xs'>{type === ALERT_TYPE_ERROR ? 'error' : 'check_circle'}</span>
                     <p className='txt-md txt-secondary txt-cap txt-500'>{message}</p>
                 </div>
             }
-
             <input type='text' placeholder='username' value={username} onChange={(e => updateUsername(e))} className='input input-md txt-md txt-primary pd-xs mg-btm-s' />
-
             <div className="flx flx-maj-start flx-min-center">
                 <input type={passwordInputType} placeholder='password' value={password} onChange={(e => updatePassword(e))} className='input input-md txt-md txt-primary pd-xs mg-btm-s' />
                 <button type='button' onClick={togglePasswordInputType} className="btn-txt mg-left-xs">
@@ -81,15 +78,12 @@ const LoginForm = () => {
                     </span>
                 </button>
             </div>
-
             <div className='flx flx-maj-end'>
                 <button ref={submitBtnRef} type="submit" className='btn-solid bg-secondary txt-secondary txt-md txt-ucase pd-left-s pd-right-s pd-top-xs pd-btm-xs brd-s'>login</button>
             </div>
-
             <div className='flx flx-maj-end mg-top-xs'>
                 <button onClick={handleGuestLogin} type="button" className='btn-outlined b-solid b-primary bg-primary txt-primary txt-md txt-cap pd-left-s pd-right-s pd-top-xs pd-btm-xs brd-s'>guest login</button>
             </div>
-
         </form>
     )
 }
