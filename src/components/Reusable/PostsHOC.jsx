@@ -1,9 +1,7 @@
-import { usePosts } from 'contexts'
 
-const PostsHOC = PostComponent => {
+const PostsHOC = (PostComponent, posts) => {
 
     const Posts = () => {
-        const { postsState: { posts } } = usePosts()
 
         return (
             <>

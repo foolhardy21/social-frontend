@@ -51,9 +51,13 @@ export const PostsProvider = ({ children }) => {
         }
     }
 
-    const removeBookmarkFromPost = async postId => {
+    const createPost = async postText => {
         try {
-            const response = await axios.post(`/api/users/remove-bookmark/${postId}`, {}, {
+            const response = await axios.post('/api/posts', {
+                postData: {
+                    content: postText
+                }
+            }, {
                 headers: {
                     authorization: getUserToken()
                 }
@@ -64,13 +68,9 @@ export const PostsProvider = ({ children }) => {
         }
     }
 
-    const createPost = async postText => {
+    const removeBookmarkFromPost = async postId => {
         try {
-            const response = await axios.post('/api/posts', {
-                postData: {
-                    content: postText
-                }
-            }, {
+            const response = await axios.post(`/api/users/remove-bookmark/${postId}`, {}, {
                 headers: {
                     authorization: getUserToken()
                 }

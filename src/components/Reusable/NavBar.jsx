@@ -96,7 +96,7 @@ import { useAuth } from "contexts"
 import styles from './reusable.module.css'
 
 const NavBar = () => {
-    const { isUserLoggedIn, logoutUser } = useAuth()
+    const { isUserLoggedIn, logoutUser, getUsername } = useAuth()
     const { pathname } = useLocation()
     const navigate = useNavigate()
 
@@ -146,7 +146,7 @@ const NavBar = () => {
             </li>
 
             <li>
-                <Link to='/profile' className={`flx flx-min-center ${styles.navBarItem} pd-s`}>
+                <Link to={`/${getUsername()}`} className={`flx flx-min-center ${styles.navBarItem} pd-s`}>
                     <span className='material-icons icon-secondary mg-right-xs'>
                         person
                     </span>
