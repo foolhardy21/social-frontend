@@ -1,11 +1,14 @@
 import { useEffect } from 'react'
 import { useParams } from "react-router-dom"
 import ClipLoader from 'react-spinners/ClipLoader'
-import { Modal, PostsWrapper, Post, FeedPageWrapper } from "components/Reusable"
+import { PostsWrapper, Post, FeedPageWrapper, ModalWrapper } from "components/Reusable"
+import { PostEdit, ProfileBio, ProfileEdit } from 'components/Profile'
 import { useModal, usePosts, useProfile } from "contexts"
-import { ProfileBio } from 'components/Profile'
 import { ACTION_INIT_PROFILE_POSTS, ACTION_SET_BIO } from 'utils'
 import styles from 'components/Reusable/feedpage.module.css'
+
+const PostModal = ModalWrapper(PostEdit)
+const ProfileModal = ModalWrapper(ProfileEdit)
 
 const ProfileSection = () => {
     const params = useParams()
@@ -25,14 +28,12 @@ const ProfileSection = () => {
     }, [])
 
     useEffect(() => {
-        if (Object.keys(profileState.bio).length > 0) {
-            (async () => {
-                const { status, data: { posts } } = await getUserPosts(params.username)
-                if (status === 200) {
-                    postsDispatch({ type: ACTION_INIT_PROFILE_POSTS, payload: posts })
-                }
-            })()
-        }
+        (async () => {
+            const { status, data: { posts } } = await getUserPosts(params.username)
+            if (status === 200) {
+                postsDispatch({ type: ACTION_INIT_PROFILE_POSTS, payload: posts })
+            }
+        })()
     }, [profileState.bio])
 
     return (
@@ -48,7 +49,7 @@ const ProfileSection = () => {
                     : <ProfilePosts />
             }
             {
-                modal.type.length > 0 && <Modal />
+                modal.type === 'POST' ? <PostModal /> : modal.type === 'BIO' ? <ProfileModal /> : ''
             }
         </div>
     )

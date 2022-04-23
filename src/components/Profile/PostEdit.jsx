@@ -4,10 +4,9 @@ import { useEffect, useState } from "react"
 import { ACTION_EDIT_POST } from "utils"
 import styles from './profile.module.css'
 
-const PostModal = () => {
+const PostEdit = () => {
     const [post, setPost] = useState({})
     const { modal: { id }, setModal } = useModal()
-    // const { , profileDispatch } = useProfile()
     const { editPost, postsDispatch } = usePosts()
 
     const handlePostEdit = async () => {
@@ -30,20 +29,15 @@ const PostModal = () => {
     }, [])
 
     return (
-        <section className="flx flx-center modal-container pos-fixed tl-0 z-5">
-            <article className="modal-md bg-primary brd-s pd-s">
-
-                <textarea className={`${styles.postModalTextArea}`} value={post.content} onChange={e => setPost(p => ({ ...p, content: e.target.value }))} />
-
-                <div className="flx flx-maj-end">
-                    <button onClick={handlePostEdit} className="btn-solid bg-secondary txt-secondary pd-xs brd-s txt-md txt-lcase">
-                        edit
-                    </button>
-                </div>
-
-            </article>
-        </section>
+        <>
+            <textarea className={`${styles.postModalTextArea}`} value={post?.content} onChange={e => setPost(p => ({ ...p, content: e.target.value }))} />
+            <div className="flx flx-maj-end">
+                <button onClick={handlePostEdit} className="btn-solid bg-secondary txt-secondary pd-xs brd-s txt-md txt-lcase">
+                    edit
+                </button>
+            </div>
+        </>
     )
 }
 
-export default PostModal
+export default PostEdit

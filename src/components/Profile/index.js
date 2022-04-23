@@ -1,3 +1,3 @@
 export { default as ProfileBio } from './ProfileBio'
-export { default as PostModal } from './PostModal'
-export { default as ProfileModal } from './ProfileModal' 
+export { default as PostEdit } from './PostEdit'
+export { default as ProfileEdit } from './ProfileEdit' 

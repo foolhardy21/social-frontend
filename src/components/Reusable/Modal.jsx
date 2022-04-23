@@ -1,12 +1,16 @@
-import { PostModal, ProfileModal } from "components/Profile"
-import { useModal } from "contexts"
+const ModalWrapper = (ModalComponent) => {
 
-const Modal = () => {
-    const { modal: { type } } = useModal()
+    const Modal = () => {
 
-    return (type === 'BIO')
-        ? <ProfileModal />
-        : <PostModal />
+        return (
+            <section className="flx flx-center modal-container pos-fixed tl-0 z-5">
+                <article className="modal-md bg-primary brd-s pd-s">
+                    <ModalComponent />
+                </article>
+            </section>
+        )
+    }
+    return Modal
 }
 
-export default Modal
+export default ModalWrapper
