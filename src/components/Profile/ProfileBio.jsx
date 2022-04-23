@@ -1,10 +1,12 @@
 import axios from "axios"
+import { useState, useEffect } from "react"
 import { useAuth, useModal, useProfile } from "contexts"
-import { getDate } from 'utils'
+import { ACTION_SET_BIO, getDate } from 'utils'
 import styles from './profile.module.css'
 
 const ProfileBio = () => {
-    const { profileState: { bio } } = useProfile()
+    const [isUserFollowed, setIsUserFollowed] = useState(false)
+    const { profileState: { bio }, followUser, unFollowUser, profileDispatch } = useProfile()
     const { setModal } = useModal()
     const { getUsername } = useAuth()
 
@@ -12,16 +14,64 @@ const ProfileBio = () => {
         setModal(m => ({ ...m, type: 'BIO', id: bio.username }))
     }
 
+    useEffect(() => {
+        (async () => {
+            if (getUsername() !== bio.username) {
+                const users = await axios.get('/api/users')
+                const loggedInUser = users.data.users.find(user => user.username === getUsername())
+                if (loggedInUser.following.some(user => user.username === bio.username)) {
+                    setIsUserFollowed(true)
+                } else {
+                    setIsUserFollowed(false)
+                }
+            }
+        })()
+    }, [])
+
+    const handleFollowUser = async () => {
+        const response = await followUser(bio._id)
+        if (response.status === 200) {
+            setIsUserFollowed(true)
+            profileDispatch({ type: ACTION_SET_BIO, payload: response.data.followUser })
+        } else if (response.status === 400) {
+            // already following
+        } else if (response.status === 404) {
+            // not logged in
+        }
+    }
+
+    const handleUnfollowUser = async () => {
+        const response = await unFollowUser(bio._id)
+        if (response.status === 200) {
+            setIsUserFollowed(false)
+            profileDispatch({ type: ACTION_SET_BIO, payload: response.data.followUser })
+        } else if (response.status === 400) {
+            // already following
+        } else if (response.status === 404) {
+            // not logged in
+        }
+    }
+
     return (
         <article className={`flx flx-column pd-md ${styles.profileDiv}`}>
-            <div className='flx'>
-                <p className='txt-lg txt-600 txt-secondary mg-right-xs txt-cap' >{bio?.firstName}</p>
-                <p className='txt-lg txt-600 txt-secondary txt-cap'>{bio?.lastName}</p>
+            <div className="flx flx-maj-stretch flx-min-center">
+                <div className="flx">
+                    <p className='txt-lg txt-600 txt-secondary mg-right-xs txt-cap' >{bio?.firstName}</p>
+                    <p className='txt-lg txt-600 txt-secondary txt-cap'>{bio?.lastName}</p>
+                </div>
+                {
+                    getUsername() !== bio?.username &&
+                    <button onClick={isUserFollowed ? handleUnfollowUser : handleFollowUser} className={`btn-solid ${styles.btnFollow} txt-md txt-primary bg-primary pd-xs brd-md`}>
+                        {
+                            isUserFollowed ? 'unfollow' : 'follow'
+                        }
+                    </button>
+                }
             </div>
             <p className='txt-md txt-off-secondary mg-btm-s'>{`@${bio?.username}`}</p>
             <p className='txt-md txt-off-secondary txt-cap'>{`joined ${getDate(bio?.createdAt)}`}</p>
             <div className="flx flx-min-center mg-top-s">
-                <a href={`https://www.google.com/search?q=${bio?.city}`} target='_blank' className='txt-md txt-secondary flx flx-min-center mg-right-md'>
+                <a href={bio.city && `https://www.google.com/search?q=${bio?.city}`} target='_blank' className='txt-md txt-secondary flx flx-min-center mg-right-md'>
                     <span className="material-icons txt-off-secondary mg-right-xs">
                         pin_drop
                     </span>

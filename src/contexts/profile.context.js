@@ -42,6 +42,32 @@ export const ProfileProvider = ({ children }) => {
         }
     }
 
+    const followUser = async userId => {
+        try {
+            const response = axios.post(`/api/users/follow/${userId}`, {}, {
+                headers: {
+                    authorization: getUserToken()
+                }
+            })
+            return response
+        } catch (e) {
+            return e.response
+        }
+    }
+
+    const unFollowUser = async userId => {
+        try {
+            const response = axios.post(`/api/users/unfollow/${userId}`, {}, {
+                headers: {
+                    authorization: getUserToken()
+                }
+            })
+            return response
+        } catch (e) {
+            return e.response
+        }
+    }
+
     return (
         <ProfileContext.Provider
             value={{
@@ -49,6 +75,8 @@ export const ProfileProvider = ({ children }) => {
                 profileDispatch,
                 getProfileBio,
                 editBio,
+                followUser,
+                unFollowUser,
             }}
         >
             {children}
