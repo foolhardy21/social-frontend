@@ -1,16 +1,21 @@
 import postStyles from './post.module.css'
 import styles from './createpost.module.css'
 import { useState } from 'react'
-
-
+import { useComments } from 'contexts'
+import { useParams } from 'react-router-dom'
 
 const CreateComment = () => {
     const [commentValue, setCommentValue] = useState('')
+    const { postId } = useParams()
+    const { addCommentToPost, commentsDispatch } = useComments()
 
     const isButtonDisabled = () => commentValue.length === 0
 
-    const handleCommentSubmit = () => {
-        // add comment to the post
+    const handleCommentSubmit = async () => {
+        const response = await addCommentToPost(postId, commentValue)
+        if (response.status === 201) {
+            commentsDispatch({ type: 'ADD_COMMENT', payload: response.data })
+        }
     }
 
     return (

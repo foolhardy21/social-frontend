@@ -4,6 +4,7 @@ import App from "./App";
 import { AuthProvider, ModalProvider, PostsProvider, ProfileProvider } from "contexts";
 import { makeServer } from "./server";
 import { BookmarksProvider } from "contexts";
+import { CommentsProvider } from "contexts/comments.context";
 
 // Call make Server
 makeServer();
@@ -11,13 +12,15 @@ makeServer();
 ReactDOM.render(
   <AuthProvider>
     <PostsProvider>
-      <BookmarksProvider>
-        <ProfileProvider>
-          <ModalProvider>
-            <App />
-          </ModalProvider>
-        </ProfileProvider>
-      </BookmarksProvider>
+      <CommentsProvider>
+        <BookmarksProvider>
+          <ProfileProvider>
+            <ModalProvider>
+              <App />
+            </ModalProvider>
+          </ProfileProvider>
+        </BookmarksProvider>
+      </CommentsProvider>
     </PostsProvider>
   </AuthProvider>,
   document.getElementById("root")

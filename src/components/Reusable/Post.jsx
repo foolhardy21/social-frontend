@@ -102,12 +102,17 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
         navigate(`/${username}/post/${_id}`)
     }
 
+    const handleUsernameClick = (e) => {
+        navigate(`/${username}`)
+        e.stopPropagation()
+    }
+
     return (
         <article onClick={handlePostClick} className={`${styles.postDiv} pd-s`}>
             <div className='flx flx-maj-stretch'>
-                <Link to={`/${username}`} className='btn-txt txt-secondary txt-md txt-500'>
+                <p onClick={handleUsernameClick} className='btn-txt txt-secondary txt-md txt-500'>
                     {'@ '}{username}
-                </Link>
+                </p>
                 {
                     getUsername() === username && params.username === username &&
                     <div className='flx'>
