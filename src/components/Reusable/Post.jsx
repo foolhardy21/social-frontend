@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react'
-import { useAuth, useBookmarks, usePosts } from 'contexts'
-import { ACTION_INIT_BOOKMARKS, ACTION_LIKE_POST, getDate, getTime } from 'utils'
+import { Link, useParams } from 'react-router-dom'
+import { useAuth, useBookmarks, useModal, usePosts } from 'contexts'
+import { ACTION_INIT_BOOKMARKS, ACTION_LIKE_POST, ACTION_REMOVE_POST, getDate, getTime } from 'utils'
 import styles from './post.module.css'
 
 const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, createdAt } }) => {
+    const params = useParams()
     const [isPostLiked, setIsPostLiked] = useState(false)
     const [isPostBookmarked, setIsPostBookmarked] = useState(false)
     const { isUserLoggedIn, getUsername } = useAuth()
-    const { postsState: { posts }, likePost, dislikePost, postsDispatch } = usePosts()
+    const { postsState: { posts }, likePost, dislikePost, editPost, removePost, postsDispatch } = usePosts()
     const { bookmarksState: { bookmarks }, bookmarkPost, removeBookmarkFromPost, bookmarksDispatch } = useBookmarks()
+    const { setModal } = useModal()
 
     useEffect(() => {
         const loggedInUsername = getUsername()
@@ -79,10 +82,44 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
         }
     }
 
+    const handleEditPost = async () => {
+        setModal(m => ({ ...m, type: 'POST', id: _id }))
+    }
+
+    const handleRemovePost = async () => {
+        const response = await removePost(_id)
+        if (response.status === 201) {
+            postsDispatch({ type: ACTION_REMOVE_POST, payload: _id })
+        } else if (response.status === 404) {
+            // not logged in
+        } else if (response.status === 400) {
+            // not your post
+        }
+    }
+
     return (
 
         <article className={`${styles.postDiv} pd-s`}>
-            <p className='txt-secondary txt-md txt-500'>{'@ '}{username}</p>
+            <div className='flx flx-maj-stretch'>
+                <Link to={`/${username}`} className='btn-txt txt-secondary txt-md txt-500'>
+                    {'@ '}{username}
+                </Link>
+                {
+                    getUsername() === username && params.username === username &&
+                    <div className='flx'>
+                        <button onClick={handleEditPost} className='btn-txt mg-right-xs'>
+                            <span className='material-icons icon-secondary'>
+                                edit
+                            </span>
+                        </button>
+                        <button onClick={handleRemovePost} className='btn-txt'>
+                            <span className='material-icons icon-secondary'>
+                                delete
+                            </span>
+                        </button>
+                    </div>
+                }
+            </div>
             <p className='txt-secondary txt-md txt-300 mg-left-xs mg-top-s mg-btm-s'>{content}</p>
             <p className='txt-off-secondary txt-md txt-300'>{getDate(createdAt)}</p>
             <p className='txt-off-secondary txt-md txt-300'>{getTime(createdAt)}</p>

@@ -1,0 +1,12 @@
+.profileDiv {
+  border-bottom: solid thin var(--clr-primary);
+}
+
+.postModalTextArea {
+  resize: none;
+}
+
+.btnFollow:hover {
+  background-color: var(--clr-primary);
+  color: var(--clr-secondary);
+}

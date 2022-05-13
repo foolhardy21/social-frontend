@@ -1,4 +1,4 @@
-import { ACTION_ADD_POST, ACTION_INIT_POSTS, ACTION_INIT_USER_FEED, ACTION_LIKE_POST, ACTION_REMOVE_LOADING, ACTION_SET_LOADING } from "utils"
+import { ACTION_CREATE_POST, ACTION_EDIT_POST, ACTION_INIT_POSTS, ACTION_INIT_PROFILE_POSTS, ACTION_INIT_USER_FEED, ACTION_LIKE_POST, ACTION_REMOVE_LOADING, ACTION_REMOVE_POST, ACTION_SET_LOADING } from "utils"
 
 export const postsReducer = (state, { type, payload }) => {
 
@@ -16,7 +16,15 @@ export const postsReducer = (state, { type, payload }) => {
 
         case ACTION_INIT_USER_FEED: return { ...state, posts: state.posts.filter(post => payload.some(username => username === post.username)) }
 
-        case ACTION_ADD_POST: return { ...state, posts: [{ ...payload }, ...state.posts] }
+        case ACTION_CREATE_POST: return { ...state, posts: [{ ...payload }, ...state.posts] }
+
+        case ACTION_INIT_PROFILE_POSTS: return { ...state, posts: payload }
+
+        case ACTION_REMOVE_POST: return { ...state, posts: state.posts.filter(post => post._id !== payload) }
+
+        case ACTION_EDIT_POST: return { ...state, posts: state.posts.map(post => post._id === payload._id ? payload : post) }
+
+        default: return state
 
     }
 }

@@ -80,11 +80,11 @@ const LoginForm = () => {
             </div>
             <div className='flx flx-maj-end'>
                 <button ref={submitBtnRef} type="submit" className='btn-solid bg-secondary txt-secondary txt-md txt-ucase pd-left-s pd-right-s pd-top-xs pd-btm-xs brd-s'>login</button>
-            </div>
+            </div >
             <div className='flx flx-maj-end mg-top-xs'>
                 <button onClick={handleGuestLogin} type="button" className='btn-outlined b-solid b-primary bg-primary txt-primary txt-md txt-cap pd-left-s pd-right-s pd-top-xs pd-btm-xs brd-s'>guest login</button>
             </div>
-        </form>
+        </form >
     )
 }
 

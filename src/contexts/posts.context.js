@@ -51,19 +51,6 @@ export const PostsProvider = ({ children }) => {
         }
     }
 
-    const removeBookmarkFromPost = async postId => {
-        try {
-            const response = await axios.post(`/api/users/remove-bookmark/${postId}`, {}, {
-                headers: {
-                    authorization: getUserToken()
-                }
-            })
-            return response
-        } catch (e) {
-            return e.response
-        }
-    }
-
     const createPost = async postText => {
         try {
             const response = await axios.post('/api/posts', {
@@ -81,6 +68,63 @@ export const PostsProvider = ({ children }) => {
         }
     }
 
+    const removeBookmarkFromPost = async postId => {
+        try {
+            const response = await axios.post(`/api/users/remove-bookmark/${postId}`, {}, {
+                headers: {
+                    authorization: getUserToken()
+                }
+            })
+            return response
+        } catch (e) {
+            return e.response
+        }
+    }
+
+    const getUserPosts = async (username) => {
+        postsDispatch({ type: ACTION_SET_LOADING })
+        try {
+            const response = await axios.get(`/api/posts/user/${username}`)
+            return response
+        } catch (e) {
+            return e.response
+        } finally {
+            postsDispatch({ type: ACTION_REMOVE_LOADING })
+        }
+    }
+
+    const removePost = async postId => {
+        try {
+            const response = await axios.delete(`/api/posts/${postId}`, {
+                headers: {
+                    authorization: getUserToken()
+                }
+            })
+            return response
+        } catch (e) {
+            return e.response
+        }
+    }
+
+    const editPost = async (postId, post) => {
+        try {
+            const response = await axios.post(`/api/posts/edit/${postId}`,
+                {
+                    postData: post
+                },
+                {
+                    headers:
+                    {
+                        authorization: getUserToken()
+                    }
+                })
+            return response
+        } catch (e) {
+            return e.response
+        }
+    }
+
+
     return (
         <PostsContext.Provider
             value={{
@@ -91,6 +135,9 @@ export const PostsProvider = ({ children }) => {
                 dislikePost,
                 removeBookmarkFromPost,
                 createPost,
+                getUserPosts,
+                removePost,
+                editPost,
             }}
         >
             {children}

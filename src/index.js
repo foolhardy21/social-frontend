@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { AuthProvider, PostsProvider } from "contexts";
+import { AuthProvider, ModalProvider, PostsProvider, ProfileProvider } from "contexts";
 import { makeServer } from "./server";
 import { BookmarksProvider } from "contexts";
 
@@ -12,7 +12,11 @@ ReactDOM.render(
   <AuthProvider>
     <PostsProvider>
       <BookmarksProvider>
-        <App />
+        <ProfileProvider>
+          <ModalProvider>
+            <App />
+          </ModalProvider>
+        </ProfileProvider>
       </BookmarksProvider>
     </PostsProvider>
   </AuthProvider>,
