@@ -1,5 +1,5 @@
-import { FeedPageWrapper, Post } from "components/Reusable"
-import { usePosts } from "contexts"
+import { Comment, CommentsWrapper, FeedPageWrapper, Post, PostsWrapper } from "components/Reusable"
+import { useComments, usePosts } from "contexts"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import styles from 'components/Reusable/feedpage.module.css'
@@ -9,11 +9,25 @@ const PostAndCommentsFeed = () => {
     const [currentPost, setCurrentPost] = useState({})
     const params = useParams()
     const { postsState: { posts } } = usePosts()
+    const { commentsState: { comments }, getPostComments, commentsDispatch } = useComments()
+
+    const CommentsSection = CommentsWrapper(Comment, comments)
 
     useEffect(() => {
         const post = posts.find(post => post._id === params.postId)
         setCurrentPost(post)
     }, [])
+
+    useEffect(() => {
+        (async () => {
+            if (Object.keys(currentPost).length > 0) {
+                const response = await getPostComments(currentPost._id)
+                if (response.status === 200) {
+                    commentsDispatch({ type: 'INIT_COMMENTS', payload: response.data.comments })
+                }
+            }
+        })()
+    }, [currentPost])
 
     return (
         <div className={`${styles.feedDiv} flx flx-column`}>
@@ -21,9 +35,7 @@ const PostAndCommentsFeed = () => {
                 Object.keys(currentPost).length > 0 && <Post post={currentPost} />
             }
             <CreateComment />
-            {
-                // post comments
-            }
+            <CommentsSection />
         </div>
     )
 }

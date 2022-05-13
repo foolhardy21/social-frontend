@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth, useBookmarks, useModal, usePosts } from 'contexts'
 import { ACTION_INIT_BOOKMARKS, ACTION_LIKE_POST, ACTION_REMOVE_POST, getDate, getTime } from 'utils'
 import styles from './post.module.css'

@@ -37,16 +37,17 @@ export const CommentsProvider = ({ children }) => {
 
     function commentsReducer(state, { type, payload }) {
         switch (type) {
-            case 'ADD_COMMENT': return { ...state, comments: payload }
+            case 'INIT_COMMENTS': return { ...state, comments: payload }
         }
     }
 
     return (
         <CommentsContext.Provider
             value={{
+                commentsState,
+                commentsDispatch,
                 getPostComments,
                 addCommentToPost,
-                commentsDispatch,
             }}
         >
             {children}

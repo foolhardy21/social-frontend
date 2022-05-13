@@ -14,7 +14,8 @@ const CreateComment = () => {
     const handleCommentSubmit = async () => {
         const response = await addCommentToPost(postId, commentValue)
         if (response.status === 201) {
-            commentsDispatch({ type: 'ADD_COMMENT', payload: response.data })
+            commentsDispatch({ type: 'INIT_COMMENTS', payload: response.data.comments })
+            setCommentValue('')
         }
     }
 
