@@ -1,7 +1,7 @@
 import { useAuth, useComments, useModal } from 'contexts'
 import { Link, useParams } from 'react-router-dom'
 import { getDate, getTime } from 'utils'
-import styles from './post.module.css'
+import styles from '../Reusable/post.module.css'
 
 const Comment = ({ comment: { _id, username, text, votes: { upvotedBy, downvotedBy }, createdAt, updatedAt } }) => {
     const params = useParams()
