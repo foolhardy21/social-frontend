@@ -1,16 +1,22 @@
-import { useAuth, useModal } from 'contexts'
+import { useAuth, useComments, useModal } from 'contexts'
+import { useParams } from 'react-router-dom'
 import { getDate, getTime } from 'utils'
 import styles from './post.module.css'
 
 const Comment = ({ comment: { _id, username, text, votes: { upvotedBy, downvotedBy }, createdAt, updatedAt } }) => {
+    const params = useParams()
     const { getUsername } = useAuth()
     const { setModal } = useModal()
+    const { deleteComment, commentsDispatch } = useComments()
 
     const handleCommentEdit = () => {
         setModal(m => ({ ...m, type: 'COMMENT', id: _id }))
     }
-    const handleCommentDelete = () => {
-
+    const handleCommentDelete = async () => {
+        const response = await deleteComment(params.postId, _id)
+        if (response.status === 201) {
+            commentsDispatch({ type: 'INIT_COMMENTS', payload: response.data.comments })
+        }
     }
     const handleCommentUpVote = () => {
 

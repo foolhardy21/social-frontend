@@ -50,6 +50,19 @@ export const CommentsProvider = ({ children }) => {
         }
     }
 
+    const deleteComment = async (postId, commentId) => {
+        try {
+            const response = await axios.post(`/api/comments/delete/${postId}/${commentId}`, {}, {
+                headers: {
+                    authorization: getUserToken()
+                }
+            })
+            return response
+        } catch (e) {
+            return e.response
+        }
+    }
+
     function commentsReducer(state, { type, payload }) {
         switch (type) {
             case 'INIT_COMMENTS': return { ...state, comments: payload }
@@ -64,6 +77,7 @@ export const CommentsProvider = ({ children }) => {
                 getPostComments,
                 addCommentToPost,
                 editComment,
+                deleteComment,
             }}
         >
             {children}
