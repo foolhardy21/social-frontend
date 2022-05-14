@@ -63,6 +63,32 @@ export const CommentsProvider = ({ children }) => {
         }
     }
 
+    const upvoteComment = async (postId, commentId) => {
+        try {
+            const response = await axios.post(`/api/comments/upvote/${postId}/${commentId}`, {}, {
+                headers: {
+                    authorization: getUserToken()
+                }
+            })
+            return response
+        } catch (e) {
+            return e.response
+        }
+    }
+
+    const downvoteComment = async (postId, commentId) => {
+        try {
+            const response = await axios.post(`/api/comments/downvote/${postId}/${commentId}`, {}, {
+                headers: {
+                    authorization: getUserToken()
+                }
+            })
+            return response
+        } catch (e) {
+            return e.response
+        }
+    }
+
     function commentsReducer(state, { type, payload }) {
         switch (type) {
             case 'INIT_COMMENTS': return { ...state, comments: payload }
@@ -78,6 +104,8 @@ export const CommentsProvider = ({ children }) => {
                 addCommentToPost,
                 editComment,
                 deleteComment,
+                upvoteComment,
+                downvoteComment,
             }}
         >
             {children}

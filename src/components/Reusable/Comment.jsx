@@ -1,5 +1,5 @@
 import { useAuth, useComments, useModal } from 'contexts'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { getDate, getTime } from 'utils'
 import styles from './post.module.css'
 
@@ -7,7 +7,7 @@ const Comment = ({ comment: { _id, username, text, votes: { upvotedBy, downvoted
     const params = useParams()
     const { getUsername } = useAuth()
     const { setModal } = useModal()
-    const { deleteComment, commentsDispatch } = useComments()
+    const { deleteComment, upvoteComment, downvoteComment, commentsDispatch } = useComments()
 
     const handleCommentEdit = () => {
         setModal(m => ({ ...m, type: 'COMMENT', id: _id }))
@@ -18,22 +18,25 @@ const Comment = ({ comment: { _id, username, text, votes: { upvotedBy, downvoted
             commentsDispatch({ type: 'INIT_COMMENTS', payload: response.data.comments })
         }
     }
-    const handleCommentUpVote = () => {
-
+    const handleCommentUpVote = async () => {
+        const response = await upvoteComment(params.postId, _id)
+        if (response.status === 201) {
+            commentsDispatch({ type: 'INIT_COMMENTS', payload: response.data.comments })
+        }
     }
-    const handleCommentDownVote = () => {
-
-    }
-    const handleUsernameClick = () => {
-
+    const handleCommentDownVote = async () => {
+        const response = await downvoteComment(params.postId, _id)
+        if (response.status === 201) {
+            commentsDispatch({ type: 'INIT_COMMENTS', payload: response.data.comments })
+        }
     }
 
     return (
         <article className={`${styles.postDiv} pd-s`}>
             <div className='flx flx-maj-stretch'>
-                <p onClick={handleUsernameClick} className='btn-txt txt-secondary txt-md txt-500'>
+                <Link to={`/${username}`} className='btn-txt txt-secondary txt-md txt-500'>
                     {'@ '}{username}
-                </p>
+                </Link>
                 {
                     getUsername() === username &&
                     <div className='flx'>
