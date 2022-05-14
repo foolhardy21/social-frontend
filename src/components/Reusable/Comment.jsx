@@ -1,12 +1,13 @@
-import { useAuth } from 'contexts'
+import { useAuth, useModal } from 'contexts'
 import { getDate, getTime } from 'utils'
 import styles from './post.module.css'
 
 const Comment = ({ comment: { _id, username, text, votes: { upvotedBy, downvotedBy }, createdAt, updatedAt } }) => {
     const { getUsername } = useAuth()
+    const { setModal } = useModal()
 
     const handleCommentEdit = () => {
-
+        setModal(m => ({ ...m, type: 'COMMENT', id: _id }))
     }
     const handleCommentDelete = () => {
 

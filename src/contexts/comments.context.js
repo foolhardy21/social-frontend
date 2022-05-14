@@ -35,6 +35,21 @@ export const CommentsProvider = ({ children }) => {
         }
     }
 
+    const editComment = async (postId, commentId, commentData) => {
+        try {
+            const response = await axios.post(`/api/comments/edit/${postId}/${commentId}`, {
+                commentData
+            }, {
+                headers: {
+                    authorization: getUserToken()
+                }
+            })
+            return response
+        } catch (e) {
+            return e.response
+        }
+    }
+
     function commentsReducer(state, { type, payload }) {
         switch (type) {
             case 'INIT_COMMENTS': return { ...state, comments: payload }
@@ -48,6 +63,7 @@ export const CommentsProvider = ({ children }) => {
                 commentsDispatch,
                 getPostComments,
                 addCommentToPost,
+                editComment,
             }}
         >
             {children}

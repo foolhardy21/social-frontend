@@ -1,15 +1,19 @@
-import { Comment, CommentsWrapper, FeedPageWrapper, Post, PostsWrapper } from "components/Reusable"
-import { useComments, usePosts } from "contexts"
+import { Comment, CommentsWrapper, FeedPageWrapper, ModalWrapper, Post, PostsWrapper } from "components/Reusable"
+import { useComments, useModal, usePosts } from "contexts"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import styles from 'components/Reusable/feedpage.module.css'
 import { CreateComment } from "components/Reusable"
+import { CommentEdit } from "components/Comment"
+
+const CommentModal = ModalWrapper(CommentEdit)
 
 const PostAndCommentsFeed = () => {
     const [currentPost, setCurrentPost] = useState({})
     const params = useParams()
     const { postsState: { posts } } = usePosts()
     const { commentsState: { comments }, getPostComments, commentsDispatch } = useComments()
+    const { modal } = useModal()
 
     const CommentsSection = CommentsWrapper(Comment, comments)
 
@@ -36,6 +40,9 @@ const PostAndCommentsFeed = () => {
             }
             <CreateComment />
             <CommentsSection />
+            {
+                modal.type === 'COMMENT' ? <CommentModal /> : ''
+            }
         </div>
     )
 }
