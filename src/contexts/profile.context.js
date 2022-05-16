@@ -1,16 +1,10 @@
 import axios from 'axios'
-import { createContext, useContext, useReducer } from 'react'
-import { profileReducer } from 'reducers'
-import { ACTION_REMOVE_LOADING, ACTION_SET_LOADING } from 'utils'
+import { createContext, useContext } from 'react'
 import { useAuth } from './auth.context'
 
 const ProfileContext = createContext()
 
 export const ProfileProvider = ({ children }) => {
-    const [profileState, profileDispatch] = useReducer(profileReducer, {
-        bio: {},
-        loading: false,
-    })
     const { getUserToken } = useAuth()
 
     const getProfileBio = async (username) => {

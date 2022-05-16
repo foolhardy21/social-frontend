@@ -1,16 +1,11 @@
 import axios from "axios";
-import { createContext, useContext, useReducer } from "react";
-import { postsReducer } from "reducers";
-import { ACTION_REMOVE_LOADING, ACTION_SET_LOADING, API_POSTS, API_POST_DISLIKE, API_POST_LIKE } from "utils";
+import { createContext, useContext } from "react";
+import { API_POSTS, API_POST_DISLIKE, API_POST_LIKE } from "utils";
 import { useAuth } from "./";
 
 const PostsContext = createContext({})
 
 export const PostsProvider = ({ children }) => {
-    const [postsState, postsDispatch] = useReducer(postsReducer, {
-        posts: [],
-        loading: false,
-    })
     const { getUserToken } = useAuth()
 
     const getPosts = async () => {

@@ -1,6 +1,0 @@
-export { loginReducer } from './login.reducer'
-export { signupReducer } from './signup.reducer'
-export { postsReducer } from './posts.reducer'
-export { bookmarksReducer } from './bookmarks.reducer'
-export { profileReducer } from './profile.reducer'
-export { commentsReducer } from './comments.reducer'

@@ -1,15 +1,10 @@
 import axios from "axios";
-import { createContext, useContext, useReducer } from "react";
-import { commentsReducer } from "reducers";
+import { createContext, useContext } from "react";
 import { useAuth } from "./auth.context";
 
 const CommentsContext = createContext([])
 
 export const CommentsProvider = ({ children }) => {
-    const [commentsState, commentsDispatch] = useReducer(commentsReducer, {
-        comments: [],
-        loading: false,
-    })
     const { getUserToken } = useAuth()
 
     const getPostComments = async (postId) => {

@@ -1,16 +1,11 @@
 import axios from "axios";
-import { createContext, useReducer, useContext } from "react";
-import { bookmarksReducer } from 'reducers'
-import { ACTION_REMOVE_LOADING, ACTION_SET_LOADING, API_POST_BOOKMARK, API_REMOVE_BOOKMARK } from "utils";
+import { createContext, useContext } from "react";
+import { API_POST_BOOKMARK, API_REMOVE_BOOKMARK } from "utils";
 import { useAuth } from "./";
 
 const BookmarkContext = createContext()
 
 export const BookmarksProvider = ({ children }) => {
-    const [bookmarksState, bookmarksDispatch] = useReducer(bookmarksReducer, {
-        loading: false,
-        bookmarks: []
-    })
     const { getUserToken } = useAuth()
 
     const getBookmarks = async () => {
