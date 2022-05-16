@@ -3,16 +3,19 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth, useBookmarks, useModal, usePosts } from 'contexts'
 import { ACTION_INIT_BOOKMARKS, ACTION_LIKE_POST, ACTION_REMOVE_POST, getDate, getTime } from 'utils'
 import styles from './post.module.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { initialisePosts } from 'slices'
 
 const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, createdAt } }) => {
-    const params = useParams()
     const [isPostLiked, setIsPostLiked] = useState(false)
     const [isPostBookmarked, setIsPostBookmarked] = useState(false)
     const navigate = useNavigate()
     const { isUserLoggedIn, getUsername } = useAuth()
-    const { postsState: { posts }, likePost, dislikePost, editPost, removePost, postsDispatch } = usePosts()
+    const { likePost, dislikePost, removePost } = usePosts()
     const { bookmarksState: { bookmarks }, bookmarkPost, removeBookmarkFromPost, bookmarksDispatch } = useBookmarks()
     const { setModal } = useModal()
+    const { posts } = useSelector(state => state.postsState)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const loggedInUsername = getUsername()
@@ -31,7 +34,8 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
         }
     }, [bookmarks])
 
-    const handleRemoveBookmark = async () => {
+    const handleRemoveBookmark = async (e) => {
+        e.stopPropagation()
         const response = await removeBookmarkFromPost(_id)
         if (response.status === 200) {
             bookmarksDispatch({ type: ACTION_INIT_BOOKMARKS, payload: response.data.bookmarks })
@@ -42,7 +46,8 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
         }
     }
 
-    const handlePostBookmark = async () => {
+    const handlePostBookmark = async (e) => {
+        e.stopPropagation()
         if (isUserLoggedIn) {
             const response = await bookmarkPost(_id)
             if (response.status === 200) {
@@ -55,12 +60,12 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
         }
     }
 
-    const handlePostLike = async () => {
+    const handlePostLike = async (e) => {
+        e.stopPropagation()
         if (isUserLoggedIn) {
             const response = await likePost(_id)
             if (response.status === 201) {
-                const likedPost = response.data.posts.find(post => post._id === _id)
-                postsDispatch({ type: ACTION_LIKE_POST, payload: likedPost })
+                dispatch(initialisePosts(response.data.posts))
             } else if (response.status === 404) {
                 // not logged in
             } else if (response.status === 400) {
@@ -69,12 +74,12 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
         }
     }
 
-    const handlePostDislike = async () => {
+    const handlePostDislike = async (e) => {
+        e.stopPropagation()
         if (isUserLoggedIn) {
             const response = await dislikePost(_id)
             if (response.status === 201) {
-                const dislikedPost = response.data.posts.find(post => post._id === _id)
-                postsDispatch({ type: ACTION_LIKE_POST, payload: dislikedPost })
+                dispatch(initialisePosts(response.data.posts))
             } else if (response.status === 404) {
                 // not logged in
             } else if (response.status === 400) {
@@ -83,14 +88,16 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
         }
     }
 
-    const handleEditPost = async () => {
+    const handleEditPost = async (e) => {
+        e.stopPropagation()
         setModal(m => ({ ...m, type: 'POST', id: _id }))
     }
 
-    const handleRemovePost = async () => {
+    const handleRemovePost = async (e) => {
+        e.stopPropagation()
         const response = await removePost(_id)
         if (response.status === 201) {
-            postsDispatch({ type: ACTION_REMOVE_POST, payload: _id })
+            dispatch(initialisePosts(response.data.posts))
         } else if (response.status === 404) {
             // not logged in
         } else if (response.status === 400) {
@@ -114,7 +121,7 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
                     {'@ '}{username}
                 </p>
                 {
-                    getUsername() === username && params.username === username &&
+                    getUsername() === username &&
                     <div className='flx'>
                         <button onClick={handleEditPost} className='btn-txt mg-right-xs'>
                             <span className='material-icons icon-secondary'>

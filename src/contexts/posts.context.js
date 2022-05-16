@@ -14,14 +14,14 @@ export const PostsProvider = ({ children }) => {
     const { getUserToken } = useAuth()
 
     const getPosts = async () => {
-        postsDispatch({ type: ACTION_SET_LOADING })
+        // postsDispatch({ type: ACTION_SET_LOADING })
         try {
             const response = await axios.get(API_POSTS)
             return response
         } catch (e) {
             return e.response
         } finally {
-            postsDispatch({ type: ACTION_REMOVE_LOADING })
+            // postsDispatch({ type: ACTION_REMOVE_LOADING })
         }
     }
 
@@ -82,14 +82,14 @@ export const PostsProvider = ({ children }) => {
     }
 
     const getUserPosts = async (username) => {
-        postsDispatch({ type: ACTION_SET_LOADING })
+        // postsDispatch({ type: ACTION_SET_LOADING })
         try {
             const response = await axios.get(`/api/posts/user/${username}`)
             return response
         } catch (e) {
             return e.response
         } finally {
-            postsDispatch({ type: ACTION_REMOVE_LOADING })
+            // postsDispatch({ type: ACTION_REMOVE_LOADING })
         }
     }
 

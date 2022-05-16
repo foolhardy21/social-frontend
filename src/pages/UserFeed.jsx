@@ -1,13 +1,15 @@
 import axios from 'axios'
 import { useEffect } from 'react'
 import { FeedPageWrapper, Post, PostsWrapper, PageHeading } from "components/Reusable"
-import { useAuth, usePosts } from 'contexts'
-import { ACTION_INIT_USER_FEED } from 'utils'
+import { useAuth } from 'contexts'
 import styles from 'components/Reusable/feedpage.module.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { initialiseFeed } from 'slices'
 
 const UserFeedSection = () => {
-    const { postsDispatch, postsState: { posts } } = usePosts()
     const { getUsername } = useAuth()
+    const { posts } = useSelector(state => state.postsState)
+    const dispatch = useDispatch()
 
     const FeedPosts = PostsWrapper(Post, posts, 'my feed')
 
@@ -15,7 +17,9 @@ const UserFeedSection = () => {
         (async () => {
             const response = await axios.get('/api/users')
             const loggedInUser = response.data.users.find(user => user.username === getUsername())
-            postsDispatch({ type: ACTION_INIT_USER_FEED, payload: loggedInUser.following.map(followinguser => followinguser.username) })
+            const loggedInUserFollowing = loggedInUser.following.map(followinguser => followinguser.username)
+            const feedPosts = posts.filter(post => loggedInUserFollowing.some(username => username === post.username))
+            dispatch(initialiseFeed(feedPosts))
         })()
     }, [])
 

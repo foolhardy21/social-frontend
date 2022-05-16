@@ -6,15 +6,19 @@ import { PostEdit, ProfileBio, ProfileEdit } from 'components/Profile'
 import { useModal, usePosts, useProfile } from "contexts"
 import { ACTION_INIT_PROFILE_POSTS, ACTION_SET_BIO } from 'utils'
 import styles from 'components/Reusable/feedpage.module.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { initialiseProfilePosts, removePostsLoading, setPostsLoading } from 'slices'
 
 const PostModal = ModalWrapper(PostEdit)
 const ProfileModal = ModalWrapper(ProfileEdit)
 
 const ProfileSection = () => {
     const params = useParams()
-    const { postsState, getUserPosts, postsDispatch } = usePosts()
+    const { getUserPosts } = usePosts()
     const { profileState, getProfileBio, profileDispatch } = useProfile()
     const { modal } = useModal()
+    const dispatch = useDispatch()
+    const postsState = useSelector(state => state.postsState)
 
     const ProfilePosts = PostsWrapper(Post, postsState.posts)
 
@@ -29,10 +33,12 @@ const ProfileSection = () => {
 
     useEffect(() => {
         (async () => {
-            const { status, data: { posts } } = await getUserPosts(params.username)
+            dispatch(setPostsLoading())
+            const { status, data } = await getUserPosts(params.username)
             if (status === 200) {
-                postsDispatch({ type: ACTION_INIT_PROFILE_POSTS, payload: posts })
+                dispatch(initialiseProfilePosts(data.posts))
             }
+            dispatch(removePostsLoading())
         })()
     }, [profileState.bio])
 

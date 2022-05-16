@@ -1,20 +1,21 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { usePosts } from 'contexts'
-import { ACTION_CREATE_POST } from 'utils'
+import { initialisePosts } from 'slices'
 import postStyles from './post.module.css'
 import styles from './createpost.module.css'
 
 const CreatePost = () => {
     const [postValue, setPostValue] = useState('')
-    const { createPost, postsDispatch } = usePosts()
+    const { createPost } = usePosts()
+    const dispatch = useDispatch()
 
     const isButtonDisabled = () => postValue.length === 0
 
     const handlePostSubmit = async () => {
         const response = await createPost(postValue)
         if (response.status === 201) {
-            const createdPost = response.data.posts[response.data.posts.length - 1]
-            postsDispatch({ type: ACTION_CREATE_POST, payload: createdPost })
+            dispatch(initialisePosts(response.data.posts))
         } else if (response.status === 404) {
             // not logged in
         }
