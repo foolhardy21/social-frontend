@@ -14,7 +14,7 @@ export const ProfileProvider = ({ children }) => {
     const { getUserToken } = useAuth()
 
     const getProfileBio = async (username) => {
-        profileDispatch({ type: ACTION_SET_LOADING })
+        // profileDispatch({ type: ACTION_SET_LOADING })
         try {
             const { data: { users } } = await axios.get('/api/users')
             const loggedInUser = users.find(user => user.username === username)
@@ -23,7 +23,7 @@ export const ProfileProvider = ({ children }) => {
         } catch (e) {
             return e.response
         } finally {
-            profileDispatch({ type: ACTION_REMOVE_LOADING })
+            // profileDispatch({ type: ACTION_REMOVE_LOADING })
         }
     }
 
@@ -71,8 +71,8 @@ export const ProfileProvider = ({ children }) => {
     return (
         <ProfileContext.Provider
             value={{
-                profileState,
-                profileDispatch,
+                // profileState,
+                // profileDispatch,
                 getProfileBio,
                 editBio,
                 followUser,

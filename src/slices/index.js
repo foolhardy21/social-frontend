@@ -2,3 +2,4 @@ export { default as loginReducer, toggleLoginPasswordType, updateLoginUsername, 
 export { default as signupReducer, updateSignupAlert, updateSignupFirstName, updateSignupLastName, updateSignupPassword, updateSignupUsername, toggleSignupPasswordType } from './signup.slice'
 export { default as postsReducer, setPostsLoading, removePostsLoading, initialisePosts, initialiseFeed, initialiseProfilePosts } from './posts.slice'
 export { default as bookmarksReducer, initialiseBookmarks, setBookmarksLoading, removeBookmarksLoading } from './bookmarks.slice'
+export { default as profileReducer, setProfileBio, removeProfileLoading, setProfileLoading } from './profile.slice'

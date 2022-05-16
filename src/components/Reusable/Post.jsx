@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAuth, useBookmarks, useModal, usePosts } from 'contexts'
 import { getDate, getTime } from 'utils'
@@ -17,6 +17,7 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
     const { posts } = useSelector(state => state.postsState)
     const { bookmarks } = useSelector(state => state.bookmarksState)
     const dispatch = useDispatch()
+    const params = useParams()
 
     useEffect(() => {
         const loggedInUsername = getUsername()
@@ -122,7 +123,7 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
                     {'@ '}{username}
                 </p>
                 {
-                    getUsername() === username &&
+                    getUsername() === username && params.username === username &&
                     <div className='flx'>
                         <button onClick={handleEditPost} className='btn-txt mg-right-xs'>
                             <span className='material-icons icon-secondary'>

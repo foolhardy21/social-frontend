@@ -1,14 +1,18 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { useAuth, useModal, useProfile } from "contexts"
-import { ACTION_SET_BIO, getDate } from 'utils'
+import { getDate } from 'utils'
 import styles from './profile.module.css'
+import { useDispatch, useSelector } from "react-redux"
+import { setProfileBio } from "slices"
 
 const ProfileBio = () => {
     const [isUserFollowed, setIsUserFollowed] = useState(false)
-    const { profileState: { bio }, followUser, unFollowUser, profileDispatch } = useProfile()
+    const { followUser, unFollowUser } = useProfile()
     const { setModal } = useModal()
     const { getUsername } = useAuth()
+    const { bio } = useSelector(state => state.profile)
+    const dispatch = useDispatch()
 
     const handleProfileEdit = async () => {
         setModal(m => ({ ...m, type: 'BIO', id: bio.username }))
@@ -32,7 +36,7 @@ const ProfileBio = () => {
         const response = await followUser(bio._id)
         if (response.status === 200) {
             setIsUserFollowed(true)
-            profileDispatch({ type: ACTION_SET_BIO, payload: response.data.followUser })
+            dispatch(setProfileBio(response.data.followUser))
         } else if (response.status === 400) {
             // already following
         } else if (response.status === 404) {
@@ -44,7 +48,7 @@ const ProfileBio = () => {
         const response = await unFollowUser(bio._id)
         if (response.status === 200) {
             setIsUserFollowed(false)
-            profileDispatch({ type: ACTION_SET_BIO, payload: response.data.followUser })
+            dispatch(setProfileBio(response.data.followUser))
         } else if (response.status === 400) {
             // already following
         } else if (response.status === 404) {

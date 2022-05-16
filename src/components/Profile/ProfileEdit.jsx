@@ -1,11 +1,14 @@
 import { useModal, useProfile } from "contexts"
 import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import { setProfileBio } from "slices"
 import { ACTION_SET_BIO } from "utils"
 
 const ProfileEdit = () => {
     const [bio, setBio] = useState({})
     const { modal: { id }, setModal } = useModal()
-    const { getProfileBio, editBio, profileDispatch } = useProfile()
+    const { getProfileBio, editBio } = useProfile()
+    const dispatch = useDispatch()
 
     useEffect(() => {
         (async () => {
@@ -19,7 +22,7 @@ const ProfileEdit = () => {
     const handleBioEdit = async () => {
         const response = await editBio(bio)
         if (response.status === 201) {
-            profileDispatch({ type: ACTION_SET_BIO, payload: bio })
+            dispatch(setProfileBio(bio))
         }
         setBio({})
         setModal(m => ({ ...m, type: '', id: '' }))

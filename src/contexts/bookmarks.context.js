@@ -59,8 +59,8 @@ export const BookmarksProvider = ({ children }) => {
     return (
         <BookmarkContext.Provider
             value={{
-                bookmarksState,
-                bookmarksDispatch,
+                // bookmarksState,
+                // bookmarksDispatch,
                 getBookmarks,
                 bookmarkPost,
                 removeBookmarkFromPost,

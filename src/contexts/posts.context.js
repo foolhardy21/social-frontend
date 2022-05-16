@@ -128,8 +128,8 @@ export const PostsProvider = ({ children }) => {
     return (
         <PostsContext.Provider
             value={{
-                postsState,
-                postsDispatch,
+                // postsState,
+                // postsDispatch,
                 getPosts,
                 likePost,
                 dislikePost,
