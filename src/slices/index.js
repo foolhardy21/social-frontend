@@ -1,1 +1,2 @@
 export { default as loginReducer, toggleLoginPasswordType, updateLoginUsername, updateLoginPassword, updateLoginAlert } from './login.slice'
+export { default as signupReducer, updateSignupAlert, updateSignupFirstName, updateSignupLastName, updateSignupPassword, updateSignupUsername, toggleSignupPasswordType } from './signup.slice'
