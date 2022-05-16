@@ -4,6 +4,7 @@
 
 .postModalTextArea {
   resize: none;
+  padding: 0.5rem;
 }
 
 .btnFollow:hover {

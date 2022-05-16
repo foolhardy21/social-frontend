@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useReducer } from "react";
+import { commentsReducer } from "reducers";
 import { useAuth } from "./auth.context";
 
 const CommentsContext = createContext([])
@@ -86,12 +87,6 @@ export const CommentsProvider = ({ children }) => {
             return response
         } catch (e) {
             return e.response
-        }
-    }
-
-    function commentsReducer(state, { type, payload }) {
-        switch (type) {
-            case 'INIT_COMMENTS': return { ...state, comments: payload }
         }
     }
 
