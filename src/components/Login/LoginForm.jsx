@@ -1,58 +1,54 @@
-import { useReducer, useRef, useEffect } from "react"
+import { useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
 import { useAuth } from "contexts"
-import { loginReducer } from "reducers"
-import { isFormEmpty, ACTION_TOGGLE_PASSWORD_TYPE, ACTION_UPDATE_PASSWORD, ACTION_UPDATE_USERNAME, ALERT_TYPE_ERROR, ALERT_TYPE_SUCCESS, ALERT_DISPLAY_TIME, showAlert } from "utils"
+import { toggleLoginPasswordType, updateLoginUsername, updateLoginPassword, updateLoginAlert } from 'slices'
+import { isFormEmpty, ALERT_TYPE_ERROR, ALERT_TYPE_SUCCESS, ALERT_DISPLAY_TIME, showAlert } from "utils"
 
 const LoginForm = () => {
+    const loginState = useSelector((state) => state.login)
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const submitBtnRef = useRef(null)
-    const [loginState, loginDispatch] = useReducer(loginReducer, {
-        username: '',
-        password: '',
-        alert: {
-            message: '',
-            type: ''
-        },
-        passwordInputType: 'password'
-    })
     const { logInUser } = useAuth()
 
     const { username, password, alert: { message, type }, passwordInputType } = loginState
 
     const togglePasswordInputType = () => {
-        loginDispatch({ type: ACTION_TOGGLE_PASSWORD_TYPE })
+        dispatch(toggleLoginPasswordType())
     }
 
     const updateUsername = e => {
-        loginDispatch({ type: ACTION_UPDATE_USERNAME, payload: e.target.value })
+        dispatch(updateLoginUsername(e.target.value))
     }
 
     const updatePassword = e => {
-        loginDispatch({ type: ACTION_UPDATE_PASSWORD, payload: e.target.value })
+        dispatch(updateLoginPassword(e.target.value))
     }
 
     const handleLoginSubmit = async e => {
         e.preventDefault()
 
         if (isFormEmpty({ username, password })) {
-            showAlert(loginDispatch, 'form is empty', ALERT_TYPE_ERROR)
+            showAlert(dispatch, updateLoginAlert, 'form is empty', ALERT_TYPE_ERROR)
         } else {
             const response = await logInUser(username, password)
             if (response.status === 200) {
-                showAlert(loginDispatch, 'logged in', ALERT_TYPE_SUCCESS)
+                showAlert(dispatch, updateLoginAlert, 'logged in', ALERT_TYPE_SUCCESS)
                 setTimeout(() => navigate('/explore'), ALERT_DISPLAY_TIME + 100)
             } else if (response.status === 404) {
-                showAlert(loginDispatch, 'user not found', ALERT_TYPE_ERROR)
+                showAlert(dispatch, updateLoginAlert, 'user not found', ALERT_TYPE_ERROR)
             } else if (response.status === 401) {
-                showAlert(loginDispatch, 'wrong password', ALERT_TYPE_ERROR)
+                showAlert(dispatch, updateLoginAlert, 'wrong password', ALERT_TYPE_ERROR)
             }
+            dispatch(updateLoginUsername(''))
+            dispatch(updateLoginPassword(''))
         }
     }
 
     const handleGuestLogin = () => {
-        loginDispatch({ type: 'UPDATE_USERNAME', payload: 'coolmohit' })
-        loginDispatch({ type: 'UPDATE_PASSWORD', payload: 'a1!' })
+        dispatch(updateLoginUsername('coolmohit'))
+        dispatch(updateLoginPassword('a1!'))
     }
 
     useEffect(() => {

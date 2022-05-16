@@ -5,6 +5,8 @@ import { AuthProvider, ModalProvider, PostsProvider, ProfileProvider } from "con
 import { makeServer } from "./server";
 import { BookmarksProvider } from "contexts";
 import { CommentsProvider } from "contexts/comments.context";
+import { Provider } from "react-redux";
+import { store } from "app/store";
 
 // Call make Server
 makeServer();
@@ -16,12 +18,15 @@ ReactDOM.render(
         <BookmarksProvider>
           <ProfileProvider>
             <ModalProvider>
-              <App />
+              <Provider store={store}>
+                <App />
+              </Provider>
             </ModalProvider>
           </ProfileProvider>
         </BookmarksProvider>
       </CommentsProvider>
     </PostsProvider>
-  </AuthProvider>,
+  </AuthProvider>
+  ,
   document.getElementById("root")
 );
