@@ -1,15 +1,15 @@
 import { useEffect } from 'react'
 import ClipLoader from 'react-spinners/ClipLoader'
+import { useDispatch, useSelector } from 'react-redux'
 import { CreatePost, FeedPageWrapper, PageHeading, Post, PostsWrapper } from 'components/Reusable'
 import { usePosts, useAuth } from 'contexts'
-import styles from 'components/Reusable/feedpage.module.css'
-import { useDispatch, useSelector } from 'react-redux'
 import { initialisePosts, removePostsLoading, setPostsLoading } from 'slices'
+import styles from 'components/Reusable/feedpage.module.css'
 
 const ExplorePostsSection = () => {
     const { getPosts } = usePosts()
     const { getUserToken, setIsUserLoggedIn } = useAuth()
-    const { posts, loading } = useSelector(state => state.postsState)
+    const { posts, loading } = useSelector(state => state.posts)
     const dispatch = useDispatch()
 
     const ExplorePosts = PostsWrapper(Post, posts, 'explore')

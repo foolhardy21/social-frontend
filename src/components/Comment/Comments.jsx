@@ -1,7 +1,7 @@
 const CommentsWrapper = (CommentComponent, comments) => {
 
     const Comments = () => {
-
+        console.log(comments)
         return (
             <div className="flx flx-column">
                 {

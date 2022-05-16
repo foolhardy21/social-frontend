@@ -93,8 +93,8 @@ export const CommentsProvider = ({ children }) => {
     return (
         <CommentsContext.Provider
             value={{
-                commentsState,
-                commentsDispatch,
+                // commentsState,
+                // commentsDispatch,
                 getPostComments,
                 addCommentToPost,
                 editComment,

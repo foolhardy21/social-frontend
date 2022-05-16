@@ -8,7 +8,7 @@ import { initialiseFeed } from 'slices'
 
 const UserFeedSection = () => {
     const { getUsername } = useAuth()
-    const { posts } = useSelector(state => state.postsState)
+    const { posts } = useSelector(state => state.posts)
     const dispatch = useDispatch()
 
     const FeedPosts = PostsWrapper(Post, posts, 'my feed')

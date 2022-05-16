@@ -5,15 +5,19 @@ import { useParams } from "react-router-dom"
 import styles from 'components/Reusable/feedpage.module.css'
 import { CreateComment } from "components/Reusable"
 import { CommentEdit, Comment, CommentsWrapper } from "components/Comment"
+import { useDispatch, useSelector } from "react-redux"
+import { initialiseComments } from "slices"
 
 const CommentModal = ModalWrapper(CommentEdit)
 
 const PostAndCommentsFeed = () => {
     const [currentPost, setCurrentPost] = useState({})
     const params = useParams()
-    const { postsState: { posts } } = usePosts()
-    const { commentsState: { comments }, getPostComments, commentsDispatch } = useComments()
+    const { posts } = useSelector(state => state.posts)
+    const { comments } = useSelector(state => state.comments)
+    const { getPostComments } = useComments()
     const { modal } = useModal()
+    const dispatch = useDispatch()
 
     const CommentsSection = CommentsWrapper(Comment, comments)
 
@@ -27,7 +31,7 @@ const PostAndCommentsFeed = () => {
             if (Object.keys(currentPost).length > 0) {
                 const response = await getPostComments(currentPost._id)
                 if (response.status === 200) {
-                    commentsDispatch({ type: 'INIT_COMMENTS', payload: response.data.comments })
+                    dispatch(initialiseComments(response.data.comments))
                 }
             }
         })()

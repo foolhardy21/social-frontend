@@ -8,7 +8,7 @@ import styles from 'components/Reusable/feedpage.module.css'
 
 const BookmarksSection = () => {
     const { getBookmarks } = useBookmarks()
-    const { bookmarks, loading } = useSelector(state => state.bookmarksState)
+    const { bookmarks, loading } = useSelector(state => state.bookmarks)
     const dispatch = useDispatch()
 
     const BookmarkPosts = PostsWrapper(Post, bookmarks)

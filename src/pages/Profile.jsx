@@ -18,7 +18,7 @@ const ProfileSection = () => {
     const { modal } = useModal()
     const dispatch = useDispatch()
     const profileState = useSelector(state => state.profile)
-    const postsState = useSelector(state => state.postsState)
+    const postsState = useSelector(state => state.posts)
 
     const ProfilePosts = PostsWrapper(Post, postsState.posts)
 

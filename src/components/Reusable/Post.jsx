@@ -14,8 +14,8 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
     const { likePost, dislikePost, removePost } = usePosts()
     const { bookmarkPost, removeBookmarkFromPost } = useBookmarks()
     const { setModal } = useModal()
-    const { posts } = useSelector(state => state.postsState)
-    const { bookmarks } = useSelector(state => state.bookmarksState)
+    const { posts } = useSelector(state => state.posts)
+    const { bookmarks } = useSelector(state => state.bookmarks)
     const dispatch = useDispatch()
     const params = useParams()
 

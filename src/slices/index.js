@@ -3,3 +3,4 @@ export { default as signupReducer, updateSignupAlert, updateSignupFirstName, upd
 export { default as postsReducer, setPostsLoading, removePostsLoading, initialisePosts, initialiseFeed, initialiseProfilePosts } from './posts.slice'
 export { default as bookmarksReducer, initialiseBookmarks, setBookmarksLoading, removeBookmarksLoading } from './bookmarks.slice'
 export { default as profileReducer, setProfileBio, removeProfileLoading, setProfileLoading } from './profile.slice'
+export { default as commentsReducer, initialiseComments } from './comments.slice'
