@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth, useBookmarks, useModal, usePosts } from 'contexts'
 import { ACTION_INIT_BOOKMARKS, ACTION_LIKE_POST, ACTION_REMOVE_POST, getDate, getTime } from 'utils'
 import styles from './post.module.css'
@@ -8,6 +8,7 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
     const params = useParams()
     const [isPostLiked, setIsPostLiked] = useState(false)
     const [isPostBookmarked, setIsPostBookmarked] = useState(false)
+    const navigate = useNavigate()
     const { isUserLoggedIn, getUsername } = useAuth()
     const { postsState: { posts }, likePost, dislikePost, editPost, removePost, postsDispatch } = usePosts()
     const { bookmarksState: { bookmarks }, bookmarkPost, removeBookmarkFromPost, bookmarksDispatch } = useBookmarks()
@@ -97,13 +98,21 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
         }
     }
 
-    return (
+    const handlePostClick = () => {
+        navigate(`/${username}/post/${_id}`)
+    }
 
-        <article className={`${styles.postDiv} pd-s`}>
+    const handleUsernameClick = (e) => {
+        navigate(`/${username}`)
+        e.stopPropagation()
+    }
+
+    return (
+        <article onClick={handlePostClick} className={`${styles.postDiv} pd-s`}>
             <div className='flx flx-maj-stretch'>
-                <Link to={`/${username}`} className='btn-txt txt-secondary txt-md txt-500'>
+                <p onClick={handleUsernameClick} className='btn-txt txt-secondary txt-md txt-500'>
                     {'@ '}{username}
-                </Link>
+                </p>
                 {
                     getUsername() === username && params.username === username &&
                     <div className='flx'>
