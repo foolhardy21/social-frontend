@@ -14,7 +14,7 @@ export const BookmarksProvider = ({ children }) => {
     const { getUserToken } = useAuth()
 
     const getBookmarks = async () => {
-        bookmarksDispatch({ type: ACTION_SET_LOADING })
+        // bookmarksDispatch({ type: ACTION_SET_LOADING })
         try {
             const response = await axios.get(API_POST_BOOKMARK, {
                 headers: {
@@ -25,7 +25,7 @@ export const BookmarksProvider = ({ children }) => {
         } catch (e) {
             return e.response
         } finally {
-            bookmarksDispatch({ type: ACTION_REMOVE_LOADING })
+            // bookmarksDispatch({ type: ACTION_REMOVE_LOADING })
         }
     }
 

@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { useAuth, useBookmarks, useModal, usePosts } from 'contexts'
-import { ACTION_INIT_BOOKMARKS, ACTION_LIKE_POST, ACTION_REMOVE_POST, getDate, getTime } from 'utils'
-import styles from './post.module.css'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { initialisePosts } from 'slices'
+import { useAuth, useBookmarks, useModal, usePosts } from 'contexts'
+import { getDate, getTime } from 'utils'
+import { initialiseBookmarks, initialisePosts } from 'slices'
+import styles from './post.module.css'
 
 const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, createdAt } }) => {
     const [isPostLiked, setIsPostLiked] = useState(false)
@@ -12,9 +12,10 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
     const navigate = useNavigate()
     const { isUserLoggedIn, getUsername } = useAuth()
     const { likePost, dislikePost, removePost } = usePosts()
-    const { bookmarksState: { bookmarks }, bookmarkPost, removeBookmarkFromPost, bookmarksDispatch } = useBookmarks()
+    const { bookmarkPost, removeBookmarkFromPost } = useBookmarks()
     const { setModal } = useModal()
     const { posts } = useSelector(state => state.postsState)
+    const { bookmarks } = useSelector(state => state.bookmarksState)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -38,7 +39,7 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
         e.stopPropagation()
         const response = await removeBookmarkFromPost(_id)
         if (response.status === 200) {
-            bookmarksDispatch({ type: ACTION_INIT_BOOKMARKS, payload: response.data.bookmarks })
+            dispatch(initialiseBookmarks(response.data.bookmarks))
         } else if (response.status === 400) {
             // already removed from bookmarks
         } else if (response.status === 404) {
@@ -51,7 +52,7 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
         if (isUserLoggedIn) {
             const response = await bookmarkPost(_id)
             if (response.status === 200) {
-                bookmarksDispatch({ type: ACTION_INIT_BOOKMARKS, payload: response.data.bookmarks })
+                dispatch(initialiseBookmarks(response.data.bookmarks))
             } else if (response.status === 404) {
                 // not logged in
             } else if (response.status === 400) {
