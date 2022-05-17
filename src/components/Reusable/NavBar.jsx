@@ -1,14 +1,18 @@
 import { useLocation, Link, useNavigate } from "react-router-dom"
 import { useAuth } from "contexts"
 import styles from './navbar.module.css'
+import { useDispatch, useSelector } from "react-redux"
+import { logOutUser } from "slices"
 
 const NavBar = () => {
-    const { isUserLoggedIn, logoutUser, getUsername } = useAuth()
+    const { getUsername } = useAuth()
+    const { isUserLoggedIn } = useSelector(state => state.auth)
+    const dispatch = useDispatch()
     const { pathname } = useLocation()
     const navigate = useNavigate()
 
     const handleLogoutUser = () => {
-        logoutUser()
+        dispatch(logOutUser())
         navigate('/')
     }
 

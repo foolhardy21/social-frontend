@@ -3,12 +3,12 @@ import ClipLoader from 'react-spinners/ClipLoader'
 import { useDispatch, useSelector } from 'react-redux'
 import { CreatePost, FeedPageWrapper, PageHeading, Post, PostsWrapper } from 'components/Reusable'
 import { usePosts, useAuth } from 'contexts'
-import { initialisePosts, removePostsLoading, setPostsLoading } from 'slices'
+import { initialisePosts, removePostsLoading, setPostsLoading, updateUserLogInStatus } from 'slices'
 import styles from 'components/Reusable/feedpage.module.css'
 
 const ExplorePostsSection = () => {
     const { getPosts } = usePosts()
-    const { getUserToken, setIsUserLoggedIn } = useAuth()
+    const { getUserToken } = useAuth()
     const { posts, loading } = useSelector(state => state.posts)
     const dispatch = useDispatch()
 
@@ -24,7 +24,7 @@ const ExplorePostsSection = () => {
             dispatch(removePostsLoading())
         })()
         if (getUserToken()) {
-            setIsUserLoggedIn(true)
+            dispatch(updateUserLogInStatus())
         }
     }, [])
 

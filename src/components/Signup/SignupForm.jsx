@@ -1,15 +1,14 @@
-import { useReducer } from "react"
+import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { useAuth } from "contexts"
-import { isFormEmpty, ACTION_TOGGLE_PASSWORD_TYPE, ACTION_UPDATE_FIRST_NAME, ACTION_UPDATE_LAST_NAME, ACTION_UPDATE_PASSWORD, ACTION_UPDATE_USERNAME, ALERT_DISPLAY_TIME, ALERT_TYPE_ERROR, ALERT_TYPE_SUCCESS, showAlert } from "utils"
+import { isFormEmpty, ALERT_DISPLAY_TIME, ALERT_TYPE_ERROR, ALERT_TYPE_SUCCESS, showAlert } from "utils"
 import { useDispatch, useSelector } from "react-redux"
-import { toggleSignupPasswordType, updateSignupAlert, updateSignupFirstName, updateSignupLastName, updateSignupPassword, updateSignupUsername } from "slices"
+import { signUpUser, toggleSignupPasswordType, updateSignupAlert, updateSignupFirstName, updateSignupLastName, updateSignupPassword, updateSignupUsername } from "slices"
 
 const SignupForm = () => {
     const signupState = useSelector(state => state.signup)
+    const authState = useSelector(state => state.auth)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { signUpUser } = useAuth()
 
     const { username, password, firstName, lastName, alert: { message, type }, passwordInputType } = signupState
 
@@ -34,15 +33,18 @@ const SignupForm = () => {
         if (isFormEmpty({ username, password, firstName, lastName })) {
             showAlert(dispatch, updateSignupAlert, 'form is empty', ALERT_TYPE_ERROR)
         } else {
-            const response = await signUpUser(username, password, firstName, lastName)
-            if (response.status === 201) {
-                showAlert(dispatch, updateSignupAlert, 'signed up', ALERT_TYPE_SUCCESS)
-                setTimeout(() => navigate('/login'), ALERT_DISPLAY_TIME + 100)
-            } else if (response.status === 422) {
-                showAlert(dispatch, updateSignupAlert, 'user already exists', ALERT_TYPE_ERROR)
-            }
+            dispatch(signUpUser({ username, password, firstName, lastName }))
         }
     }
+
+    useEffect(() => {
+        if (authState.isUserSignedUp) {
+            showAlert(dispatch, updateSignupAlert, 'signed up', ALERT_TYPE_SUCCESS)
+            setTimeout(() => navigate('/login'), ALERT_DISPLAY_TIME + 100)
+        } else if (authState.error.length > 0) {
+            showAlert(dispatch, updateSignupAlert, authState.error, ALERT_TYPE_ERROR)
+        }
+    }, [authState])
 
     return (
         <form onSubmit={handleSignupSubmit} className='flx flx-column mg-top-md mg-btm-md'>

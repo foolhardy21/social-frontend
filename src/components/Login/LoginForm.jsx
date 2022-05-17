@@ -1,16 +1,15 @@
 import { useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { useAuth } from "contexts"
-import { toggleLoginPasswordType, updateLoginUsername, updateLoginPassword, updateLoginAlert } from 'slices'
+import { toggleLoginPasswordType, updateLoginUsername, updateLoginPassword, updateLoginAlert, logInUser } from 'slices'
 import { isFormEmpty, ALERT_TYPE_ERROR, ALERT_TYPE_SUCCESS, ALERT_DISPLAY_TIME, showAlert } from "utils"
 
 const LoginForm = () => {
     const loginState = useSelector((state) => state.login)
+    const authState = useSelector(state => state.auth)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const submitBtnRef = useRef(null)
-    const { logInUser } = useAuth()
 
     const { username, password, alert: { message, type }, passwordInputType } = loginState
 
@@ -26,21 +25,13 @@ const LoginForm = () => {
         dispatch(updateLoginPassword(e.target.value))
     }
 
-    const handleLoginSubmit = async e => {
+    const handleLoginSubmit = e => {
         e.preventDefault()
 
         if (isFormEmpty({ username, password })) {
             showAlert(dispatch, updateLoginAlert, 'form is empty', ALERT_TYPE_ERROR)
         } else {
-            const response = await logInUser(username, password)
-            if (response.status === 200) {
-                showAlert(dispatch, updateLoginAlert, 'logged in', ALERT_TYPE_SUCCESS)
-                setTimeout(() => navigate('/explore'), ALERT_DISPLAY_TIME + 100)
-            } else if (response.status === 404) {
-                showAlert(dispatch, updateLoginAlert, 'user not found', ALERT_TYPE_ERROR)
-            } else if (response.status === 401) {
-                showAlert(dispatch, updateLoginAlert, 'wrong password', ALERT_TYPE_ERROR)
-            }
+            dispatch(logInUser({ username, password }))
             dispatch(updateLoginUsername(''))
             dispatch(updateLoginPassword(''))
         }
@@ -50,6 +41,15 @@ const LoginForm = () => {
         dispatch(updateLoginUsername('coolmohit'))
         dispatch(updateLoginPassword('a1!'))
     }
+
+    useEffect(() => {
+        if (authState.isUserLoggedIn) {
+            showAlert(dispatch, updateLoginAlert, 'logged in', ALERT_TYPE_SUCCESS)
+            setTimeout(() => navigate('/explore'), ALERT_DISPLAY_TIME + 100)
+        } else if (authState.error.length > 0) {
+            showAlert(dispatch, updateLoginAlert, authState.error, ALERT_TYPE_ERROR)
+        }
+    }, [authState])
 
     useEffect(() => {
         if (username === 'coolmohit' && password === 'a1!') {

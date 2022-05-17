@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { profileReducer, bookmarksReducer, loginReducer, postsReducer, signupReducer, commentsReducer } from 'slices'
+import { profileReducer, bookmarksReducer, loginReducer, postsReducer, signupReducer, commentsReducer, authReducer } from 'slices'
 
 export const store = configureStore({
     reducer: {
@@ -9,5 +9,6 @@ export const store = configureStore({
         bookmarks: bookmarksReducer,
         profile: profileReducer,
         comments: commentsReducer,
+        auth: authReducer,
     }
 })
