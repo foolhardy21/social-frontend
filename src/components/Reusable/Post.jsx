@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useAuth, useBookmarks, useModal } from 'contexts'
+import { useAuth, useModal } from 'contexts'
 import { getDate, getTime } from 'utils'
 import { likePost, dislikePost, removeBookmarkFromPost, removePost, bookmarkPost } from 'slices'
 import styles from './post.module.css'
@@ -11,7 +11,6 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
     const [isPostBookmarked, setIsPostBookmarked] = useState(false)
     const navigate = useNavigate()
     const { getUsername, getUserToken } = useAuth()
-    const { } = useBookmarks()
     const { setModal } = useModal()
     const { posts } = useSelector(state => state.posts)
     const { bookmarks } = useSelector(state => state.bookmarks)

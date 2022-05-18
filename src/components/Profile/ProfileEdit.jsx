@@ -1,4 +1,4 @@
-import { useAuth, useModal, useProfile } from "contexts"
+import { useAuth, useModal } from "contexts"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { editBio } from "slices"
@@ -6,7 +6,6 @@ import { editBio } from "slices"
 const ProfileEdit = () => {
     const [bio, setBio] = useState({})
     const { modal: { id }, setModal } = useModal()
-    const { } = useProfile()
     const { getUserToken } = useAuth()
     const dispatch = useDispatch()
     const profileState = useSelector(state => state.profile)

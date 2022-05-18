@@ -1,5 +1,5 @@
 import { FeedPageWrapper, ModalWrapper, Post } from "components/Reusable"
-import { useComments, useModal } from "contexts"
+import { useModal } from "contexts"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import styles from 'components/Reusable/feedpage.module.css'
@@ -15,7 +15,6 @@ const PostAndCommentsFeed = () => {
     const params = useParams()
     const { posts } = useSelector(state => state.posts)
     const { comments } = useSelector(state => state.comments)
-    const { } = useComments()
     const { modal } = useModal()
     const dispatch = useDispatch()
 

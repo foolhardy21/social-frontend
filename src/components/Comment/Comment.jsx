@@ -1,7 +1,7 @@
-import { useAuth, useComments, useModal } from 'contexts'
+import { useAuth, useModal } from 'contexts'
 import { useDispatch } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import { deleteComment, downvoteComment, initialiseComments, upvoteComment } from 'slices'
+import { deleteComment, downvoteComment, upvoteComment } from 'slices'
 import { getDate, getTime } from 'utils'
 import styles from '../Reusable/post.module.css'
 
@@ -9,7 +9,6 @@ const Comment = ({ comment: { _id, username, text, votes: { upvotedBy, downvoted
     const params = useParams()
     const { getUsername, getUserToken } = useAuth()
     const { setModal } = useModal()
-    const { } = useComments()
     const dispatch = useDispatch()
 
     const handleCommentEdit = () => {

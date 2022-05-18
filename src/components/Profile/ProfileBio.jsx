@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
-import { useAuth, useModal, useProfile } from "contexts"
+import { useAuth, useModal } from "contexts"
 import { getDate } from 'utils'
 import styles from './profile.module.css'
 import { useDispatch, useSelector } from "react-redux"
@@ -8,7 +8,6 @@ import { followUser, unFollowUser } from "slices"
 
 const ProfileBio = () => {
     const [isUserFollowed, setIsUserFollowed] = useState(false)
-    const { } = useProfile()
     const { setModal } = useModal()
     const { getUsername, getUserToken } = useAuth()
     const { bio } = useSelector(state => state.profile)
