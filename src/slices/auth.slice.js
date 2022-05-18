@@ -15,6 +15,8 @@ export const logInUser = createAsyncThunk(
             username,
             password,
         })
+        window.localStorage.setItem('userToken', response.data.encodedToken)
+        window.localStorage.setItem('username', response.data.foundUser.username)
         return response
     }
 )
@@ -37,8 +39,6 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         logOutUser: (state) => {
-            window.localStorage.removeItem('userToken')
-            window.localStorage.removeItem('username')
             state.isUserLoggedIn = false
         },
         updateUserLogInStatus: (state) => {
@@ -46,9 +46,7 @@ export const authSlice = createSlice({
         }
     },
     extraReducers: {
-        [logInUser.fulfilled]: (state, action) => {
-            window.localStorage.setItem('userToken', action.payload.data.encodedToken)
-            window.localStorage.setItem('username', action.payload.data.foundUser.username)
+        [logInUser.fulfilled]: (state) => {
             state.isUserLoggedIn = true
             state.error = ''
         },

@@ -1,8 +1,8 @@
-import { useLocation, Link, useNavigate } from "react-router-dom"
-import { getUsername } from 'utils'
-import styles from './navbar.module.css'
 import { useDispatch, useSelector } from "react-redux"
+import { useLocation, Link, useNavigate } from "react-router-dom"
+import { getUsername, resetLocalStorage } from 'utils'
 import { logOutUser } from "slices"
+import styles from './navbar.module.css'
 
 const NavBar = () => {
     const { isUserLoggedIn } = useSelector(state => state.auth)
@@ -11,6 +11,7 @@ const NavBar = () => {
     const navigate = useNavigate()
 
     const handleLogoutUser = () => {
+        resetLocalStorage()
         dispatch(logOutUser())
         navigate('/')
     }
