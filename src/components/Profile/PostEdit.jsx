@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { editPost, resetModal } from "slices"
 import { getUserToken } from 'utils'
 import styles from './profile.module.css'
@@ -8,6 +8,7 @@ import styles from './profile.module.css'
 const PostEdit = () => {
     const [post, setPost] = useState({})
     const dispatch = useDispatch()
+    const { id } = useSelector(state => state.modal)
 
     const handlePostEdit = () => {
         const token = getUserToken()
