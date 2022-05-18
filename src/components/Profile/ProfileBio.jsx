@@ -4,13 +4,13 @@ import { useAuth, useModal, useProfile } from "contexts"
 import { getDate } from 'utils'
 import styles from './profile.module.css'
 import { useDispatch, useSelector } from "react-redux"
-import { setProfileBio } from "slices"
+import { followUser, unFollowUser } from "slices"
 
 const ProfileBio = () => {
     const [isUserFollowed, setIsUserFollowed] = useState(false)
-    const { followUser, unFollowUser } = useProfile()
+    const { } = useProfile()
     const { setModal } = useModal()
-    const { getUsername } = useAuth()
+    const { getUsername, getUserToken } = useAuth()
     const { bio } = useSelector(state => state.profile)
     const dispatch = useDispatch()
 
@@ -32,28 +32,16 @@ const ProfileBio = () => {
         })()
     }, [])
 
-    const handleFollowUser = async () => {
-        const response = await followUser(bio._id)
-        if (response.status === 200) {
-            setIsUserFollowed(true)
-            dispatch(setProfileBio(response.data.followUser))
-        } else if (response.status === 400) {
-            // already following
-        } else if (response.status === 404) {
-            // not logged in
-        }
+    const handleFollowUser = () => {
+        const token = getUserToken()
+        dispatch(followUser({ _id: bio._id, token }))
+        setIsUserFollowed(true)
     }
 
     const handleUnfollowUser = async () => {
-        const response = await unFollowUser(bio._id)
-        if (response.status === 200) {
-            setIsUserFollowed(false)
-            dispatch(setProfileBio(response.data.followUser))
-        } else if (response.status === 400) {
-            // already following
-        } else if (response.status === 404) {
-            // not logged in
-        }
+        const token = getUserToken()
+        dispatch(unFollowUser({ _id: bio._id, token }))
+        setIsUserFollowed(false)
     }
 
     return (

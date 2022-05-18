@@ -1,25 +1,23 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { useComments } from 'contexts'
-import { initialiseComments } from 'slices'
+import { useAuth } from 'contexts'
+import { addComment } from 'slices'
 import postStyles from './post.module.css'
 import styles from './createpost.module.css'
 
 const CreateComment = () => {
     const [commentValue, setCommentValue] = useState('')
     const { postId } = useParams()
-    const { addCommentToPost } = useComments()
+    const { getUserToken } = useAuth()
     const dispatch = useDispatch()
 
     const isButtonDisabled = () => commentValue.length === 0
 
-    const handleCommentSubmit = async () => {
-        const response = await addCommentToPost(postId, commentValue)
-        if (response.status === 201) {
-            dispatch(initialiseComments(response.data.comments))
-            setCommentValue('')
-        }
+    const handleCommentSubmit = () => {
+        const token = getUserToken()
+        dispatch(addComment({ _id: postId, commentData: commentValue, token }))
+        setCommentValue('')
     }
 
     return (

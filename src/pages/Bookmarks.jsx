@@ -2,12 +2,12 @@ import { useEffect } from "react"
 import ClipLoader from 'react-spinners/ClipLoader'
 import { useDispatch, useSelector } from "react-redux"
 import { FeedPageWrapper, PageHeading, Post, PostsWrapper } from "components/Reusable"
-import { useBookmarks } from "contexts"
-import { initialiseBookmarks, removeBookmarksLoading, setBookmarksLoading } from "slices"
+import { useAuth } from "contexts"
+import { getBookmarks } from "slices"
 import styles from 'components/Reusable/feedpage.module.css'
 
 const BookmarksSection = () => {
-    const { getBookmarks } = useBookmarks()
+    const { getUserToken } = useAuth()
     const { bookmarks, loading } = useSelector(state => state.bookmarks)
     const dispatch = useDispatch()
 
@@ -15,14 +15,8 @@ const BookmarksSection = () => {
 
     useEffect(() => {
         (async () => {
-            dispatch(setBookmarksLoading())
-            const response = await getBookmarks()
-            if (response.status === 200) {
-                dispatch(initialiseBookmarks(response.data.bookmarks))
-            } else if (response.status === 404) {
-                // not logged in
-            }
-            dispatch(removeBookmarksLoading())
+            const token = getUserToken()
+            dispatch(getBookmarks(token))
         })()
     }, [])
 

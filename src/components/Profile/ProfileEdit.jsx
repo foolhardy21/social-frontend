@@ -1,29 +1,24 @@
-import { useModal, useProfile } from "contexts"
+import { useAuth, useModal, useProfile } from "contexts"
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
-import { setProfileBio } from "slices"
-import { ACTION_SET_BIO } from "utils"
+import { useDispatch, useSelector } from "react-redux"
+import { editBio } from "slices"
 
 const ProfileEdit = () => {
     const [bio, setBio] = useState({})
     const { modal: { id }, setModal } = useModal()
-    const { getProfileBio, editBio } = useProfile()
+    const { } = useProfile()
+    const { getUserToken } = useAuth()
     const dispatch = useDispatch()
+    const profileState = useSelector(state => state.profile)
 
     useEffect(() => {
-        (async () => {
-            const { status, data: { user } } = await getProfileBio(id)
-            if (status === 200) {
-                setBio(user)
-            }
-        })()
+        const user = profileState.bio
+        setBio(user)
     }, [])
 
-    const handleBioEdit = async () => {
-        const response = await editBio(bio)
-        if (response.status === 201) {
-            dispatch(setProfileBio(bio))
-        }
+    const handleBioEdit = () => {
+        const token = getUserToken()
+        dispatch(editBio({ user: bio, token }))
         setBio({})
         setModal(m => ({ ...m, type: '', id: '' }))
     }

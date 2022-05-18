@@ -1,37 +1,31 @@
 import { useAuth, useComments, useModal } from 'contexts'
 import { useDispatch } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import { initialiseComments } from 'slices'
+import { deleteComment, downvoteComment, initialiseComments, upvoteComment } from 'slices'
 import { getDate, getTime } from 'utils'
 import styles from '../Reusable/post.module.css'
 
 const Comment = ({ comment: { _id, username, text, votes: { upvotedBy, downvotedBy }, createdAt, updatedAt } }) => {
     const params = useParams()
-    const { getUsername } = useAuth()
+    const { getUsername, getUserToken } = useAuth()
     const { setModal } = useModal()
-    const { deleteComment, upvoteComment, downvoteComment } = useComments()
+    const { } = useComments()
     const dispatch = useDispatch()
 
     const handleCommentEdit = () => {
         setModal(m => ({ ...m, type: 'COMMENT', id: _id }))
     }
-    const handleCommentDelete = async () => {
-        const response = await deleteComment(params.postId, _id)
-        if (response.status === 201) {
-            dispatch(initialiseComments(response.data.comments))
-        }
+    const handleCommentDelete = () => {
+        const token = getUserToken()
+        dispatch(deleteComment({ postId: params.postId, commentId: _id, token }))
     }
-    const handleCommentUpVote = async () => {
-        const response = await upvoteComment(params.postId, _id)
-        if (response.status === 201) {
-            dispatch(initialiseComments(response.data.comments))
-        }
+    const handleCommentUpVote = () => {
+        const token = getUserToken()
+        dispatch(upvoteComment({ postId: params.postId, commentId: _id, token }))
     }
-    const handleCommentDownVote = async () => {
-        const response = await downvoteComment(params.postId, _id)
-        if (response.status === 201) {
-            dispatch(initialiseComments(response.data.comments))
-        }
+    const handleCommentDownVote = () => {
+        const token = getUserToken()
+        dispatch(downvoteComment({ postId: params.postId, commentId: _id, token }))
     }
 
     return (
