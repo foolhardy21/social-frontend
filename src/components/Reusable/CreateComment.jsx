@@ -1,15 +1,14 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { useAuth } from 'contexts'
 import { addComment } from 'slices'
+import { getUserToken } from 'utils'
 import postStyles from './post.module.css'
 import styles from './createpost.module.css'
 
 const CreateComment = () => {
     const [commentValue, setCommentValue] = useState('')
     const { postId } = useParams()
-    const { getUserToken } = useAuth()
     const dispatch = useDispatch()
 
     const isButtonDisabled = () => commentValue.length === 0

@@ -4,7 +4,6 @@ import ClipLoader from 'react-spinners/ClipLoader'
 import { useDispatch, useSelector } from 'react-redux'
 import { PostsWrapper, Post, FeedPageWrapper, ModalWrapper } from "components/Reusable"
 import { PostEdit, ProfileBio, ProfileEdit } from 'components/Profile'
-import { useModal } from "contexts"
 import { getProfileBio, getProfilePosts } from 'slices'
 import styles from 'components/Reusable/feedpage.module.css'
 
@@ -13,10 +12,10 @@ const ProfileModal = ModalWrapper(ProfileEdit)
 
 const ProfileSection = () => {
     const params = useParams()
-    const { modal } = useModal()
     const dispatch = useDispatch()
     const profileState = useSelector(state => state.profile)
     const postsState = useSelector(state => state.posts)
+    const modal = useSelector(state => state.modal)
 
     const ProfilePosts = PostsWrapper(Post, postsState.posts)
 

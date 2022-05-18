@@ -1,13 +1,12 @@
 import axios from 'axios'
 import { useEffect } from 'react'
 import { FeedPageWrapper, Post, PostsWrapper, PageHeading } from "components/Reusable"
-import { useAuth } from 'contexts'
+import { getUsername } from 'utils'
 import styles from 'components/Reusable/feedpage.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { initialiseFeed } from 'slices'
 
 const UserFeedSection = () => {
-    const { getUsername } = useAuth()
     const { posts } = useSelector(state => state.posts)
     const dispatch = useDispatch()
 

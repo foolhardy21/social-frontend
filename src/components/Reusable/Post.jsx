@@ -1,17 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useAuth, useModal } from 'contexts'
-import { getDate, getTime } from 'utils'
-import { likePost, dislikePost, removeBookmarkFromPost, removePost, bookmarkPost } from 'slices'
+import { getDate, getTime, getUsername, getUserToken } from 'utils'
+import { likePost, dislikePost, removeBookmarkFromPost, removePost, bookmarkPost, setModal } from 'slices'
 import styles from './post.module.css'
 
 const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, createdAt } }) => {
     const [isPostLiked, setIsPostLiked] = useState(false)
     const [isPostBookmarked, setIsPostBookmarked] = useState(false)
     const navigate = useNavigate()
-    const { getUsername, getUserToken } = useAuth()
-    const { setModal } = useModal()
     const { posts } = useSelector(state => state.posts)
     const { bookmarks } = useSelector(state => state.bookmarks)
     const { isUserLoggedIn } = useSelector(state => state.auth)
@@ -45,34 +42,28 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
     const handlePostBookmark = async (e) => {
         e.stopPropagation()
 
-        if (isUserLoggedIn) {
-            const token = getUserToken()
-            dispatch(bookmarkPost({ _id, token }))
-        }
+        const token = getUserToken()
+        dispatch(bookmarkPost({ _id, token }))
     }
 
     const handlePostLike = e => {
         e.stopPropagation()
 
-        if (isUserLoggedIn) {
-            const token = getUserToken()
-            dispatch(likePost({ _id, token }))
-        }
+        const token = getUserToken()
+        dispatch(likePost({ _id, token }))
     }
 
     const handlePostDislike = e => {
         e.stopPropagation()
 
-        if (isUserLoggedIn) {
-            const token = getUserToken()
-            dispatch(dislikePost({ _id, token }))
-        }
+        const token = getUserToken()
+        dispatch(dislikePost({ _id, token }))
     }
 
     const handleEditPost = (e) => {
         e.stopPropagation()
 
-        setModal(m => ({ ...m, type: 'POST', id: _id }))
+        dispatch(setModal({ type: 'POST', id: _id }))
     }
 
     const handleRemovePost = (e) => {

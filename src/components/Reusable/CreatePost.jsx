@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useAuth } from 'contexts'
 import { createPost } from 'slices'
+import { getUserToken } from 'utils'
 import postStyles from './post.module.css'
 import styles from './createpost.module.css'
 
 const CreatePost = () => {
     const [postValue, setPostValue] = useState('')
-    const { getUserToken } = useAuth()
     const dispatch = useDispatch()
 
     const isButtonDisabled = () => postValue.length === 0

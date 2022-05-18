@@ -40,4 +40,4 @@ export const signupSlice = createSlice({
 
 export const { toggleSignupPasswordType, updateSignupUsername, updateSignupPassword, updateSignupLastName, updateSignupFirstName, updateSignupAlert } = signupSlice.actions
 
-export default signupSlice.reducer
+export const signupReducer = signupSlice.reducer

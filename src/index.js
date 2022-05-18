@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { AuthProvider, ModalProvider } from "contexts";
 import { makeServer } from "./server";
 import { Provider } from "react-redux";
 import { store } from "app/store";
@@ -10,13 +9,8 @@ import { store } from "app/store";
 makeServer();
 
 ReactDOM.render(
-  <AuthProvider>
-    <ModalProvider>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </ModalProvider>
-  </AuthProvider>
-  ,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById("root")
 );

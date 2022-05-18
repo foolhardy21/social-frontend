@@ -2,12 +2,11 @@ import { useEffect } from 'react'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { useDispatch, useSelector } from 'react-redux'
 import { CreatePost, FeedPageWrapper, PageHeading, Post, PostsWrapper } from 'components/Reusable'
-import { useAuth } from 'contexts'
+import { getUserToken } from 'utils'
 import { getPosts, updateUserLogInStatus } from 'slices'
 import styles from 'components/Reusable/feedpage.module.css'
 
 const ExplorePostsSection = () => {
-    const { getUserToken } = useAuth()
     const { posts, loading } = useSelector(state => state.posts)
     const dispatch = useDispatch()
 

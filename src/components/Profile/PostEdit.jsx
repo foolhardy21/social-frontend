@@ -1,21 +1,19 @@
 import axios from "axios"
-import { useAuth, useModal } from "contexts"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { editPost } from "slices"
+import { editPost, resetModal } from "slices"
+import { getUserToken } from 'utils'
 import styles from './profile.module.css'
 
 const PostEdit = () => {
     const [post, setPost] = useState({})
-    const { modal: { id }, setModal } = useModal()
-    const { getUserToken } = useAuth()
     const dispatch = useDispatch()
 
     const handlePostEdit = () => {
         const token = getUserToken()
         dispatch(editPost({ _id: id, post, token }))
         setPost({})
-        setModal(m => ({ ...m, type: '', id: '' }))
+        dispatch(resetModal())
     }
 
     useEffect(() => {

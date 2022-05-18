@@ -2,12 +2,11 @@ import { useEffect } from "react"
 import ClipLoader from 'react-spinners/ClipLoader'
 import { useDispatch, useSelector } from "react-redux"
 import { FeedPageWrapper, PageHeading, Post, PostsWrapper } from "components/Reusable"
-import { useAuth } from "contexts"
 import { getBookmarks } from "slices"
+import { getUserToken } from 'utils'
 import styles from 'components/Reusable/feedpage.module.css'
 
 const BookmarksSection = () => {
-    const { getUserToken } = useAuth()
     const { bookmarks, loading } = useSelector(state => state.bookmarks)
     const dispatch = useDispatch()
 

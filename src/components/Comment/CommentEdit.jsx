@@ -1,15 +1,14 @@
-import { useAuth, useModal } from 'contexts'
 import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { editComment } from 'slices'
+import { useDispatch, useSelector } from 'react-redux'
+import { editComment, setModal } from 'slices'
+import { getUserToken } from 'utils'
 import styles from '../Profile/profile.module.css'
 
 const CommentEdit = () => {
     const [comment, setComment] = useState({})
     const params = useParams()
-    const { modal: { id }, setModal } = useModal()
-    const { getUserToken } = useAuth()
+    const { id } = useSelector(state => state.modal)
     const dispatch = useDispatch()
     const { comments } = useSelector(state => state.comments)
 
@@ -17,7 +16,7 @@ const CommentEdit = () => {
         const token = getUserToken()
         dispatch(editComment({ postId: params.postId, commentId: id, commentData: comment, token }))
         setComment({})
-        setModal(m => ({ ...m, type: '', id: '' }))
+        dispatch(setModal({ type: '', id: '' }))
     }
 
     useEffect(() => {

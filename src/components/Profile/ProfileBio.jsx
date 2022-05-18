@@ -1,20 +1,17 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
-import { useAuth, useModal } from "contexts"
-import { getDate } from 'utils'
-import styles from './profile.module.css'
 import { useDispatch, useSelector } from "react-redux"
-import { followUser, unFollowUser } from "slices"
+import { getDate, getUsername, getUserToken } from 'utils'
+import { followUser, setModal, unFollowUser } from "slices"
+import styles from './profile.module.css'
 
 const ProfileBio = () => {
     const [isUserFollowed, setIsUserFollowed] = useState(false)
-    const { setModal } = useModal()
-    const { getUsername, getUserToken } = useAuth()
     const { bio } = useSelector(state => state.profile)
     const dispatch = useDispatch()
 
-    const handleProfileEdit = async () => {
-        setModal(m => ({ ...m, type: 'BIO', id: bio.username }))
+    const handleProfileEdit = () => {
+        dispatch(setModal({ type: 'BIO', id: bio.username }))
     }
 
     useEffect(() => {
