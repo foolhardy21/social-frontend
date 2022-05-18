@@ -1,25 +1,23 @@
 import { useEffect } from 'react'
 import ClipLoader from 'react-spinners/ClipLoader'
+import { useDispatch, useSelector } from 'react-redux'
 import { CreatePost, FeedPageWrapper, PageHeading, Post, PostsWrapper } from 'components/Reusable'
-import { usePosts, useAuth } from 'contexts'
-import { ACTION_INIT_POSTS } from 'utils'
+import { getUserToken } from 'utils'
+import { getPosts, updateUserLogInStatus } from 'slices'
 import styles from 'components/Reusable/feedpage.module.css'
 
 const ExplorePostsSection = () => {
-    const { postsState: { loading, posts }, getPosts, postsDispatch } = usePosts()
-    const { getUserToken, setIsUserLoggedIn } = useAuth()
+    const { posts, loading } = useSelector(state => state.posts)
+    const dispatch = useDispatch()
 
     const ExplorePosts = PostsWrapper(Post, posts, 'explore')
 
     useEffect(() => {
         (async () => {
-            const response = await getPosts()
-            if (response.status === 200) {
-                postsDispatch({ type: ACTION_INIT_POSTS, payload: response.data.posts })
-            }
+            dispatch((getPosts()))
         })()
         if (getUserToken()) {
-            setIsUserLoggedIn(true)
+            dispatch(updateUserLogInStatus())
         }
     }, [])
 

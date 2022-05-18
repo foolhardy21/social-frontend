@@ -1,17 +1,17 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
-import { useAuth, useModal, useProfile } from "contexts"
-import { ACTION_SET_BIO, getDate } from 'utils'
+import { useDispatch, useSelector } from "react-redux"
+import { getDate, getUsername, getUserToken } from 'utils'
+import { followUser, setModal, unFollowUser } from "slices"
 import styles from './profile.module.css'
 
 const ProfileBio = () => {
     const [isUserFollowed, setIsUserFollowed] = useState(false)
-    const { profileState: { bio }, followUser, unFollowUser, profileDispatch } = useProfile()
-    const { setModal } = useModal()
-    const { getUsername } = useAuth()
+    const { bio } = useSelector(state => state.profile)
+    const dispatch = useDispatch()
 
-    const handleProfileEdit = async () => {
-        setModal(m => ({ ...m, type: 'BIO', id: bio.username }))
+    const handleProfileEdit = () => {
+        dispatch(setModal({ type: 'BIO', id: bio.username }))
     }
 
     useEffect(() => {
@@ -28,28 +28,16 @@ const ProfileBio = () => {
         })()
     }, [])
 
-    const handleFollowUser = async () => {
-        const response = await followUser(bio._id)
-        if (response.status === 200) {
-            setIsUserFollowed(true)
-            profileDispatch({ type: ACTION_SET_BIO, payload: response.data.followUser })
-        } else if (response.status === 400) {
-            // already following
-        } else if (response.status === 404) {
-            // not logged in
-        }
+    const handleFollowUser = () => {
+        const token = getUserToken()
+        dispatch(followUser({ _id: bio._id, token }))
+        setIsUserFollowed(true)
     }
 
     const handleUnfollowUser = async () => {
-        const response = await unFollowUser(bio._id)
-        if (response.status === 200) {
-            setIsUserFollowed(false)
-            profileDispatch({ type: ACTION_SET_BIO, payload: response.data.followUser })
-        } else if (response.status === 400) {
-            // already following
-        } else if (response.status === 404) {
-            // not logged in
-        }
+        const token = getUserToken()
+        dispatch(unFollowUser({ _id: bio._id, token }))
+        setIsUserFollowed(false)
     }
 
     return (

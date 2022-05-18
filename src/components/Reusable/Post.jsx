@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { useAuth, useBookmarks, useModal, usePosts } from 'contexts'
-import { ACTION_INIT_BOOKMARKS, ACTION_LIKE_POST, ACTION_REMOVE_POST, getDate, getTime } from 'utils'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { getDate, getTime, getUsername, getUserToken } from 'utils'
+import { likePost, dislikePost, removeBookmarkFromPost, removePost, bookmarkPost, setModal } from 'slices'
 import styles from './post.module.css'
 
 const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, createdAt } }) => {
-    const params = useParams()
     const [isPostLiked, setIsPostLiked] = useState(false)
     const [isPostBookmarked, setIsPostBookmarked] = useState(false)
     const navigate = useNavigate()
-    const { isUserLoggedIn, getUsername } = useAuth()
-    const { postsState: { posts }, likePost, dislikePost, editPost, removePost, postsDispatch } = usePosts()
-    const { bookmarksState: { bookmarks }, bookmarkPost, removeBookmarkFromPost, bookmarksDispatch } = useBookmarks()
-    const { setModal } = useModal()
+    const { posts } = useSelector(state => state.posts)
+    const { bookmarks } = useSelector(state => state.bookmarks)
+    const { isUserLoggedIn } = useSelector(state => state.auth)
+    const dispatch = useDispatch()
+    const params = useParams()
 
     useEffect(() => {
         const loggedInUsername = getUsername()
@@ -31,71 +32,45 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
         }
     }, [bookmarks])
 
-    const handleRemoveBookmark = async () => {
-        const response = await removeBookmarkFromPost(_id)
-        if (response.status === 200) {
-            bookmarksDispatch({ type: ACTION_INIT_BOOKMARKS, payload: response.data.bookmarks })
-        } else if (response.status === 400) {
-            // already removed from bookmarks
-        } else if (response.status === 404) {
-            // not logged in
-        }
+    const handleRemoveBookmark = e => {
+        e.stopPropagation()
+
+        const token = getUserToken()
+        dispatch(removeBookmarkFromPost({ _id, token }))
     }
 
-    const handlePostBookmark = async () => {
-        if (isUserLoggedIn) {
-            const response = await bookmarkPost(_id)
-            if (response.status === 200) {
-                bookmarksDispatch({ type: ACTION_INIT_BOOKMARKS, payload: response.data.bookmarks })
-            } else if (response.status === 404) {
-                // not logged in
-            } else if (response.status === 400) {
-                // already bookmarked
-            }
-        }
+    const handlePostBookmark = async (e) => {
+        e.stopPropagation()
+
+        const token = getUserToken()
+        dispatch(bookmarkPost({ _id, token }))
     }
 
-    const handlePostLike = async () => {
-        if (isUserLoggedIn) {
-            const response = await likePost(_id)
-            if (response.status === 201) {
-                const likedPost = response.data.posts.find(post => post._id === _id)
-                postsDispatch({ type: ACTION_LIKE_POST, payload: likedPost })
-            } else if (response.status === 404) {
-                // not logged in
-            } else if (response.status === 400) {
-                // already liked
-            }
-        }
+    const handlePostLike = e => {
+        e.stopPropagation()
+
+        const token = getUserToken()
+        dispatch(likePost({ _id, token }))
     }
 
-    const handlePostDislike = async () => {
-        if (isUserLoggedIn) {
-            const response = await dislikePost(_id)
-            if (response.status === 201) {
-                const dislikedPost = response.data.posts.find(post => post._id === _id)
-                postsDispatch({ type: ACTION_LIKE_POST, payload: dislikedPost })
-            } else if (response.status === 404) {
-                // not logged in
-            } else if (response.status === 400) {
-                // already disliked
-            }
-        }
+    const handlePostDislike = e => {
+        e.stopPropagation()
+
+        const token = getUserToken()
+        dispatch(dislikePost({ _id, token }))
     }
 
-    const handleEditPost = async () => {
-        setModal(m => ({ ...m, type: 'POST', id: _id }))
+    const handleEditPost = (e) => {
+        e.stopPropagation()
+
+        dispatch(setModal({ type: 'POST', id: _id }))
     }
 
-    const handleRemovePost = async () => {
-        const response = await removePost(_id)
-        if (response.status === 201) {
-            postsDispatch({ type: ACTION_REMOVE_POST, payload: _id })
-        } else if (response.status === 404) {
-            // not logged in
-        } else if (response.status === 400) {
-            // not your post
-        }
+    const handleRemovePost = (e) => {
+        e.stopPropagation()
+
+        const token = getUserToken()
+        dispatch(removePost({ _id, token }))
     }
 
     const handlePostClick = () => {

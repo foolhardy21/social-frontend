@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import { useParams } from "react-router-dom"
 import ClipLoader from 'react-spinners/ClipLoader'
+import { useDispatch, useSelector } from 'react-redux'
 import { PostsWrapper, Post, FeedPageWrapper, ModalWrapper } from "components/Reusable"
 import { PostEdit, ProfileBio, ProfileEdit } from 'components/Profile'
-import { useModal, usePosts, useProfile } from "contexts"
-import { ACTION_INIT_PROFILE_POSTS, ACTION_SET_BIO } from 'utils'
+import { getProfileBio, getProfilePosts } from 'slices'
 import styles from 'components/Reusable/feedpage.module.css'
 
 const PostModal = ModalWrapper(PostEdit)
@@ -12,28 +12,20 @@ const ProfileModal = ModalWrapper(ProfileEdit)
 
 const ProfileSection = () => {
     const params = useParams()
-    const { postsState, getUserPosts, postsDispatch } = usePosts()
-    const { profileState, getProfileBio, profileDispatch } = useProfile()
-    const { modal } = useModal()
+    const dispatch = useDispatch()
+    const profileState = useSelector(state => state.profile)
+    const postsState = useSelector(state => state.posts)
+    const modal = useSelector(state => state.modal)
 
     const ProfilePosts = PostsWrapper(Post, postsState.posts)
 
     useEffect(() => {
-        (async () => {
-            const { status, data: { user } } = await getProfileBio(params.username)
-            if (status === 200) {
-                profileDispatch({ type: ACTION_SET_BIO, payload: user })
-            }
-        })()
+        dispatch(getProfileBio(params.username))
     }, [])
 
     useEffect(() => {
-        (async () => {
-            const { status, data: { posts } } = await getUserPosts(params.username)
-            if (status === 200) {
-                postsDispatch({ type: ACTION_INIT_PROFILE_POSTS, payload: posts })
-            }
-        })()
+
+        dispatch(getProfilePosts(params.username))
     }, [profileState.bio])
 
     return (
