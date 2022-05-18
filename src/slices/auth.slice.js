@@ -60,7 +60,7 @@ export const authSlice = createSlice({
                 state.error = 'wrong password'
             }
         },
-        [signUpUser.fulfilled]: (state, action) => {
+        [signUpUser.fulfilled]: (state) => {
             state.error = ''
             state.isUserSignedUp = true
         },
