@@ -15,17 +15,19 @@ const ProfileBio = () => {
     }
 
     useEffect(() => {
+        let isMounted = true;
         (async () => {
             if (getUsername() !== bio.username) {
                 const users = await axios.get('/api/users')
                 const loggedInUser = users.data.users.find(user => user.username === getUsername())
-                if (loggedInUser.following.some(user => user.username === bio.username)) {
+                if (loggedInUser.following.some(user => user.username === bio.username) && isMounted) {
                     setIsUserFollowed(true)
-                } else {
+                } else if (isMounted) {
                     setIsUserFollowed(false)
                 }
             }
         })()
+        return () => { isMounted = false }
     }, [])
 
     const handleFollowUser = () => {

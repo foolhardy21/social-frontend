@@ -11,5 +11,8 @@ export const store = configureStore({
         comments: commentsReducer,
         auth: authReducer,
         modal: modalReducer,
-    }
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: false
+    })
 })

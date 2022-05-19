@@ -18,12 +18,15 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
     const params = useParams()
 
     useEffect(() => {
+        let isMounted = true;
         (async () => {
             const { data: { users } } = await axios.get('/api/users')
             const postUser = users.find(user => user.username === username)
             const response = await axios.get(`/api/users/${postUser._id}`)
-            setProfileImg(response.data.user.profileImg)
+            if (isMounted)
+                setProfileImg(response.data.user.profileImg)
         })()
+        return () => { isMounted = false }
     }, [])
 
     useEffect(() => {
