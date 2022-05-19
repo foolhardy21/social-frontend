@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { API_POSTS, API_POST_DISLIKE, API_POST_LIKE } from "utils";
 
 const initialState = {
@@ -72,7 +72,7 @@ export const removePost = createAsyncThunk(
                 authorization: token
             }
         })
-        return response
+        return _id
     }
 )
 
@@ -86,7 +86,7 @@ export const editPost = createAsyncThunk(
             {
                 headers: { authorization: token }
             })
-        return response
+        return response.data.posts.find(post => post._id === _id)
     }
 )
 
@@ -146,11 +146,11 @@ export const postsSlice = createSlice({
             state.status = action.payload.status
         },
         [removePost.fulfilled]: (state, action) => {
-            state.posts = action.payload.data.posts
+            state.posts = state.posts.filter(statePost => statePost._id !== action.payload)
             state.status = action.payload.status
         },
         [editPost.fulfilled]: (state, action) => {
-            state.posts = action.payload.data.posts
+            state.posts = state.posts.map(statePost => statePost._id === action.payload._id ? action.payload : statePost)
             state.status = action.payload.status
         },
 
