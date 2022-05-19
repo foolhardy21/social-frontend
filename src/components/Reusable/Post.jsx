@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,12 +9,22 @@ import styles from './post.module.css'
 const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, createdAt } }) => {
     const [isPostLiked, setIsPostLiked] = useState(false)
     const [isPostBookmarked, setIsPostBookmarked] = useState(false)
+    const [profileImg, setProfileImg] = useState('')
     const navigate = useNavigate()
     const { posts } = useSelector(state => state.posts)
     const { bookmarks } = useSelector(state => state.bookmarks)
-    const { isUserLoggedIn } = useSelector(state => state.auth)
+
     const dispatch = useDispatch()
     const params = useParams()
+
+    useEffect(() => {
+        (async () => {
+            const { data: { users } } = await axios.get('/api/users')
+            const postUser = users.find(user => user.username === username)
+            const response = await axios.get(`/api/users/${postUser._id}`)
+            setProfileImg(response.data.user.profileImg)
+        })()
+    }, [])
 
     useEffect(() => {
         const loggedInUsername = getUsername()
@@ -85,9 +96,12 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
     return (
         <article onClick={handlePostClick} className={`${styles.postDiv} pd-s`}>
             <div className='flx flx-maj-stretch'>
-                <p onClick={handleUsernameClick} className='btn-txt txt-secondary txt-md txt-500'>
-                    {'@ '}{username}
-                </p>
+                <div className='flx flx-min-center'>
+                    <img srcSet={profileImg} alt='dp' className={`${styles.postProfileImg} brd-full img-fit-cover txt-secondary mg-right-xs`} />
+                    <p onClick={handleUsernameClick} className='btn-txt txt-off-secondary txt-md txt-500'>
+                        {`@${username}`}
+                    </p>
+                </div>
                 {
                     getUsername() === username && params.username === username &&
                     <div className='flx'>

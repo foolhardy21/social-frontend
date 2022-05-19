@@ -17,6 +17,11 @@ const PostEdit = () => {
         dispatch(resetModal())
     }
 
+    const handlePostCancel = () => {
+        setPost({})
+        dispatch(resetModal())
+    }
+
     useEffect(() => {
         (async () => {
             const response = await axios.get(`/api/posts/${id}`)
@@ -29,7 +34,10 @@ const PostEdit = () => {
     return (
         <>
             <textarea rows='5' className={`${styles.postModalTextArea}`} value={post?.content} onChange={e => setPost(p => ({ ...p, content: e.target.value }))} />
-            <div className="flx flx-maj-end">
+            <div className="flx flx-min-center flx-maj-end">
+                <button onClick={handlePostCancel} className="btn-txt txt-primary txt-md txt-lcase pd-xs">
+                    cancel
+                </button>
                 <button onClick={handlePostEdit} className="btn-solid bg-secondary txt-secondary pd-xs brd-s txt-md txt-lcase">
                     edit
                 </button>
