@@ -23,7 +23,11 @@ const PostsWrapper = (PostComponent, posts) => {
         return (
             <div className="flx flx-column">
                 <div className="flx flx-maj-end mg-top-xs">
-                    <button onClick={handlePostsSort} className='btn-txt txt-secondary txt-md'>latest</button>
+                    <button onClick={handlePostsSort} className='btn-txt txt-secondary txt-md'>
+                        <span className="material-icons icon-secondary">
+                            sort
+                        </span>
+                    </button>
                 </div>
                 {
                     currentPosts?.map(post => <PostComponent key={post._id} post={post} />)
