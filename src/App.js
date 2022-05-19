@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ExploreFeedPage, Home, Login, Signup, UserFeedPage, BookmarksFeedPage, Profile, PostPage } from 'pages';
+import RequireAuth from 'components/RequireAuth';
 
 const App = () => {
 
@@ -9,11 +10,31 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
-        <Route path='/explore' element={<ExploreFeedPage />} />
-        <Route path='/myfeed' element={<UserFeedPage />} />
-        <Route path='/bookmarks' element={<BookmarksFeedPage />} />
-        <Route path='/:username/post/:postId' element={<PostPage />} />
-        <Route path='/:username' element={<Profile />} />
+        <Route path='/explore' element={
+          <RequireAuth>
+            <ExploreFeedPage />
+          </RequireAuth>
+        } />
+        <Route path='/myfeed' element={
+          <RequireAuth>
+            <UserFeedPage />
+          </RequireAuth>
+        } />
+        <Route path='/bookmarks' element={
+          <RequireAuth>
+            <BookmarksFeedPage />
+          </RequireAuth>
+        } />
+        <Route path='/:username/post/:postId' element={
+          <RequireAuth>
+            <PostPage />
+          </RequireAuth>
+        } />
+        <Route path='/:username' element={
+          <RequireAuth>
+            <Profile />
+          </RequireAuth>
+        } />
       </Routes>
     </BrowserRouter>
   );

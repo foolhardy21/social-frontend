@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { toggleLoginPasswordType, updateLoginUsername, updateLoginPassword, updateLoginAlert, logInUser } from 'slices'
 import { isFormEmpty, ALERT_TYPE_ERROR, ALERT_TYPE_SUCCESS, ALERT_DISPLAY_TIME, showAlert } from "utils"
@@ -10,6 +10,9 @@ const LoginForm = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const submitBtnRef = useRef(null)
+    const location = useLocation()
+
+    const from = location?.state?.from?.pathname || '/explore'
 
     const { username, password, alert: { message, type }, passwordInputType } = loginState
 
@@ -45,7 +48,7 @@ const LoginForm = () => {
     useEffect(() => {
         if (authState.isUserLoggedIn) {
             showAlert(dispatch, updateLoginAlert, 'logged in', ALERT_TYPE_SUCCESS)
-            setTimeout(() => navigate('/explore'), ALERT_DISPLAY_TIME + 100)
+            setTimeout(() => navigate(from), ALERT_DISPLAY_TIME + 100)
         } else if (authState.error.length > 0) {
             showAlert(dispatch, updateLoginAlert, authState.error, ALERT_TYPE_ERROR)
         }
