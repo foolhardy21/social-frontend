@@ -46,7 +46,7 @@ const ProfileBio = () => {
         <article className={`flx flx-column pd-md ${styles.profileDiv}`}>
             <div className="flx flx-maj-stretch flx-min-center">
                 <div className="flx flx-min-center mg-btm-xs">
-                    <img srcSet={bio?.profileImg} alt='profile photo' className={`${styles.profileImg} brd-full img-fit-cover mg-right-xs`} />
+                    <img srcSet={bio?.profileImg} alt={bio?.username} className={`${styles.profileImg} brd-full img-fit-cover mg-right-xs`} />
                     <div className="flx flx-column">
                         <div className="flx">
                             <p className='txt-lg txt-600 txt-secondary mg-right-xs txt-cap' >{bio?.firstName}</p>

@@ -100,7 +100,7 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
         <article onClick={handlePostClick} className={`${styles.postDiv} pd-s`}>
             <div className='flx flx-maj-stretch'>
                 <div className='flx flx-min-center'>
-                    <img srcSet={profileImg} alt='dp' className={`${styles.postProfileImg} brd-full img-fit-cover txt-secondary mg-right-xs`} />
+                    <img srcSet={profileImg} alt={username} className={`${styles.postProfileImg} brd-full img-fit-cover txt-secondary mg-right-xs`} />
                     <p onClick={handleUsernameClick} className='btn-txt txt-off-secondary txt-md txt-500'>
                         {`@${username}`}
                     </p>
