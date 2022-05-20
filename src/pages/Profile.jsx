@@ -21,10 +21,9 @@ const ProfileSection = () => {
 
     useEffect(() => {
         dispatch(getProfileBio(params.username))
-    }, [])
+    }, [params.username])
 
     useEffect(() => {
-
         dispatch(getProfilePosts(params.username))
     }, [profileState.bio])
 

@@ -15,17 +15,19 @@ const ProfileBio = () => {
     }
 
     useEffect(() => {
+        let isMounted = true;
         (async () => {
             if (getUsername() !== bio.username) {
                 const users = await axios.get('/api/users')
                 const loggedInUser = users.data.users.find(user => user.username === getUsername())
-                if (loggedInUser.following.some(user => user.username === bio.username)) {
+                if (loggedInUser.following.some(user => user.username === bio.username) && isMounted) {
                     setIsUserFollowed(true)
-                } else {
+                } else if (isMounted) {
                     setIsUserFollowed(false)
                 }
             }
         })()
+        return () => { isMounted = false }
     }, [])
 
     const handleFollowUser = () => {
@@ -43,9 +45,15 @@ const ProfileBio = () => {
     return (
         <article className={`flx flx-column pd-md ${styles.profileDiv}`}>
             <div className="flx flx-maj-stretch flx-min-center">
-                <div className="flx">
-                    <p className='txt-lg txt-600 txt-secondary mg-right-xs txt-cap' >{bio?.firstName}</p>
-                    <p className='txt-lg txt-600 txt-secondary txt-cap'>{bio?.lastName}</p>
+                <div className="flx flx-min-center mg-btm-xs">
+                    <img srcSet={bio?.profileImg} alt={bio?.username} className={`${styles.profileImg} brd-full img-fit-cover mg-right-xs`} />
+                    <div className="flx flx-column">
+                        <div className="flx">
+                            <p className='txt-lg txt-600 txt-secondary mg-right-xs txt-cap' >{bio?.firstName}</p>
+                            <p className='txt-lg txt-600 txt-secondary txt-cap'>{bio?.lastName}</p>
+                        </div>
+                        <p className='txt-md txt-off-secondary'>{`@${bio?.username}`}</p>
+                    </div>
                 </div>
                 {
                     getUsername() !== bio?.username &&
@@ -56,7 +64,6 @@ const ProfileBio = () => {
                     </button>
                 }
             </div>
-            <p className='txt-md txt-off-secondary mg-btm-s'>{`@${bio?.username}`}</p>
             <p className='txt-md txt-off-secondary txt-cap'>{`joined ${getDate(bio?.createdAt)}`}</p>
             <div className="flx flx-min-center mg-top-s">
                 <a href={bio.city && `https://www.google.com/search?q=${bio?.city}`} target='_blank' className='txt-md txt-secondary flx flx-min-center mg-right-md'>

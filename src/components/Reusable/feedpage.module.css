@@ -16,13 +16,26 @@
   border-left: solid thin var(--clr-off-primary);
 }
 
-.extraDiv {
+.trendingDiv {
   grid-area: extra;
   height: 100vh;
 }
 
-@media only screen and (max-width: 1024px) {
+.trendingDiv ul {
+  height: 35vh;
+  overflow-y: auto;
+}
+
+.profileImgSmall {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+@media only screen and (max-width: 768px) {
   .feedPageGrid {
-    grid-template-columns: 20vw 1fr;
+    grid-template-areas: "nav feed feed";
+  }
+  .trendingDiv {
+    display: none;
   }
 }

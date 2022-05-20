@@ -1,3 +1,16 @@
+.profileImg {
+  width: 4rem;
+  height: 4rem;
+}
+
+.profileImgLabel:hover {
+  cursor: pointer;
+}
+
+.profileImgLabel > input[type="file"] {
+  display: none;
+}
+
 .profileDiv {
   border-bottom: solid thin var(--clr-primary);
 }
