@@ -15,6 +15,15 @@
   border-bottom: solid thin var(--clr-primary);
 }
 
+.profileLink {
+  color: rgb(29, 155, 240);
+}
+
+.profileLink:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .postModalTextArea {
   resize: none;
   padding: 0.5rem;

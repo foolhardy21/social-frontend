@@ -11,11 +11,11 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
     const [isPostBookmarked, setIsPostBookmarked] = useState(false)
     const [profileImg, setProfileImg] = useState('')
     const navigate = useNavigate()
+    const params = useParams()
     const { posts } = useSelector(state => state.posts)
     const { bookmarks } = useSelector(state => state.bookmarks)
 
     const dispatch = useDispatch()
-    const params = useParams()
 
     useEffect(() => {
         let isMounted = true;
@@ -53,7 +53,7 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
         dispatch(removeBookmarkFromPost({ _id, token }))
     }
 
-    const handlePostBookmark = async (e) => {
+    const handlePostBookmark = e => {
         e.stopPropagation()
 
         const token = getUserToken()
@@ -64,23 +64,25 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
         e.stopPropagation()
 
         const token = getUserToken()
-        dispatch(likePost({ _id, token }))
+        const profileUsername = params.username
+        dispatch(likePost({ _id, token, username: profileUsername ?? null }))
     }
 
     const handlePostDislike = e => {
         e.stopPropagation()
 
         const token = getUserToken()
-        dispatch(dislikePost({ _id, token }))
+        const profileUsername = params.username
+        dispatch(dislikePost({ _id, token, username: profileUsername ?? null }))
     }
 
-    const handleEditPost = (e) => {
+    const handleEditPost = e => {
         e.stopPropagation()
 
         dispatch(setModal({ type: 'POST', id: _id }))
     }
 
-    const handleRemovePost = (e) => {
+    const handleRemovePost = e => {
         e.stopPropagation()
 
         const token = getUserToken()
@@ -91,9 +93,10 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
         navigate(`/${username}/post/${_id}`)
     }
 
-    const handleUsernameClick = (e) => {
-        navigate(`/${username}`)
+    const handleUsernameClick = e => {
         e.stopPropagation()
+
+        navigate(`/${username}`)
     }
 
     return (

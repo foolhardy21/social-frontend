@@ -66,16 +66,16 @@ const ProfileBio = () => {
             </div>
             <p className='txt-md txt-off-secondary txt-cap'>{`joined ${getDate(bio?.createdAt)}`}</p>
             <div className="flx flx-min-center mg-top-s">
-                <a href={bio.city && `https://www.google.com/search?q=${bio?.city}`} target='_blank' className='txt-md txt-secondary flx flx-min-center mg-right-md'>
-                    <span className="material-icons txt-off-secondary mg-right-xs">
-                        pin_drop
-                    </span>
+                <span className="material-icons txt-off-secondary mg-right-xs">
+                    pin_drop
+                </span>
+                <a href={bio.city && `https://www.google.com/search?q=${bio?.city}`} target='_blank' className={`${bio.city ? styles.profileLink : ''} txt-md txt-secondary flx flx-min-center mg-right-md`}>
                     {bio.city ?? 'your city'}
                 </a>
-                <a href={bio?.portfolio} target='_blank' className='txt-md txt-secondary flx flx-min-center'>
-                    <span className="material-icons txt-off-secondary mg-right-xs">
-                        link
-                    </span>
+                <span className="material-icons txt-off-secondary mg-right-xs">
+                    link
+                </span>
+                <a href={bio?.portfolio} target='_blank' className={`${bio.portfolio ? styles.profileLink : ''} txt-md txt-secondary flx flx-min-center`}>
                     {bio.portfolio ?? 'your portfolio'}
                 </a>
             </div>
