@@ -27,7 +27,7 @@ const Post = ({ post: { _id, username, content, likes: { likeCount, likedBy }, c
                 setProfileImg(response.data.user.profileImg)
         })()
         return () => { isMounted = false }
-    }, [])
+    }, [username])
 
     useEffect(() => {
         const loggedInUsername = getUsername()
