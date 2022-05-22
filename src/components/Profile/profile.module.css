@@ -15,6 +15,10 @@
   border-bottom: solid thin var(--clr-primary);
 }
 
+.profileDiv > div > div > p:hover {
+  cursor: pointer;
+}
+
 .profileLink {
   color: rgb(29, 155, 240);
 }

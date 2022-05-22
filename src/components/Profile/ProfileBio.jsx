@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { getDate, getUsername, getUserToken } from 'utils'
 import { followUser, setModal, unFollowUser } from "slices"
 import styles from './profile.module.css'
+import { useNavigate } from "react-router-dom"
 
 const ProfileBio = () => {
     const [isUserFollowed, setIsUserFollowed] = useState(false)
+    const navigate = useNavigate()
     const { bio } = useSelector(state => state.profile)
     const dispatch = useDispatch()
 
@@ -81,8 +83,8 @@ const ProfileBio = () => {
             </div>
             <div className='flx flx-maj-stretch flx-min-center mg-top-md'>
                 <div className='flx flx-min-center'>
-                    <p className='txt-md txt-secondary txt-cap mg-right-xs'>{`followers ${bio?.followers?.length}`}</p>
-                    <p className='txt-md txt-secondary txt-cap'>{`following ${bio?.following?.length}`}</p>
+                    <p onClick={() => navigate(`/${bio.username}/followers`)} className='txt-md txt-secondary txt-cap mg-right-xs'>{`followers ${bio?.followers?.length}`}</p>
+                    <p onClick={() => navigate(`/${bio.username}/following`)} className='txt-md txt-secondary txt-cap'>{`following ${bio?.following?.length}`}</p>
                 </div>
                 {
                     getUsername() === bio?.username &&
