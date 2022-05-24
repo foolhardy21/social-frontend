@@ -18,25 +18,27 @@ export const getPosts = createAsyncThunk(
 
 export const likePost = createAsyncThunk(
     'posts/likePost',
-    async ({ _id, token }) => {
+    async ({ _id, token, username }) => {
         const response = await axios.post(`${API_POST_LIKE}/${_id}`, {}, {
             headers: {
                 authorization: token
             }
         })
-        return response
+        return username ? response.data.posts.filter(post => post.username === username)
+            : response.data.posts
     }
 )
 
 export const dislikePost = createAsyncThunk(
     'posts/dislikePost',
-    async ({ _id, token }) => {
+    async ({ _id, token, username }) => {
         const response = await axios.post(`${API_POST_DISLIKE}/${_id}`, {}, {
             headers: {
                 authorization: token
             }
         })
-        return response
+        return username ? response.data.posts.filter(post => post.username === username)
+            : response.data.posts
     }
 )
 
@@ -124,10 +126,10 @@ export const postsSlice = createSlice({
             state.status = action.error.message
         },
         [likePost.fulfilled]: (state, action) => {
-            state.posts = action.payload.data.posts
+            state.posts = action.payload
         },
         [dislikePost.fulfilled]: (state, action) => {
-            state.posts = action.payload.data.posts
+            state.posts = action.payload
         },
         [getProfilePosts.pending]: (state) => {
             state.loading = true

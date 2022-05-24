@@ -12,3 +12,11 @@
 .postDiv:hover {
   cursor: pointer;
 }
+
+.followerDiv {
+  border-bottom: solid thin var(--clr-off-primary);
+}
+
+.followerDiv:hover {
+  cursor: pointer;
+}

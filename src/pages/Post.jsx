@@ -22,7 +22,9 @@ const PostAndCommentsFeed = () => {
     useEffect(() => {
         const post = posts.find(post => post._id === params.postId)
         setCurrentPost(post)
-    }, [])
+    }, [params.postId])
+
+    // fetch user image also with post
 
     useEffect(() => {
         if (Object.keys(currentPost).length > 0) {

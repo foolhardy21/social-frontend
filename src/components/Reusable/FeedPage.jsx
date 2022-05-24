@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { NavBar } from '.'
 import styles from './feedpage.module.css'
 
@@ -9,6 +10,7 @@ const FeedPageWrapper = PostsSection => {
     const FeedPage = () => {
         const [mostLikedPosts, setMostLikedPosts] = useState([])
         const [mostCommentedPosts, setMostCommentedPosts] = useState([])
+        const navigate = useNavigate()
         const { posts } = useSelector(state => state.posts)
 
         useEffect(() => {
@@ -41,8 +43,8 @@ const FeedPageWrapper = PostsSection => {
                             <p className='txt-lg txt-secondary txt-lcase mg-left-xs mg-top-s mg-btm-xs'>most liked posts</p>
                             <ul>
                                 {
-                                    mostLikedPosts?.map(post => <li key={post._id} className='flx flx-min-center mg-s'>
-                                        <img srcSet={post?.postUser} alt='dp' className={`${styles.profileImgSmall} brd-full img-fit-cover mg-right-xs`} />
+                                    mostLikedPosts?.map(post => <li onClick={() => navigate(`/${post.username}/post/${post._id}`)} key={post._id} className='flx flx-min-center mg-btm-s'>
+                                        <img srcSet={post.postUser} alt={post.username} className={`${styles.profileImgSmall} brd-full img-fit-cover mg-right-xs`} />
                                         <div>
                                             <p className='txt-md txt-off-secondary'>{post.username}</p>
                                             <p className='txt-md txt-off-secondary'>{post.content.slice(0, 20)}....</p>
@@ -55,7 +57,7 @@ const FeedPageWrapper = PostsSection => {
                             <p className='txt-lg txt-secondary txt-lcase mg-left-xs mg-top-s mg-btm-xs'>most commented on posts</p>
                             <ul>
                                 {
-                                    mostCommentedPosts?.map(post => <li key={post._id} className='flx flx-min-center mg-s'>
+                                    mostCommentedPosts?.map(post => <li key={post._id} onClick={() => navigate(`/${post.username}/post/${post._id}`)} className='flx flx-min-center mg-btm-s'>
                                         <img srcSet={post?.postUser} alt='dp' className={`${styles.profileImgSmall} brd-full img-fit-cover mg-right-xs`} />
                                         <div>
                                             <p className='txt-md txt-off-secondary'>{post.username}</p>

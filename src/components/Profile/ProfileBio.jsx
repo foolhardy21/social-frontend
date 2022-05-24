@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { getDate, getUsername, getUserToken } from 'utils'
 import { followUser, setModal, unFollowUser } from "slices"
 import styles from './profile.module.css'
+import { useNavigate } from "react-router-dom"
 
 const ProfileBio = () => {
     const [isUserFollowed, setIsUserFollowed] = useState(false)
+    const navigate = useNavigate()
     const { bio } = useSelector(state => state.profile)
     const dispatch = useDispatch()
 
@@ -66,23 +68,23 @@ const ProfileBio = () => {
             </div>
             <p className='txt-md txt-off-secondary txt-cap'>{`joined ${getDate(bio?.createdAt)}`}</p>
             <div className="flx flx-min-center mg-top-s">
-                <a href={bio.city && `https://www.google.com/search?q=${bio?.city}`} target='_blank' className='txt-md txt-secondary flx flx-min-center mg-right-md'>
-                    <span className="material-icons txt-off-secondary mg-right-xs">
-                        pin_drop
-                    </span>
+                <span className="material-icons txt-off-secondary mg-right-xs">
+                    pin_drop
+                </span>
+                <a href={bio.city && `https://www.google.com/search?q=${bio?.city}`} target='_blank' className={`${bio.city ? styles.profileLink : ''} txt-md txt-secondary flx flx-min-center mg-right-md`}>
                     {bio.city ?? 'your city'}
                 </a>
-                <a href={bio?.portfolio} target='_blank' className='txt-md txt-secondary flx flx-min-center'>
-                    <span className="material-icons txt-off-secondary mg-right-xs">
-                        link
-                    </span>
+                <span className="material-icons txt-off-secondary mg-right-xs">
+                    link
+                </span>
+                <a href={bio?.portfolio} target='_blank' className={`${bio.portfolio ? styles.profileLink : ''} txt-md txt-secondary flx flx-min-center`}>
                     {bio.portfolio ?? 'your portfolio'}
                 </a>
             </div>
             <div className='flx flx-maj-stretch flx-min-center mg-top-md'>
                 <div className='flx flx-min-center'>
-                    <p className='txt-md txt-secondary txt-cap mg-right-xs'>{`followers ${bio?.followers?.length}`}</p>
-                    <p className='txt-md txt-secondary txt-cap'>{`following ${bio?.following?.length}`}</p>
+                    <p onClick={() => navigate(`/${bio.username}/followers`)} className='txt-md txt-secondary txt-cap mg-right-xs'>{`followers ${bio?.followers?.length}`}</p>
+                    <p onClick={() => navigate(`/${bio.username}/following`)} className='txt-md txt-secondary txt-cap'>{`following ${bio?.following?.length}`}</p>
                 </div>
                 {
                     getUsername() === bio?.username &&

@@ -26,6 +26,10 @@
   overflow-y: auto;
 }
 
+.trendingDiv ul li:hover {
+  cursor: pointer;
+}
+
 .profileImgSmall {
   width: 2.5rem;
   height: 2.5rem;

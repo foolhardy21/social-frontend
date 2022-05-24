@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { ExploreFeedPage, Home, Login, Signup, UserFeedPage, BookmarksFeedPage, Profile, PostPage } from 'pages';
+import { ExploreFeedPage, Home, Login, Signup, UserFeedPage, BookmarksFeedPage, Profile, PostPage, FollowersPage, FollowingPage } from 'pages';
 import RequireAuth from 'components/RequireAuth';
 
 const App = () => {
@@ -33,6 +33,16 @@ const App = () => {
         <Route path='/:username' element={
           <RequireAuth>
             <Profile />
+          </RequireAuth>
+        } />
+        <Route path='/:username/followers' element={
+          <RequireAuth>
+            <FollowersPage />
+          </RequireAuth>
+        } />
+        <Route path='/:username/following' element={
+          <RequireAuth>
+            <FollowingPage />
           </RequireAuth>
         } />
       </Routes>
