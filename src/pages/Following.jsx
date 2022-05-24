@@ -23,7 +23,7 @@ const FollowingSection = () => {
             <PageHeading heading='following' />
             {
                 following?.map(followingUser =>
-                    <article onClick={() => navigate(`/${followingUser.username}`)} className={`${styles.followerDiv} flx flx-min-center pd-btm-xs mg-s`}>
+                    <article key={followingUser._id} onClick={() => navigate(`/${followingUser.username}`)} className={`${styles.followerDiv} flx flx-min-center pd-btm-xs mg-s`}>
                         <img srcSet={followingUser.profileImg} alt={followingUser.username} className={`${styles.postProfileImg} brd-full img-fit-cover`} />
                         <div className='flx flx-column mg-left-s'>
                             <p className='txt-md txt-500 txt-secondary txt-cap'>{followingUser.firstName}{' '}{followingUser.lastName}</p>
